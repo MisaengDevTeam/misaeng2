@@ -1,0 +1,162 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String?
+  email String? @unique
+  emailVerified DateTime? @default(now())
+  phoneVerified DateTime?
+  image String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  favoriteRentIds String[] @db.ObjectId
+  kakaoId String?
+  gender String?
+  dob DateTime?
+  jobLocation String?
+  status String?
+  
+  accounts Account[]
+  rentlistings RentListing[]
+  roommatelistings RoommateListing[]
+  reviews Review[]
+}
+
+model Account {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  type String
+  provider String
+  providerAccountId String
+  refersh_token String? @db.String
+  access_token String? @db.String
+  expires_at Int?
+  token_type String?
+  scope String?
+  id_token String? @db.String
+  session_state String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model RentListing {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  buildingId String @db.ObjectId
+  category String
+  title String
+  bedCount Int
+  bathCount Int
+  price Int
+  description String
+  address String
+  unit String
+  imageSrc String[]
+  moveDate DateTime
+  length String
+  utility Boolean
+  broker Boolean
+  createdAt DateTime @default(now())
+  updatedAt DateTime?
+  amenity String[]
+  feature String[]
+  contact String[]
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  building Building @relation(fields: [buildingId], references: [id], onDelete: Cascade)
+}
+
+model RoommateListing {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  category String
+  address String
+  price Int
+  roomType String
+  moveDate DateTime?
+  length String
+  utility Boolean
+  description String
+  amenity String[]
+  feature String[]
+  imageSrc String[]
+  ownerPre String[]
+  roommatePre String[]
+  coordinate Int[]
+  contact String[]
+  district String
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Building {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  company String
+  address String
+  coordinate Int[]
+  neighborhoodOne String
+  neighborhoodTwo String
+  subwayOneKm String[]
+
+  subway BuildingToSubway[]
+  reviews Review[]
+  rentlisting RentListing[]
+}
+
+
+model BuildingToSubway {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  buildingId String @db.ObjectId
+  name   String
+  distance Float
+
+  building Building @relation(fields: [buildingId], references: [id], onDelete: Cascade)
+}
+
+model Review {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  buildingId String @db.ObjectId
+  generalReview String
+  neighborhoodReview String
+  buildingReview String
+  transportationReview String
+  managementReview String
+  generalRate Int
+  neighborhoodRate Int
+  buildingRate Int
+  transportationRate Int
+  managementRate Int
+
+  building Building @relation(fields: [buildingId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+
+model Subway {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  station String
+  lines String[]
+}
+
+model Zip {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  zipcode String
+  neighborhood String
+  city String
+}
