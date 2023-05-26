@@ -38,8 +38,9 @@ model Account {
   type String
   provider String
   providerAccountId String
-  refersh_token String? @db.String
+  refresh_token String? @db.String
   access_token String? @db.String
+  accessTokenExpires DateTime?
   expires_at Int?
   token_type String?
   scope String?
@@ -49,6 +50,18 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId       Int      @map(name: "user_id")
+  expires      DateTime
+  sessionToken String   @unique @map(name: "session_token")
+  accessToken  String   @unique @map(name: "access_token")
+  createdAt    DateTime @default(now()) @map(name: "created_at")
+  updatedAt    DateTime @default(now()) @map(name: "updated_at")
+
+  @@map(name: "sessions")
 }
 
 model RentListing {

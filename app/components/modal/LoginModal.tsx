@@ -37,8 +37,8 @@ const LoginModal: React.FC<LoginModalProps> = ({}) => {
   });
 
   const onEmailLoginSubmit: SubmitHandler<FieldValues> = (data) => {
-    const email = data.email;
-    signIn('email', { email, callbackUrl: 'http://localhost:3000/' });
+    // const email = data.email;
+    // signIn('email', { email, callbackUrl: 'http://localhost:3000/' });
   };
 
   const bodyContent = (
@@ -76,18 +76,16 @@ const LoginModal: React.FC<LoginModalProps> = ({}) => {
         label={'Continue with Gooogle'}
         outline
       />
-      <Button
+      {/* <Button
         onClick={() => {
-          try {
-            signIn('kakao', { callbackUrl: 'http://localhost:3000' });
-          } catch (error) {
-            console.log(error);
-          }
+          signIn('kakao', {
+            callbackUrl: 'http://localhost:3000/api/auth/callback/kakao',
+          });
         }}
         icon={RiKakaoTalkFill}
         label={'Continue with KakaoTalk'}
         outline
-      />
+      /> */}
       <Button
         onClick={() =>
           signIn('naver', { callbackUrl: 'http://localhost:3000/' })

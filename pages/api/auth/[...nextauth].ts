@@ -15,11 +15,11 @@ export const authOptions: AuthOptions = {
     }),
     EmailProvider({
       server: {
-        host: process.env.EMAIL_SERVER_HOST as string,
-        port: process.env.EMAIL_SERVER_PORT as string,
+        host: process.env.EMAIL_SERVER_HOST,
+        port: process.env.EMAIL_SERVER_PORT,
         auth: {
-          user: process.env.EMAIL_SERVER_USER as string,
-          pass: process.env.EMAIL_SERVER_PASSWORD as string,
+          user: process.env.EMAIL_SERVER_USER,
+          pass: process.env.EMAIL_SERVER_PASSWORD,
         },
       },
       from: process.env.EMAIL_FROM as string,
@@ -35,6 +35,11 @@ export const authOptions: AuthOptions = {
   ],
   pages: {
     signIn: '/',
+  },
+  callbacks: {
+    async session({ session, token, user }) {
+      return session;
+    },
   },
   debug: process.env.NODE_ENV == 'development',
   session: {

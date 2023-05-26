@@ -3,7 +3,6 @@
 import { useCallback, useState } from 'react';
 import UserMenuWithUser from './UserMenuWithUser';
 import { AiOutlineMenu } from 'react-icons/ai';
-import { FaUserCircle } from 'react-icons/fa';
 import useLoginModal from '../hooks/useLoginModal';
 import { User } from '@prisma/client';
 import Avatar from '../Avatar';
@@ -17,8 +16,6 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const loginModal = useLoginModal();
   const [isOpen, setIsOpen] = useState(false);
   const [tempSession, setTempSession] = useState(false);
-
-  console.log(currentUser);
 
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value);
