@@ -6,6 +6,7 @@ import './globals.css';
 import { Nunito_Sans } from 'next/font/google';
 import { getCurrentUser } from './actions/getCurrentUser';
 import ToasterProvider from './components/ToasterProvider';
+import RoommateRegisterModal from './components/modal/RoommateRegisterModal';
 
 const font = Nunito_Sans({ subsets: ['latin'] });
 
@@ -27,6 +28,7 @@ export default async function RootLayout({
         <ClientOnly>
           <ToasterProvider />
           <LoginModal />
+          <RoommateRegisterModal />
           <Navbar currentUser={currentUser} />
           {children}
         </ClientOnly>
