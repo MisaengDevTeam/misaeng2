@@ -21,7 +21,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const currentUser = await getCurrentUser();
-  const email = currentUser?.email;
+  const email = currentUser?.email!;
 
   return (
     <html lang='en'>
