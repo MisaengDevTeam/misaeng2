@@ -21,6 +21,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const currentUser = await getCurrentUser();
+  const email = currentUser?.email;
 
   return (
     <html lang='en'>
@@ -28,7 +29,7 @@ export default async function RootLayout({
         <ClientOnly>
           <ToasterProvider />
           <LoginModal />
-          <RoommateRegisterModal />
+          <RoommateRegisterModal email={email} />
           <Navbar currentUser={currentUser} />
           {children}
         </ClientOnly>

@@ -51,6 +51,17 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   //   </div>
   // );
   // TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY
+  // return
+  // !currentUser ? (
+  //   <div>
+  //     <div
+  //       onClick={loginModal.onOpen}
+  //       className='text-lg cursor-pointer font-light hover:text-[#EC662A] hover:font-semibold'
+  //     >
+  //       간편 로그인 하기
+  //     </div>
+  //   </div>
+  // ) :
   return (
     <div className='relative'>
       <div

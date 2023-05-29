@@ -21,6 +21,7 @@ const UserMenuWithUser: React.FC<UserMenuWithUserProps> = ({
         label='룸메찾기 등록하기'
         onClick={() => {
           roommateModalOpen();
+          toggleSession();
         }}
       />
       <UserMenuItem label='마이 페이지' onClick={() => {}} />

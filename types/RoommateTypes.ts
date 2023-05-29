@@ -20,8 +20,8 @@ export const ROOMMATE_TYPE = [
 ];
 
 export const ROOMMATE_SELF_PRE = {
-  성별: ['남자', '여자'],
-  연령대: [
+  본인성별: ['남자', '여자'],
+  본인연령대: [
     '19-23세',
     '24-28세',
     '29-33세',
@@ -30,10 +30,10 @@ export const ROOMMATE_SELF_PRE = {
     '44-49세',
     '50세 이상',
   ],
-  학생: ['학생', '직장인', '비공개'],
-  반려동물: ['강아지', '고양이', '그 외', '없음'],
-  흡연여부: ['흡연', '비흡연'],
-  MBTI: [
+  본인학생: ['학생', '직장인', '비공개'],
+  본인반려동물: ['강아지', '고양이', '그 외', '없음'],
+  본인흡연여부: ['흡연', '비흡연'],
+  본인MBTI: [
     'ENTP',
     'ESTP',
     'ESFP',
@@ -54,8 +54,8 @@ export const ROOMMATE_SELF_PRE = {
 };
 
 export const ROOMMATE_ROOMMATE_PRE = {
-  성별: ['남자', '여자', '성별무관'],
-  연령대: [
+  상대성별: ['남자', '여자', '성별무관'],
+  상대연령대: [
     '19-23세',
     '24-28세',
     '29-33세',
@@ -65,7 +65,61 @@ export const ROOMMATE_ROOMMATE_PRE = {
     '50세 이상',
     '연령무관',
   ],
-  학생: ['학생', '직장인', '학생무관'],
-  반려동물: ['강아지', '고양이', '그 외', '반려동무관'],
-  흡연여부: ['흡연', '비흡연', '흡연무관'],
+  상대학생: ['학생', '직장인', '학생무관'],
+  상대반려동물: ['강아지', '고양이', '그 외', '반려동물무관'],
+  상대흡연여부: ['흡연', '비흡연', '흡연무관'],
+};
+
+export const ROOMMATE_MAP = {
+  Manhattan: [
+    { value: 'Downtown', label: 'Downtown' },
+    { value: 'West Village', label: 'West Village' },
+    { value: 'SoHo', label: 'SoHo' },
+    { value: 'East Village', label: 'East Village' },
+    { value: 'Midtown West', label: 'Midtown West' },
+    { value: 'Midtown Center', label: 'Midtown Center' },
+    { value: 'Midtown East', label: 'Midtown East' },
+    { value: 'Upper West Side', label: 'Upper West Side' },
+    { value: 'Upper East Side', label: 'Upper East Side' },
+    { value: 'Upper Manhattan', label: 'Upper Manhattan' },
+    { value: 'Roosevelt Island', label: 'Roosevelt Island' },
+    { value: 'Etc', label: 'Etc' },
+  ],
+  Queens: [
+    { value: 'Long Island City', label: 'Long Island City' },
+    { value: 'Astoria', label: 'Astoria' },
+    { value: 'Jackson Heights', label: 'Jackson Heights' },
+    { value: 'Elmhurst', label: 'Elmhurst' },
+    { value: 'Flushing', label: 'Flushing' },
+    { value: 'Bayside', label: 'Bayside' },
+    { value: 'Great Neck', label: 'Great Neck' },
+    { value: 'Little Neck', label: 'Little Neck' },
+    { value: 'Etc', label: 'Etc' },
+  ],
+  Brooklyn: [
+    { value: 'Williamsburg', label: 'Williamsburg' },
+    { value: 'Bedford-stuyvesant', label: 'Bedford-stuyvesant' },
+    { value: 'Downtown Brooklyn', label: 'Downtown Brooklyn' },
+    { value: 'Prospect Heights', label: 'Prospect Heights' },
+    { value: 'Etc', label: 'Etc' },
+  ],
+  NewJersey: [
+    { value: 'Englewood', label: 'Englewood' },
+    { value: 'Fort Lee', label: 'Fort Lee' },
+    { value: 'Edgewater', label: 'Edgewater' },
+    { value: 'Palisades Park', label: 'Palisades Park' },
+    { value: 'West New York', label: 'West New York' },
+    { value: 'Weehawken', label: 'Weehawken' },
+    { value: 'Hoboken', label: 'Hoboken' },
+    { value: 'Jersey City', label: 'Jersey City' },
+  ],
+  Bronx: [
+    { value: 'Morrisania', label: 'Morrisania' },
+    { value: 'Hunts Point', label: 'Hunts Point' },
+    { value: 'Parkchester', label: 'Parkchester' },
+    { value: 'West Bronx', label: 'West Bronx' },
+    { value: 'Morris Park', label: 'Morris Park' },
+    { value: 'East Bronx', label: 'East Bronx' },
+  ],
+  StatenIsland: [{ value: 'Staten Island', label: 'Staten Island' }],
 };

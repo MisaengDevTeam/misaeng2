@@ -11,6 +11,7 @@ interface InputProps {
   register: UseFormRegister<FieldValues>;
   emailValue?: string;
   errors: FieldValues;
+  defaultValue?: any;
 }
 
 const Input: React.FC<InputProps> = ({
