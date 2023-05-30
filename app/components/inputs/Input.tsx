@@ -12,6 +12,7 @@ interface InputProps {
   emailValue?: string;
   errors: FieldValues;
   defaultValue?: any;
+  onChange?: (value: any) => void;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -23,6 +24,7 @@ const Input: React.FC<InputProps> = ({
   register,
   errors,
   emailValue,
+  onChange,
 }) => {
   return (
     <div className='w-full relative'>
@@ -33,6 +35,7 @@ const Input: React.FC<InputProps> = ({
         {...register(id, { required })}
         placeholder=' '
         type={type}
+        onChange={onChange}
         className={`peer w-full p-4 pt-6 font-light bg-white border-2 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed
         ${errors[id] ? 'border-rose-500' : 'border-neutral-300'}
         ${errors[id] ? 'focus:border-rose-500' : 'focus:border-black'}

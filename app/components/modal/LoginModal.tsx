@@ -29,6 +29,8 @@ const LoginModal: React.FC<LoginModalProps> = ({}) => {
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
@@ -36,14 +38,18 @@ const LoginModal: React.FC<LoginModalProps> = ({}) => {
     },
   });
 
+  const email = watch('email');
+
   const onEmailLoginSubmit: SubmitHandler<FieldValues> = (data) => {
-    // const email = data.email;
-    // signIn('email', { email, callbackUrl: 'http://localhost:3000/' });
+    setIsLoading(true);
+    const email = data.email;
+    signIn('email', { email, callbackUrl: 'http://localhost:3000' });
+    setIsLoading(false);
   };
 
   const bodyContent = (
-    <form
-      onSubmit={handleSubmit(onEmailLoginSubmit)}
+    <div
+      // onSubmit={handleSubmit(onEmailLoginSubmit)}
       className='flex flex-col gap-4'
     >
       <Input
@@ -51,10 +57,14 @@ const LoginModal: React.FC<LoginModalProps> = ({}) => {
         label={'Email'}
         register={register}
         errors={errors}
+        onChange={(value) => {
+          setValue('email', value.currentTarget.value);
+        }}
         required
       />
       <Button
         onClick={() => {
+          signIn('email', { email, callbackUrl: 'http://localhost:3000' });
           // setIsLoading(true);
           // setTimeout(() => {
           //   setIsLoading(false);
@@ -65,7 +75,7 @@ const LoginModal: React.FC<LoginModalProps> = ({}) => {
         label={isLoading ? <LoadingSpinner /> : 'Login with your email'}
         disabled={isLoading}
       />
-    </form>
+    </div>
   );
 
   const footerContent = (
@@ -76,20 +86,16 @@ const LoginModal: React.FC<LoginModalProps> = ({}) => {
         label={'Continue with Gooogle'}
         outline
       />
-      {/* <Button
+      <Button
         onClick={() => {
-          signIn('kakao', {
-            callbackUrl: 'http://localhost:3000/api/auth/callback/kakao',
-          });
+          signIn('kakao');
         }}
         icon={RiKakaoTalkFill}
         label={'Continue with KakaoTalk'}
         outline
-      /> */}
+      />
       <Button
-        onClick={() =>
-          signIn('naver', { callbackUrl: 'http://localhost:3000/' })
-        }
+        onClick={() => signIn('naver')}
         icon={SiNaver}
         iconSize={16}
         label={'Continue with Naver'}
