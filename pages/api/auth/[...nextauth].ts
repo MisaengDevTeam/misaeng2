@@ -36,11 +36,6 @@ export const authOptions: AuthOptions = {
   pages: {
     signIn: '/',
   },
-  callbacks: {
-    async session({ session, token, user }) {
-      return session;
-    },
-  },
   debug: process.env.NODE_ENV == 'development',
   session: {
     strategy: 'jwt',
