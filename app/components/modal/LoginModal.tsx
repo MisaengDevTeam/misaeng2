@@ -81,7 +81,11 @@ const LoginModal: React.FC<LoginModalProps> = ({}) => {
   const footerContent = (
     <div className='flex flex-col gap-4 mt-3'>
       <Button
-        onClick={() => signIn('google')}
+        onClick={() =>
+          signIn('google', {
+            callbackUrl: 'https://misaengusa.com/api/auth/callback/google',
+          })
+        }
         icon={FcGoogle}
         label={'Continue with Gooogle'}
         outline
