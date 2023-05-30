@@ -50,21 +50,23 @@ const Modal: React.FC<ModalProps> = ({
         >
           <div className='relative flex flex-col w-full bg-white outline-none focus:outline-none translate h-full lg:h-auto md:h-auto border-0 rounded-lg shadow-lg'>
             {/* HEADER */}
-            <div className='relative flex justify-center items-center p-6 rounded-t-lg border-b'>
+            <div className='relative flex justify-center items-center p-2 md:p-6 rounded-t-lg border-b'>
               <div className='text-lg font-semibold'>{title}</div>
               <button onClick={onClose} className='absolute right-6'>
                 <IoMdClose size={24} />
               </button>
             </div>
             {/* BODY */}
-            <div className='relative p-6 flex-auto'>{body}</div>
+            <div className='relative py-2 px-6 flex-auto'>{body}</div>
             {separator && (
               <div className='px-6'>
                 <hr />
               </div>
             )}
             {/* FOOTER */}
-            <div className='flex flex-col gap-2 p-6'>{footer}</div>
+            <div className='flex flex-col gap-4 px-6 pt-2 pb-4 md:p-6'>
+              {footer}
+            </div>
           </div>
         </div>
       </div>

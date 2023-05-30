@@ -123,7 +123,7 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({
   }
 
   let bodyContent = (
-    <div className='flex flex-col gap-4'>
+    <div className='flex flex-col gap-2 md:gap-4'>
       <Heading title='카테고리를 선택해주세요 (1/5)' />
       {ROOMMATE_TYPE.map((item) => {
         return (

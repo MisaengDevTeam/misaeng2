@@ -74,15 +74,15 @@ const RmSelfPre: React.FC<RmSelfPreProps> = ({
 
   return (
     <div className='flex flex-col gap-1'>
-      <div className=''>{addspace(selfcategory)}</div>
-      <div className='grid grid-cols-4 gap-3 max-h-[50vh] overflow-y-auto'>
+      <div className='text-xs md:text-md'>{addspace(selfcategory)}</div>
+      <div className='grid grid-cols-4 gap-x-2 gap-y-1 max-h-[50vh] overflow-y-auto'>
         {selfinfo.map((item) => (
           <div
             onClick={() => {
               onClick(selfcategory, item);
             }}
             key={item}
-            className={`flex justify-center items-center text-sm h-5 border-[1px] py-3 rounded-md cursor-pointer hover:border-black
+            className={`flex justify-center items-center text-xs md:text-md h-3 border-[1px] py-3 rounded-md cursor-pointer hover:border-black
             ${isSelected(selfcategory, `${selfcategory}${item}`)}
             `}
           >
