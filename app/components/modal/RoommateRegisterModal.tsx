@@ -155,8 +155,6 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
           price={price}
           length={length}
           description={description}
-          amenity={amenity}
-          feature={feature}
           register={register}
           errors={errors}
           movedate={movedate}
