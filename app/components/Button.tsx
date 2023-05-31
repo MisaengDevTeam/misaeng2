@@ -30,6 +30,8 @@ const Button: React.FC<ButtonProps> = ({
       disabled={disabled}
       type={type}
       className={`relative justify-center disabled:opacity-70 disabled:cursor-not-allowed rounded-lg hover:bg-[#EC662A] hover:text-white transition w-full 
+      ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'}
+      ${disabled ? 'bg-gray-800' : 'bg-orange-500'}
     ${outline ? 'bg-white' : 'bg-orange-500'} 
     ${outline ? 'border-black' : 'border-orange-500'} 
     ${outline ? 'text-black' : 'text-white'}

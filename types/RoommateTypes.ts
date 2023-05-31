@@ -2,13 +2,13 @@ export const ROOMMATE_TYPE = [
   {
     roommateCategory: '룸메 찾아요',
     roommateCategoryDescription:
-      '계약하신 방이 이미 있으신 분께서 빈 방에 입주하실 룸메이트를 찾응 카테고리입니다.',
+      '계약하신 방이 이미 있으신 분께서 빈 방에 입주할 룸메이트를 찾는 카테고리입니다.',
     icon: 'SlPeople',
   },
   {
     roommateCategory: '방 찾아요',
     roommateCategoryDescription:
-      '계약하신 방이 없으시거나 분께서 빈 방에 입주하실 룸메이트를 찾응 카테고리입니다.',
+      '빈 방에 입주를 원하시는 분들을 위한 카테고리입니다.',
     icon: 'BsHouseUp',
   },
   {
@@ -122,4 +122,36 @@ export const ROOMMATE_MAP = {
     { value: 'East Bronx', label: 'East Bronx' },
   ],
   StatenIsland: [{ value: 'Staten Island', label: 'Staten Island' }],
+};
+
+export const ROOMMATE_ROOM_INFO = {
+  roomtypeArr: ['MasterBedroom', 'Second', 'Flexed', 'Other'],
+  lengthArr: ['단기 (주 단위)', '중기 (월 단위)', '장기 (연 단위)'],
+  utilityArr: ['유틸리티 포함', '유틸리티 별도'],
+  amenityArr: [
+    '24h도어맨',
+    '헬스장',
+    '엘리베이터',
+    '로비',
+    '주차장',
+    '루프탑',
+    '세탁실',
+    '실내농구장',
+    '스크린골프',
+    '공용주방',
+    '수영장',
+    '요가룸',
+    '와이파이',
+    'BBQ그릴',
+  ],
+  featureArr: [
+    '전자레인지',
+    '에어컨',
+    '히터',
+    '세탁기',
+    '건조기',
+    '식기세척기',
+    '욕조',
+    '발코니',
+  ],
 };

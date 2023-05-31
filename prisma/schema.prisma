@@ -97,7 +97,6 @@ model RoommateListing {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   userId String @db.ObjectId
   category String
-  address String
   price Int
   roomType String
   moveDate DateTime?
@@ -111,6 +110,7 @@ model RoommateListing {
   roommatePre String[]
   coordinate Int[]
   contact String[]
+  city String
   district String
   
   createdAt DateTime @default(now())

@@ -1,16 +1,18 @@
 'use client';
 import Select from 'react-select';
 
-interface RmDistrictSelectProps {
+interface SelectCompProps {
   placeholder: string;
   options: any[];
   onChange: (value: string) => void;
+  small?: boolean;
 }
 
-const RmDistrictSelect: React.FC<RmDistrictSelectProps> = ({
+const SelectComp: React.FC<SelectCompProps> = ({
   onChange,
   placeholder,
   options,
+  small,
 }) => {
   return (
     <div>
@@ -21,9 +23,9 @@ const RmDistrictSelect: React.FC<RmDistrictSelectProps> = ({
         isSearchable={false}
         onChange={(value) => onChange(value.value)}
         classNames={{
-          control: () => 'p-3 border-2',
-          input: () => 'text-lg',
-          option: () => 'text-lg',
+          control: () => `${small ? 'p-1' : 'p-3'} border-2`,
+          input: () => `${small ? 'text-sm' : 'text-lg'}`,
+          option: () => `${small ? 'text-sm' : 'text-lg'} hover:bg-orange-200`,
         }}
         theme={(theme) => ({
           ...theme,
@@ -38,4 +40,4 @@ const RmDistrictSelect: React.FC<RmDistrictSelectProps> = ({
     </div>
   );
 };
-export default RmDistrictSelect;
+export default SelectComp;

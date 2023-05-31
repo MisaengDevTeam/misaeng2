@@ -61,6 +61,7 @@ const LoginModal: React.FC<LoginModalProps> = ({}) => {
           setValue('email', value.currentTarget.value);
         }}
         required
+        disabled={isLoading}
       />
       <Button
         onClick={() => {
@@ -85,6 +86,7 @@ const LoginModal: React.FC<LoginModalProps> = ({}) => {
         icon={FcGoogle}
         label={'Continue with Gooogle'}
         outline
+        disabled={isLoading}
       />
       <Button
         onClick={() => {
@@ -93,6 +95,7 @@ const LoginModal: React.FC<LoginModalProps> = ({}) => {
         icon={RiKakaoTalkFill}
         label={'Continue with KakaoTalk'}
         outline
+        disabled={isLoading}
       />
       {/* <Button
         onClick={() => signIn('naver', { callbackUrl: '/' })}
