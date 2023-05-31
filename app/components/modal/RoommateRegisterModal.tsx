@@ -28,7 +28,7 @@ import Input from '../inputs/Input';
 import RmDistrictSelect from '../inputs/RmDistrictSelect';
 
 interface RoommateRegisterModalProps {
-  email?: string;
+  // email?: string;
 }
 
 interface SelectValueType {
@@ -50,9 +50,11 @@ const ICONS: { [key: string]: IconType } = {
   SlPencil,
 };
 
-const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({
-  email,
-}) => {
+const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = (
+  {
+    // email,
+  }
+) => {
   const roommateRegisterModal = useRoommateRegisterModal();
 
   const [step, setStep] = useState(ROOMMATE_REGISTER_STEP.CATEGORY);
@@ -230,7 +232,7 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({
             register={register}
             errors={errors}
             required
-            emailValue={email}
+            // emailValue={email}
           />
           <Input
             id={'핸드폰'}

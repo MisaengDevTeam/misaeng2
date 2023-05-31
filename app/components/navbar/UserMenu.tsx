@@ -4,13 +4,18 @@ import { useCallback, useState } from 'react';
 import UserMenuWithUser from './UserMenuWithUser';
 import { AiOutlineMenu } from 'react-icons/ai';
 import useLoginModal from '../hooks/useLoginModal';
-import { User } from '@prisma/client';
 import Avatar from '../Avatar';
 import { signOut } from 'next-auth/react';
 import useRoommateRegisterModal from '../hooks/useRoommateRegisterModal';
 
+interface User {
+  email?: string | null | undefined;
+  image?: string | null | undefined;
+  name?: string | null | undefined;
+}
+
 interface UserMenuProps {
-  currentUser: User | null;
+  currentUser?: User | null;
 }
 
 const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {

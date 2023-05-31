@@ -6,13 +6,21 @@ import Logo from './Logo';
 import ServiceMenu from './ServiceMenu';
 import UserMenu from './UserMenu';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 interface NavbarProps {
-  currentUser: User | null;
+  // currentUser: User | null;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
-  console.log(currentUser);
+const Navbar: React.FC<NavbarProps> = (
+  {
+    // currentUser
+  }
+) => {
+  // console.log(currentUser);
+  const { data: session } = useSession();
+  const currentUser = session?.user;
+
   return (
     <div className='w-full shadow-sm z-10'>
       <div className='py-4 border-b'>
