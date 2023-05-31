@@ -1,6 +1,6 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import NextAuth, { AuthOptions } from 'next-auth';
-import prisma from '../../../app/lib/prismaDb';
+import prisma from '@/app/lib/prismaDb';
 import GoogleProvider from 'next-auth/providers/google';
 import EmailProvider from 'next-auth/providers/email';
 import KakaoProvider from 'next-auth/providers/kakao';
@@ -12,8 +12,8 @@ export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
     EmailProvider({
       server: {
@@ -27,20 +27,22 @@ export const authOptions: AuthOptions = {
       from: process.env.EMAIL_FROM,
     }),
     KakaoProvider({
-      clientId: process.env.KAKAO_CLIENT_ID!,
-      clientSecret: process.env.KAKAO_CLIENT_SECRET!,
+      clientId: process.env.KAKAO_CLIENT_ID as string,
+      clientSecret: process.env.KAKAO_CLIENT_SECRET as string,
     }),
     NaverProvider({
-      clientId: process.env.NAVER_CLIENT_ID!,
-      clientSecret: process.env.NAVER_CLIENT_SECRET!,
+      clientId: process.env.NAVER_CLIENT_ID as string,
+      clientSecret: process.env.NAVER_CLIENT_SECRET as string,
     }),
   ],
-  pages: {
-    signIn: '/',
-  },
-  debug: process.env.NODE_ENV == 'development',
+  // debug: process.env.NODE_ENV == 'development',
+  debug: true,
+  pages: { signIn: '/' },
   session: {
     strategy: 'jwt',
+  },
+  jwt: {
+    maxAge: 60 * 60 * 24 * 30,
   },
   secret: process.env.NEXTAUTH_SECRET,
 };

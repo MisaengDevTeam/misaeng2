@@ -39,6 +39,7 @@ model Account {
   provider String
   providerAccountId String
   refresh_token String? @db.String
+  refresh_token_expires_in Int?
   access_token String? @db.String
   accessTokenExpires DateTime?
   expires_at Int?
@@ -51,6 +52,7 @@ model Account {
 
   @@unique([provider, providerAccountId])
 }
+
 
 model Session {
   id String @id @default(auto()) @map("_id") @db.ObjectId

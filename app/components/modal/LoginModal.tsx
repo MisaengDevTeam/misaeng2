@@ -88,14 +88,14 @@ const LoginModal: React.FC<LoginModalProps> = ({}) => {
       />
       <Button
         onClick={() => {
-          signIn('kakao');
+          signIn('kakao', { callbackUrl: '/' });
         }}
         icon={RiKakaoTalkFill}
         label={'Continue with KakaoTalk'}
         outline
       />
       <Button
-        onClick={() => signIn('naver')}
+        onClick={() => signIn('naver', { callbackUrl: '/' })}
         icon={SiNaver}
         iconSize={16}
         label={'Continue with Naver'}

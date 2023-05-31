@@ -26,7 +26,10 @@ const UserMenuWithUser: React.FC<UserMenuWithUserProps> = ({
       />
       <UserMenuItem label='마이 페이지' onClick={() => {}} />
       <UserMenuItem label='고객 센터' onClick={() => {}} />
-      <UserMenuItem label='로그 아웃' onClick={() => signOut()} />
+      <UserMenuItem
+        label='로그 아웃'
+        onClick={() => signOut({ callbackUrl: '/' })}
+      />
     </div>
   );
 };
