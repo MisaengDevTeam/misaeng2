@@ -65,8 +65,6 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
       length: 0,
       movedate: '',
       description: '',
-      amenity: '',
-      feature: '',
       본인성별: '',
       본인연령대: '',
       본인학생: '',
@@ -89,8 +87,6 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
   const length = watch('length');
   const movedate = watch('movedate');
   const description = watch('description');
-  const amenity = watch('amenity');
-  const feature = watch('feature');
   const gender = watch('본인성별');
   const age = watch('본인연령대');
   const status = watch('본인학생');
@@ -120,7 +116,7 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
   };
 
   const onNext = () => {
-    const newStep = step == 5 ? 5 : step + 1;
+    const newStep = step == 6 ? 6 : step + 1;
     setStep(newStep);
   };
 
@@ -279,8 +275,8 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
   let footerContent = (
     <div className='flex flex-row justify-between gap-8'>
       {step > 1 && <Button onClick={onBack} label={'Back'} />}
-      {step < 5 && <Button onClick={onNext} label={'Next'} />}
-      {step == 5 && <Button onClick={() => {}} label={'Submit'} />}
+      {step < 6 && <Button onClick={onNext} label={'Next'} />}
+      {step == 6 && <Button onClick={() => {}} label={'Submit'} />}
     </div>
   );
 

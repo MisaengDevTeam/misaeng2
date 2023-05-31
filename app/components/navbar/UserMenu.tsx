@@ -3,6 +3,7 @@
 import { useCallback, useState } from 'react';
 import UserMenuWithUser from './UserMenuWithUser';
 import { AiOutlineMenu } from 'react-icons/ai';
+import { IoCloseSharp } from 'react-icons/io5';
 import useLoginModal from '../hooks/useLoginModal';
 import Avatar from '../Avatar';
 import { signOut } from 'next-auth/react';
@@ -71,7 +72,11 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
         onClick={toggleOpen}
         className='flex flex-row gap-2 justify-center items-center py-2 px-4 border border-neutral-600 rounded-full cursor-pointer hover:shadow-md transition'
       >
-        <AiOutlineMenu size={24} color='neutral-600' />
+        {isOpen ? (
+          <IoCloseSharp size={24} color='neutral-600' />
+        ) : (
+          <AiOutlineMenu size={24} color='neutral-600' />
+        )}
         <div className='hidden md:block'>
           <Avatar imgsrc={currentUser?.image} />
         </div>

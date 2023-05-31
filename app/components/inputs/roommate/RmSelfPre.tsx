@@ -54,8 +54,8 @@ const RmSelfPre: React.FC<RmSelfPreProps> = ({
       };
       const selectedValue = selectedItems[category];
       return selectedValue === item
-        ? `border-[#EC662A] bg-[#EC662A]/[0.1]`
-        : `border-neutral-200 'bg-white`;
+        ? `border-[#EC662A] bg-[#EC662A]/[0.2]`
+        : `border-neutral-400 'bg-white`;
     },
     [
       selectedAge,
@@ -82,7 +82,7 @@ const RmSelfPre: React.FC<RmSelfPreProps> = ({
               onClick(selfcategory, item);
             }}
             key={item}
-            className={`flex justify-center items-center text-xs md:text-md h-3 border-[1px] py-3 rounded-md cursor-pointer hover:border-black
+            className={`flex justify-center items-center text-xs md:text-md h-3 border-[1px] py-3 rounded-md cursor-pointer hover:border-[#EC662A]
             ${isSelected(selfcategory, `${selfcategory}${item}`)}
             `}
           >

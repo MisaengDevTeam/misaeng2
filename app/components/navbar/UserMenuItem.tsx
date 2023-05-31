@@ -14,7 +14,7 @@ const UserMenuItem: React.FC<UserMenuItemProps> = ({
   return (
     <div
       onClick={onClick}
-      className={`px-4 py-3 hover:bg-neutral-100 font-light text-lg md:text-lg text-center cursor-pointer
+      className={`px-2 py-3 md:px-4 hover:bg-neutral-100 w-full font-light text-md md:text-lg text-center cursor-pointer
       ${!mobileVisible || `block md:hidden`}
       `}
     >

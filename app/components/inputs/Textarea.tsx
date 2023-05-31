@@ -37,8 +37,8 @@ const Textarea: React.FC<TextareaProps> = ({
         placeholder={placeholer}
         rows={5}
         cols={20}
-        className={`w-full  font-light bg-white border-2 rounded-md outline-none transition resize-none
-        ${small ? 'text-md' : 'text-lg'}
+        className={`w-full  font-light bg-white border-2 border-neutral-300 rounded-md outline-none transition resize-none focus:border-[#EC662A]
+        ${small ? 'text-sm' : 'text-lg'}
         ${small ? 'px-3 py-2' : 'p-4 pt-6'}
         ${disabled ? 'opacity-70' : 'opacity-100'}
         ${disabled ? 'cursor-not-allowed' : 'cursor-text'}
