@@ -5,8 +5,6 @@ import GoogleProvider from 'next-auth/providers/google';
 import EmailProvider from 'next-auth/providers/email';
 import KakaoProvider from 'next-auth/providers/kakao';
 import NaverProvider from 'next-auth/providers/naver';
-import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
-import clientPromise from '@/app/lib/mongodb';
 
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -35,8 +33,8 @@ export const authOptions: AuthOptions = {
       clientSecret: process.env.NAVER_CLIENT_SECRET as string,
     }),
   ],
-  // debug: process.env.NODE_ENV == 'development',
-  debug: true,
+  debug: process.env.NODE_ENV == 'development',
+  // debug: true,
   pages: { signIn: '/' },
   session: {
     strategy: 'jwt',

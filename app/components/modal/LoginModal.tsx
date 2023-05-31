@@ -94,13 +94,13 @@ const LoginModal: React.FC<LoginModalProps> = ({}) => {
         label={'Continue with KakaoTalk'}
         outline
       />
-      <Button
+      {/* <Button
         onClick={() => signIn('naver', { callbackUrl: '/' })}
         icon={SiNaver}
         iconSize={16}
         label={'Continue with Naver'}
         outline
-      />
+      /> */}
     </div>
   );
   return (

@@ -64,7 +64,6 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
       >
         간편 로그인 하기
       </div>
-      <button onClick={() => signOut()}>signout</button>
     </div>
   ) : (
     <div className='relative'>
