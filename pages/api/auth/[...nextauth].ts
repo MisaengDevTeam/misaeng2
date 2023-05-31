@@ -5,13 +5,15 @@ import GoogleProvider from 'next-auth/providers/google';
 import EmailProvider from 'next-auth/providers/email';
 import KakaoProvider from 'next-auth/providers/kakao';
 import NaverProvider from 'next-auth/providers/naver';
+import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
+import clientPromise from '@/app/lib/mongodb';
 
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
     EmailProvider({
       server: {
@@ -22,15 +24,15 @@ export const authOptions: AuthOptions = {
           pass: process.env.EMAIL_SERVER_PASSWORD,
         },
       },
-      from: process.env.EMAIL_FROM as string,
+      from: process.env.EMAIL_FROM,
     }),
     KakaoProvider({
-      clientId: process.env.KAKAO_CLIENT_ID as string,
-      clientSecret: process.env.KAKAO_CLIENT_SECRET as string,
+      clientId: process.env.KAKAO_CLIENT_ID!,
+      clientSecret: process.env.KAKAO_CLIENT_SECRET!,
     }),
     NaverProvider({
-      clientId: process.env.NAVER_CLIENT_ID as string,
-      clientSecret: process.env.NAVER_CLIENT_SECRET as string,
+      clientId: process.env.NAVER_CLIENT_ID!,
+      clientSecret: process.env.NAVER_CLIENT_SECRET!,
     }),
   ],
   pages: {
