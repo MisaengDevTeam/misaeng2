@@ -13,7 +13,7 @@ const MainBlogMenu: React.FC<MainBlogMenuProps> = ({}) => {
   return (
     <div className='flex flex-col gap-4'>
       <div className='flex flex-col items-center gap-6'>
-        <div className='flex flex-row gap-4'>
+        <div className='grid grid-cols-4 md:grid-cols-8 gap-3 sm:gap-4'>
           {Object.entries(BLOG_CATEGORY).map(([key, value]) => (
             <BlogCategoryBox
               category={key}
@@ -24,7 +24,7 @@ const MainBlogMenu: React.FC<MainBlogMenuProps> = ({}) => {
             />
           ))}
         </div>
-        <div className='flex flex-row gap-4'>
+        <div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
           {BLOG_MOCK_POSTING.map((description) => (
             <BlogListingCard
               key={BLOG_MOCK_POSTING.indexOf(description)}

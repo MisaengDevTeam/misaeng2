@@ -19,6 +19,7 @@ import { SlPencil } from 'react-icons/sl';
 import {
   FieldValues,
   RegisterOptions,
+  SubmitHandler,
   UseFormRegisterReturn,
   useForm,
 } from 'react-hook-form';
@@ -27,6 +28,10 @@ import RmSelfPre from '../inputs/roommate/RmSelfPre';
 import Input from '../inputs/Input';
 import SelectComp from '../inputs/SelectComp';
 import RmRoomInfo from '../inputs/roommate/RmRoomInfo';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import validateInput from '@/app/lib/validateInput';
+import { useSession } from 'next-auth/react';
 
 interface RoommateRegisterModalProps {}
 
@@ -46,9 +51,13 @@ const ICONS: { [key: string]: IconType } = {
 };
 
 const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
+  const { data: session } = useSession();
+  const currentUser = session?.user;
+
   const roommateRegisterModal = useRoommateRegisterModal();
 
   const [step, setStep] = useState(ROOMMATE_REGISTER_STEP.CATEGORY);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -62,7 +71,7 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
       category: '',
       roomtype: '',
       price: 0,
-      length: 0,
+      length: '',
       movedate: '',
       description: '',
       본인성별: '',
@@ -71,18 +80,20 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
       본인반려동물: '',
       본인흡연여부: '',
       본인MBTI: '',
-      룸메이트성별: '',
-      룸메이트연령대: '',
-      룸메이트학생: '',
-      룸메이트반려동물: '',
-      룸메이트흡연여부: '',
+      상대성별: '',
+      상대연령대: '',
+      상대학생: '',
+      상대반려동물: '',
+      상대흡연여부: '',
       city: null,
       district: '',
+      uid: currentUser?.id,
+      phone: '',
+      kakaoId: '',
     },
   });
 
   const category = watch('category');
-  const roomtype = watch('roomtype');
   const price = watch('price');
   const length = watch('length');
   const movedate = watch('movedate');
@@ -98,8 +109,7 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
   const rmstatus = watch('상대학생');
   const rmpet = watch('상대반려동물');
   const rmsmoke = watch('상대흡연여부');
-  const city = watch('city') as string;
-
+  const city = watch('city');
   const district = watch('district');
 
   const setCustomValue = (id: string, value: any) => {
@@ -116,13 +126,64 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
   };
 
   const onNext = () => {
+    if (step == 1 && validateInput([category])) {
+      toast.error('카테고리를 선택해주세요');
+      return null;
+    }
+
+    if (step == 2 && validateInput([price, length, movedate, description])) {
+      toast.error('모든 항목을 선택/작성 해주세요');
+      return null;
+    }
+
+    if (step == 3 && validateInput([gender, age, status, pet, smoke, mbti])) {
+      toast.error('반드시 한 가지씩 선택 해주세요');
+      return null;
+    }
+
+    if (
+      step == 4 &&
+      validateInput([rmgender, rmage, rmstatus, rmpet, rmsmoke])
+    ) {
+      toast.error('반드시 한 가지씩 선택 해주세요');
+      return null;
+    }
+
+    if (step == 5 && validateInput([city, district])) {
+      toast.error('지역을 선택해주세요');
+      return null;
+    }
+
     const newStep = step == 6 ? 6 : step + 1;
+
     setStep(newStep);
   };
 
   function addSpace(str: string) {
     return str.slice(0, 2) + ' ' + str.slice(2);
   }
+
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    if (step != ROOMMATE_REGISTER_STEP.CONTACT) {
+      return null;
+    }
+    setIsLoading(true);
+    axios
+      .post(`/api/roommateRegister`, data)
+      .then((response) => {
+        toast.success('룸메이트 리스팅이 등록되었습니다!');
+        setStep(ROOMMATE_REGISTER_STEP.CATEGORY);
+        roommateRegisterModal.onClose();
+        reset();
+      })
+      .catch((error) => {
+        toast.error(`Something went wrong`);
+        console.log(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
 
   let bodyContent = (
     <div className='flex flex-col gap-2 md:gap-4'>
@@ -147,13 +208,8 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
       <div className='flex flex-col gap-2'>
         <Heading title='현재 거주하시는 방 또는 희망하시는 방에 대해 알려주세요 (2/6)' />
         <RmRoomInfo
-          roomtype={roomtype}
-          price={price}
-          length={length}
-          description={description}
           register={register}
           errors={errors}
-          movedate={movedate}
           onChange={(subcat, value) => setCustomValue(subcat, value)}
         />
       </div>
@@ -248,22 +304,25 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
         />
         <div className='flex flex-col gap-4 mt-4'>
           <Input
-            id={'이메일'}
+            id={'email'}
             label={'이메일'}
             register={register}
             errors={errors}
-            required
-            // emailValue={email}
+            length={36}
+            emailValue={currentUser && currentUser.email}
+            disabled={currentUser != null}
           />
           <Input
-            id={'핸드폰'}
+            id={'phone'}
             label={'핸드폰'}
+            length={13}
             register={register}
             errors={errors}
           />
           <Input
-            id={'카카오톡 아이디'}
+            id={'kakaoId'}
             label={'카카오톡 아이디'}
+            length={13}
             register={register}
             errors={errors}
           />
@@ -276,7 +335,9 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
     <div className='flex flex-row justify-between gap-8'>
       {step > 1 && <Button onClick={onBack} label={'Back'} />}
       {step < 6 && <Button onClick={onNext} label={'Next'} />}
-      {step == 6 && <Button onClick={() => {}} label={'Submit'} />}
+      {step == 6 && (
+        <Button onClick={handleSubmit(onSubmit)} label={'Submit'} />
+      )}
     </div>
   );
 

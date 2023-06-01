@@ -96,21 +96,26 @@ model RoommateListing {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   userId String @db.ObjectId
   category String
-  price Int
-  roomType String
-  moveDate DateTime?
-  length String
-  utility Boolean
-  description String
-  amenity String[]
-  feature String[]
-  imageSrc String[]
-  ownerPre String[]
-  roommatePre String[]
-  coordinate Int[]
-  contact String[]
-  city String
-  district String
+  roomtype  String
+  price  Int
+  length  String
+  movedate  String
+  description  String
+  selfgender  String
+  selfage  String
+  selfstatus  String
+  selfpet  String
+  selfsmoke  String
+  selfbmti  String
+  rmgender  String
+  rmage  String
+  rmstatus  String
+  rmpet  String
+  rmsmoke  String
+  city  String
+  district  String
+
+
   
   createdAt DateTime @default(now())
   updatedAt DateTime?

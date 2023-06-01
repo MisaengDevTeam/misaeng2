@@ -6,6 +6,7 @@ export const BLOG_CATEGORY = {
   life: '생활',
   per: '공연',
   sports: '운동',
+  travel: '여행',
 };
 
 export const BLOG_MOCK_POSTING = [

@@ -8,16 +8,9 @@ import UserMenu from './UserMenu';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 
-interface NavbarProps {
-  // currentUser: User | null;
-}
+interface NavbarProps {}
 
-const Navbar: React.FC<NavbarProps> = (
-  {
-    // currentUser
-  }
-) => {
-  // console.log(currentUser);
+const Navbar: React.FC<NavbarProps> = ({}) => {
   const { data: session } = useSession();
   const currentUser = session?.user;
 

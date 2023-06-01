@@ -14,6 +14,7 @@ interface InputProps {
   errors: FieldValues;
   defaultValue?: any;
   formatPrice?: boolean;
+  length?: number;
   onChange?: (value: any) => void;
 }
 
@@ -25,6 +26,7 @@ const Input: React.FC<InputProps> = ({
   required,
   register,
   errors,
+  length = 4,
   emailValue,
   onChange,
   formatPrice,
@@ -45,7 +47,7 @@ const Input: React.FC<InputProps> = ({
         placeholder=' '
         step={100}
         max={5000}
-        maxLength={4}
+        maxLength={length}
         type={type}
         onChange={onChange}
         className={`peer w-full p-4 pt-6 font-light bg-white border-2 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed

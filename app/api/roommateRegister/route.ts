@@ -3,7 +3,53 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const { name, email } = body;
+
+  const {
+    category,
+    roomtype,
+    price,
+    length,
+    movedate,
+    description,
+    본인성별,
+    본인연령대,
+    본인학생,
+    본인반려동물,
+    본인흡연여부,
+    본인MBTI,
+    상대성별,
+    상대연령대,
+    상대학생,
+    상대반려동물,
+    상대흡연여부,
+    city,
+    district,
+    userId: uid,
+  } = body;
+
+  const resListing = {
+    category,
+    roomtype,
+    price,
+    length,
+    movedate,
+    description,
+    본인성별,
+    본인연령대,
+    본인학생,
+    본인반려동물,
+    본인흡연여부,
+    본인MBTI,
+    상대성별,
+    상대연령대,
+    상대학생,
+    상대반려동물,
+    상대흡연여부,
+    city,
+    district,
+    uid,
+  };
+  console.log(body);
 
   // const user = await prisma.roommateListing.create({
   //   data: {
@@ -29,5 +75,5 @@ export async function POST(request: Request) {
   //   },
   // });
 
-  return NextResponse.json(body);
+  return NextResponse.json(resListing);
 }

@@ -127,7 +127,6 @@ export const ROOMMATE_MAP = {
 export const ROOMMATE_ROOM_INFO = {
   roomtypeArr: ['MasterBedroom', 'Second', 'Flexed', 'Other'],
   lengthArr: ['단기 (주 단위)', '중기 (월 단위)', '장기 (연 단위)'],
-  utilityArr: ['유틸리티 포함', '유틸리티 별도'],
   amenityArr: [
     '24h도어맨',
     '헬스장',

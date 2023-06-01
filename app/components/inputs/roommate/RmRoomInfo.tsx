@@ -1,25 +1,17 @@
 'use client';
 import { ROOMMATE_ROOM_INFO } from '@/types/RoommateTypes';
 import SelectComp from '../SelectComp';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import Input from '../Input';
-import {
-  RegisterOptions,
-  FieldValues,
-  UseFormRegisterReturn,
-  UseFormRegister,
-  Controller,
-} from 'react-hook-form';
-import ReactDatePicker from 'react-datepicker';
+import { FieldValues, UseFormRegister } from 'react-hook-form';
 import 'react-datepicker/dist/react-datepicker.css';
 import Textarea from '../Textarea';
+import DatePicker from 'react-datepicker';
+import dateFormatter from '@/app/lib/dateFormatter';
+
+import 'react-datepicker/dist/react-datepicker.css';
 
 interface RmRoomInfoProps {
-  roomtype: string;
-  price: number;
-  length: number;
-  movedate: string;
-  description: string;
   onChange: (subcat: string, value: any) => void;
   register: UseFormRegister<FieldValues>;
   emailValue?: string;
@@ -27,16 +19,13 @@ interface RmRoomInfoProps {
 }
 
 const RmRoomInfo: React.FC<RmRoomInfoProps> = ({
-  roomtype,
-  price,
-  length,
-  movedate,
-  description,
   onChange,
   register,
   errors,
 }) => {
-  const { roomtypeArr, utilityArr, lengthArr } = ROOMMATE_ROOM_INFO;
+  const [startDate, setStartDate] = useState(new Date());
+
+  const { roomtypeArr, lengthArr } = ROOMMATE_ROOM_INFO;
   const createOptions = useCallback(
     (arr: any[]) => arr.map((item) => ({ value: item, label: item })),
     []
@@ -59,24 +48,28 @@ const RmRoomInfo: React.FC<RmRoomInfoProps> = ({
         onChange={(value) => onChange('roomtype', value)}
         small
       />
+      <div className='flex flex-row justify-between w-full items-center border-[1px] border-neutral-300 py-2 px-4 rounded-lg gap-4'>
+        <p className='w-[160px]'>희망 입주 일자</p>
+        <DatePicker
+          className='w-full focus:outline-none focus:bg-neutral-100'
+          selected={startDate}
+          minDate={new Date()}
+          onChange={(date: Date) => {
+            setStartDate(date);
+            onChange('movedate', dateFormatter(date));
+          }}
+        />
+      </div>
       <SelectComp
         placeholder={'희망 기간'}
         options={createOptions(lengthArr)}
         onChange={(value) => onChange('length', value)}
         small
       />
-      <SelectComp
-        placeholder={'유틸리티'}
-        options={createOptions(utilityArr)}
-        onChange={(value) => onChange('utility', value)}
-        small
-      />
       <Textarea
         id={'description'}
-        label={'description'}
-        register={register}
+        onChange={(value) => onChange('description', value)}
         placeholer='회원님의 자기소개 또는 방에 대한 간략한 내용을 입력해주세요'
-        errors={errors}
         small
       />
     </div>

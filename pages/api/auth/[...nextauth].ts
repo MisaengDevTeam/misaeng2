@@ -39,6 +39,29 @@ export const authOptions: AuthOptions = {
   session: {
     strategy: 'jwt',
   },
+  callbacks: {
+    async session({ session, token, user }) {
+      const currentUser = await prisma.user.findUnique({
+        where: {
+          email: session.user!.email as string,
+        },
+      });
+
+      session = {
+        ...session,
+        user: {
+          ...user,
+          id: currentUser?.id as string,
+          name: currentUser?.name as string,
+          email: currentUser?.email as string,
+          image: currentUser?.image as string,
+        },
+      };
+
+      return session;
+    },
+  },
+
   jwt: {
     maxAge: 60 * 60 * 24 * 30,
   },
