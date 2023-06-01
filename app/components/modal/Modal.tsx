@@ -13,6 +13,7 @@ interface ModalProps {
   disabled?: boolean;
   actionLabel?: string;
   actionFunc?: () => void;
+  loadingScreen?: React.ReactElement | string;
   separator?: boolean;
 }
 
@@ -25,6 +26,7 @@ const Modal: React.FC<ModalProps> = ({
   footer,
   disabled,
   separator,
+  loadingScreen,
 }) => {
   const [showModal, setShowModal] = useState(isOpen);
 
@@ -69,6 +71,7 @@ const Modal: React.FC<ModalProps> = ({
             </div>
           </div>
         </div>
+        {disabled && loadingScreen}
       </div>
     </div>
   );

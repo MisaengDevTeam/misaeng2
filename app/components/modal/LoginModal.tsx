@@ -18,6 +18,7 @@ import {
   SubmitHandler,
 } from 'react-hook-form';
 import LoadingSpinner from '../LoadingSpinner';
+import Image from 'next/image';
 
 interface LoginModalProps {}
 
@@ -50,7 +51,7 @@ const LoginModal: React.FC<LoginModalProps> = ({}) => {
   const bodyContent = (
     <div
       // onSubmit={handleSubmit(onEmailLoginSubmit)}
-      className='flex flex-col gap-4'
+      className='flex flex-col gap-4 mb-4'
     >
       <Input
         id={'email'}
@@ -80,9 +81,12 @@ const LoginModal: React.FC<LoginModalProps> = ({}) => {
   );
 
   const footerContent = (
-    <div className='flex flex-col gap-4 mt-3'>
+    <div className='flex flex-col gap-4'>
       <Button
-        onClick={() => signIn('google')}
+        onClick={() => {
+          setIsLoading(true);
+          signIn('google');
+        }}
         icon={FcGoogle}
         label={'Continue with Gooogle'}
         outline
@@ -90,6 +94,7 @@ const LoginModal: React.FC<LoginModalProps> = ({}) => {
       />
       <Button
         onClick={() => {
+          setIsLoading(true);
           signIn('kakao', { callbackUrl: '/' });
         }}
         icon={RiKakaoTalkFill}
@@ -106,6 +111,23 @@ const LoginModal: React.FC<LoginModalProps> = ({}) => {
       /> */}
     </div>
   );
+
+  const loadingScreen = (
+    <div className='absolute top-0 left-0 w-full h-full bg-white/90 rounded-lg flex flex-col justify-center items-center gap-4'>
+      <Image
+        src={`/assets/images/logo/logo_vertical.png`}
+        width={180}
+        height={90}
+        alt='logo'
+      />
+      <LoadingSpinner />
+      <div className='flex flex-col text-center'>
+        <p>로그인 중 입니다.</p>
+        <p>잠시만 기다려주시기 바랍니다.</p>
+      </div>
+    </div>
+  );
+
   return (
     <Modal
       disabled={isLoading}
@@ -114,6 +136,7 @@ const LoginModal: React.FC<LoginModalProps> = ({}) => {
       title={'간편 로그인하기'}
       body={bodyContent}
       footer={footerContent}
+      loadingScreen={loadingScreen}
       separator
     />
   );
