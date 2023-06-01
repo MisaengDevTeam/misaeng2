@@ -8,6 +8,7 @@ const nextConfig = {
       'lh3.googleusercontent.com',
       'phinf.pstatic.net',
       'misaeng.s3.amazonaws.com',
+      'k.kakaocdn.net',
     ],
   },
 };
