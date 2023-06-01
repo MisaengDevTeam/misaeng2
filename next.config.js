@@ -9,6 +9,7 @@ const nextConfig = {
       'phinf.pstatic.net',
       'misaeng.s3.amazonaws.com',
       'k.kakaocdn.net',
+      'picsum.photos',
     ],
   },
 };
