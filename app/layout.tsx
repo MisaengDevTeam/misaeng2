@@ -4,10 +4,10 @@ import Navbar from './components/navbar/Navbar';
 
 import './globals.css';
 import { Nunito_Sans } from 'next/font/google';
-// import { getCurrentUser } from './actions/getCurrentUser';
 import ToasterProvider from './components/ToasterProvider';
 import RoommateRegisterModal from './components/modal/RoommateRegisterModal';
 import SessProvider from './components/SessProvider';
+import Footer from './components/footer/Footer';
 
 const font = Nunito_Sans({ subsets: ['latin'] });
 
@@ -21,9 +21,6 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // const currentUser = await getCurrentUser();
-  // const email = currentUser?.email!;
-
   return (
     <html lang='en'>
       <body className={`${font.className}`}>
@@ -31,13 +28,10 @@ export default async function RootLayout({
           <SessProvider>
             <ToasterProvider />
             <LoginModal />
-            <RoommateRegisterModal
-            // email={email}
-            />
-            <Navbar
-            // currentUser={currentUser}
-            />
+            <RoommateRegisterModal />
+            <Navbar />
             {children}
+            <Footer />
           </SessProvider>
         </ClientOnly>
       </body>

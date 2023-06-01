@@ -4,7 +4,11 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ['lh3.googleusercontent.com', 'phinf.pstatic.net'],
+    domains: [
+      'lh3.googleusercontent.com',
+      'phinf.pstatic.net',
+      'misaeng.s3.amazonaws.com',
+    ],
   },
 };
 
