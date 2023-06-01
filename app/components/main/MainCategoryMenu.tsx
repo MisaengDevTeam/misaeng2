@@ -24,7 +24,7 @@ const MainCategoryMenu: React.FC<MainCategoryMenuProps> = ({}) => {
           {/* ${`bg-[url("/images/img/main_category_${key}.png")]`}
           ${`bg-[url("/images/img/main_category_${key}.png")]`} */}
 
-          <div className='peer text-black md:text-white text-xl lg:text-2xl absolute z-10 w-[90%] h-[90%] md:hover:border-4 hover:border-[#EC662A] rounded-xl flex justify-center items-center'>
+          <div className='peer text-black md:text-white text-xl lg:text-2xl absolute z-10 w-[90%] h-[90%] md:hover:border-2 hover:border-[#EC662A] rounded-xl flex justify-center items-center'>
             {value}
           </div>
           <Image
