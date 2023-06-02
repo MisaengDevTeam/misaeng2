@@ -7,7 +7,7 @@ import FooterCopyright from './FooterCopyright';
 const Footer = ({}) => {
   return (
     <div className='w-full bg-[#EC662A]/20 flex flex-col justify-center items-center gap-8 py-16'>
-      <div className='flex flex-row gap-12'>
+      <div className='flex flex-col sm:flex-row gap-6 sm:gap-12 text-center'>
         <FooterMenuItem title='서비스 이용약관' href='' />
         <FooterMenuItem title='개인정보취급방침' href='' />
         <FooterMenuItem title='마케팅정보 수신동의' href='' />

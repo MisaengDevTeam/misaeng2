@@ -20,7 +20,7 @@ const BlogCategoryBox: React.FC<BlogCategoryBoxProps> = ({
   return (
     <div
       onClick={() => selectCat(category)}
-      className={`border-[1px] border-[#EC662A] rounded-lg py-1 px-2 sm:py-2 sm:px-4 cursor-pointer transition text-center
+      className={`border-[1px] border-[#EC662A] rounded-lg py-1 px-2 sm:py-2 sm:px-2 lg:px-4 cursor-pointer transition text-center
   ${selected ? `bg-[#EC662A]` : `white`}
   ${selected ? `text-white` : `text-[#EC662A]`}
   `}

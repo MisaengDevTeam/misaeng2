@@ -99,7 +99,13 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
           />
         );
       case 3:
-        return <RentModalMap />;
+        return (
+          <RentModalMap
+            register={register}
+            errors={errors}
+            onChange={() => {}}
+          />
+        );
       case 4:
         return <RentModalAmenity />;
       case 5:

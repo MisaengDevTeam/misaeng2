@@ -24,7 +24,7 @@ const SelectComp: React.FC<SelectCompProps> = ({
         onChange={(value) => onChange(value.value)}
         classNames={{
           control: () => `${small ? 'p-1' : 'p-3'} border-2`,
-          input: () => `${small ? 'text-sm' : 'text-lg'}`,
+          input: () => `overflow-hidden ${small ? 'text-sm' : 'text-lg'}`,
           option: () => `${small ? 'text-sm' : 'text-lg'} hover:bg-orange-200`,
         }}
         theme={(theme) => ({

@@ -13,11 +13,11 @@ const FooterCopyright: React.FC<FooterCopyrightProps> = ({
 }) => {
   return (
     <div className='flex flex-col gap-8'>
-      <div className='text-center text-neutral-600 font-light'>
+      <div className='text-center text-neutral-800 font-light'>
         <p>{address}</p>
         <p>{email}</p>
       </div>
-      <div className='text-center text-neutral-400 font-light'>
+      <div className='text-center text-neutral-800 font-light'>
         <p>{copyright}</p>
       </div>
     </div>
