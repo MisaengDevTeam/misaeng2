@@ -8,6 +8,7 @@ import ToasterProvider from './components/ToasterProvider';
 import RoommateRegisterModal from './components/modal/RoommateRegisterModal';
 import SessProvider from './components/SessProvider';
 import Footer from './components/footer/Footer';
+import RentRegisterModal from './components/modal/RentRegisterModal';
 
 const font = Nunito_Sans({ subsets: ['latin'] });
 
@@ -28,6 +29,7 @@ export default async function RootLayout({
           <SessProvider>
             <ToasterProvider />
             <LoginModal />
+            <RentRegisterModal />
             <RoommateRegisterModal />
             <Navbar />
             {children}

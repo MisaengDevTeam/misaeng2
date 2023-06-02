@@ -15,10 +15,12 @@ interface InputProps {
   defaultValue?: any;
   formatPrice?: boolean;
   length?: number;
+  maxNumber?: number;
   onChange?: (value: any) => void;
 }
 
 const Input: React.FC<InputProps> = ({
+  maxNumber = 5000,
   id,
   label,
   type = 'text',
@@ -46,11 +48,11 @@ const Input: React.FC<InputProps> = ({
         {...register(id, { required })}
         placeholder=' '
         step={100}
-        max={5000}
+        max={maxNumber}
         maxLength={length}
         type={type}
         onChange={onChange}
-        className={`peer w-full p-4 pt-6 font-light bg-white border-2 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed
+        className={`peer w-full p-4 pt-6 font-light h-[62px] bg-white border-2 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed
         ${formatPrice ? 'pl-9' : 'pl-4'}
         ${errors[id] ? 'border-rose-500' : 'border-neutral-300'}
         ${errors[id] ? 'focus:border-rose-500' : 'focus:border-black'}

@@ -1,6 +1,6 @@
 'use client';
 
-import { MouseEvent, useState } from 'react';
+import { useState } from 'react';
 import useRoommateRegisterModal from '../hooks/useRoommateRegisterModal';
 import Modal from './Modal';
 import {
@@ -10,19 +10,13 @@ import {
   ROOMMATE_MAP,
 } from '@/types/RoommateTypes';
 
-import RmCategoryInput from '../inputs/roommate/RmCategoryInput';
+import CategoryInput from '../inputs/CategoryInput';
 import Heading from '../Heading';
 import { IconType } from 'react-icons';
 import { SlPeople } from 'react-icons/sl';
 import { BsHouseUp } from 'react-icons/bs';
 import { SlPencil } from 'react-icons/sl';
-import {
-  FieldValues,
-  RegisterOptions,
-  SubmitHandler,
-  UseFormRegisterReturn,
-  useForm,
-} from 'react-hook-form';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Button from '../Button';
 import RmSelfPre from '../inputs/roommate/RmSelfPre';
 import Input from '../inputs/Input';
@@ -190,10 +184,10 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
       <Heading title='카테고리를 선택해주세요 (1/6)' />
       {ROOMMATE_TYPE.map((item) => {
         return (
-          <RmCategoryInput
+          <CategoryInput
             key={item.roommateCategory[0]}
-            roommateCategory={item.roommateCategory}
-            roommateCategoryDescription={item.roommateCategoryDescription}
+            category={item.roommateCategory}
+            description={item.roommateCategoryDescription}
             icon={ICONS[item.icon as keyof typeof ICONS]}
             selected={category == item.roommateCategory}
             onClick={(category) => setCustomValue('category', category)}
@@ -336,7 +330,11 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
       {step > 1 && <Button onClick={onBack} label={'Back'} />}
       {step < 6 && <Button onClick={onNext} label={'Next'} />}
       {step == 6 && (
-        <Button onClick={handleSubmit(onSubmit)} label={'Submit'} />
+        <Button
+          disabled={isLoading}
+          onClick={handleSubmit(onSubmit)}
+          label={'Submit'}
+        />
       )}
     </div>
   );

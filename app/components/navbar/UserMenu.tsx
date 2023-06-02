@@ -6,8 +6,8 @@ import { AiOutlineMenu } from 'react-icons/ai';
 import { IoCloseSharp } from 'react-icons/io5';
 import useLoginModal from '../hooks/useLoginModal';
 import Avatar from '../Avatar';
-import { signOut } from 'next-auth/react';
 import useRoommateRegisterModal from '../hooks/useRoommateRegisterModal';
+import useRentRegisterModal from '../hooks/useRentRegisterModal';
 
 interface User {
   email?: string | null | undefined;
@@ -20,6 +20,7 @@ interface UserMenuProps {
 }
 
 const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
+  const rentRegisterModal = useRentRegisterModal();
   const roommateRegisterModal = useRoommateRegisterModal();
   const loginModal = useLoginModal();
   const [isOpen, setIsOpen] = useState(loginModal.isOpen);
@@ -32,31 +33,6 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
     setIsOpen(false);
   }, []);
 
-  // return !currentUser ? (
-  //   <div>
-  //     <div
-  //       onClick={tempSessionFunction}
-  //       className='text-lg cursor-pointer font-light hover:text-[#EC662A] hover:font-semibold'
-  //     >
-  //       간편 로그인 하기
-  //     </div>
-  //     {/* <button onClick={() => signOut()}>temp logout</button> */}
-  //   </div>
-  // ) : (
-  //   <div className='relative'>
-  //     <div
-  //       onClick={toggleOpen}
-  //       className='flex flex-row gap-2 justify-center items-center py-2 px-4 border border-neutral-600 rounded-full cursor-pointer hover:shadow-md transition'
-  //     >
-  //       <AiOutlineMenu size={24} color='neutral-600' />
-  //       <div className='hidden md:block'>
-  //         <Avatar imgsrc={currentUser?.image} />
-  //       </div>
-  //     </div>
-  //     {isOpen && <UserMenuWithUser toggleSession={toggleUserSession} />}
-  //   </div>
-  // );
-  // TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY
   return !currentUser ? (
     <div>
       <div
@@ -84,12 +60,11 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
       {isOpen && (
         <UserMenuWithUser
           toggleSession={toggleUserSession}
+          rentModalOpen={rentRegisterModal.onOpen}
           roommateModalOpen={roommateRegisterModal.onOpen}
         />
       )}
     </div>
   );
-
-  // TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY
 };
 export default UserMenu;

@@ -6,17 +6,25 @@ import UserMenuItem from './UserMenuItem';
 interface UserMenuWithUserProps {
   toggleSession: () => void;
   roommateModalOpen: () => void;
+  rentModalOpen: () => void;
 }
 
 const UserMenuWithUser: React.FC<UserMenuWithUserProps> = ({
   toggleSession,
   roommateModalOpen,
+  rentModalOpen,
 }) => {
   return (
     <div className='absolute rounded-xl shadow-md border-[1px] border-neutral-600 w-[50vw] md:w-[180px] bg-white overflow-hidden right-0 top-16 md:top-12 text-md z-20'>
       <UserMenuItem mobileVisible label='렌트 찾기' onClick={() => {}} />
       <UserMenuItem mobileVisible label='룸메 찾기' onClick={() => {}} />
-      <UserMenuItem label='렌트찾기 등록하기' onClick={() => {}} />
+      <UserMenuItem
+        label='렌트찾기 등록하기'
+        onClick={() => {
+          rentModalOpen();
+          toggleSession();
+        }}
+      />
       <UserMenuItem
         label='룸메찾기 등록하기'
         onClick={() => {

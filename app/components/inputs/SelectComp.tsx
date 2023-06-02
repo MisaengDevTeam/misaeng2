@@ -18,9 +18,9 @@ const SelectComp: React.FC<SelectCompProps> = ({
     <div>
       <Select
         placeholder={placeholder}
-        isClearable
         options={options}
         isSearchable={false}
+        isClearable={false}
         onChange={(value) => onChange(value.value)}
         classNames={{
           control: () => `${small ? 'p-1' : 'p-3'} border-2`,
