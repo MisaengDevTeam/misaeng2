@@ -66,7 +66,7 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
       roomtype: '',
       price: 0,
       length: '',
-      movedate: '',
+      movedate: new Date().toString(),
       description: '',
       본인성별: '',
       본인연령대: '',

@@ -5,7 +5,7 @@ import Modal from './Modal';
 import useRentRegisterModal from '../hooks/useRentRegisterModal';
 import { useState } from 'react';
 import Button from '../Button';
-import { FieldValues, useForm } from 'react-hook-form';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import RentModalCategory from './rent/RentModalCategory';
 import RentModalRoomInfo from './rent/RentModalRoomInfo';
 import RentModalMap from './rent/RentModalMap';
@@ -56,7 +56,7 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
       feature: [],
       uid: '',
       bid: '',
-      movedate: '',
+      movedate: new Date().toString(),
       email: '',
       phone: '',
       kakaoId: '',
@@ -64,6 +64,10 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
   });
 
   const category = watch('category');
+  const address = watch('address');
+  const movedate = watch('movedate');
+  const amenity = watch('amenity');
+  const feature = watch('feature');
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -84,6 +88,29 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
     setStep(newStep);
   };
 
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    console.log(data);
+    // if (step != ROOMMATE_REGISTER_STEP.CONTACT) {
+    //   return null;
+    // }
+    // setIsLoading(true);
+    // axios
+    //   .post(`/api/roommateRegister`, data)
+    //   .then((response) => {
+    //     toast.success('룸메이트 리스팅이 등록되었습니다!');
+    //     setStep(ROOMMATE_REGISTER_STEP.CATEGORY);
+    //     roommateRegisterModal.onClose();
+    //     reset();
+    //   })
+    //   .catch((error) => {
+    //     toast.error(`Something went wrong`);
+    //     console.log(error);
+    //   })
+    //   .finally(() => {
+    //     setIsLoading(false);
+    //   });
+  };
+
   const bodyContent = (step: number) => {
     switch (step) {
       case 1:
@@ -95,7 +122,7 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
           <RentModalRoomInfo
             register={register}
             errors={errors}
-            onChange={() => {}}
+            onChange={(subcat, value) => setCustomValue(subcat, value)}
           />
         );
       case 3:
@@ -103,11 +130,19 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
           <RentModalMap
             register={register}
             errors={errors}
-            onChange={() => {}}
+            onChange={(subcat, value) => setCustomValue(subcat, value)}
           />
         );
       case 4:
-        return <RentModalAmenity />;
+        return (
+          <RentModalAmenity
+            register={register}
+            errors={errors}
+            amenity={amenity}
+            feature={feature}
+            onChange={(subcat, value) => setCustomValue(subcat, value)}
+          />
+        );
       case 5:
         return <RentModalPicture />;
       case 6:
@@ -125,10 +160,15 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
       {step == 6 && (
         <Button
           disabled={isLoading}
-          onClick={
-            () => {}
-            // handleSubmit(onSubmit)
-          }
+          onClick={() => {
+            console.log('submit');
+            console.log(category);
+            console.log(address);
+            console.log(movedate);
+            console.log(amenity);
+            console.log(feature);
+            // handleSubmit(onSubmit);
+          }}
           label={'Submit'}
         />
       )}

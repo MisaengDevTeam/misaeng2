@@ -16,32 +16,17 @@ interface RentModalMapProps {
   errors: FieldValues;
 }
 
-// const searchGeocoding = async () => {
-//   const modifiedAddress = capitalizeFirstLetters(`${address.street} ${address.city} ${address.state.toUpperCase()} ${address.zip}`)
-
-//   const response = await fetch(`${API.BASE_URL}${API.THRID_API_GEOCODE}${encodeURIComponent(modifiedAddress)}`)
-//   if (!response.ok) {
-//     throw new Error('An error occurred while fetching the data')
-//   }
-//   const data = await response.json()
-
-//   setViewport({...viewport, latitude: data.features[0].geometry.coordinates[1], longitude: data.features[0].geometry.coordinates[0]})
-
-//   return data
-// }
-
 const RentModalMap: React.FC<RentModalMapProps> = ({
   onChange,
   register,
   errors,
 }) => {
   const [coordinate, setCoordinate] = useState<[number, number]>([
-    -73.948529, 40.7653643,
+    -74.0085514, 40.7127543,
   ]);
   const [address, setAddress] = useState<string | null>(null);
 
   const handleAddress = useCallback(() => {
-    // console.log(address);
     if (address) {
       axios
         .post(`/api/geocode`, { address })
@@ -50,6 +35,8 @@ const RentModalMap: React.FC<RentModalMapProps> = ({
             res.data.features[0].geometry.coordinates[0],
             res.data.features[0].geometry.coordinates[1],
           ]);
+
+          onChange('address', res.data.features[0].place_name);
         })
         .catch((error) => {
           toast.error(`Address error`);
@@ -57,7 +44,7 @@ const RentModalMap: React.FC<RentModalMapProps> = ({
         .finally(() => {});
     }
     return null;
-  }, [address]);
+  }, [address, onChange]);
 
   return (
     <div>
@@ -75,13 +62,18 @@ const RentModalMap: React.FC<RentModalMapProps> = ({
               errors={errors}
               length={40}
               rentmap
-              onChange={(e) =>
+              onEnter={(e) => {
+                if (e.key === 'Enter') {
+                  handleAddress();
+                }
+              }}
+              onChange={(e) => {
                 setAddress(
                   encodeURIComponent(
                     capitalizeFirstLetters(e.currentTarget.value)
                   )
-                )
-              }
+                );
+              }}
             />
           </div>
           <div className='w-[20%] h-[60px]'>
