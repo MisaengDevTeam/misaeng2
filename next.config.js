@@ -10,6 +10,7 @@ const nextConfig = {
       'misaeng.s3.amazonaws.com',
       'k.kakaocdn.net',
       'picsum.photos',
+      'res.cloudinary.com',
     ],
   },
 };

@@ -34,7 +34,7 @@ const RentModalRoomInfo: React.FC<RentModalRoomInfoProps> = ({
           length={32}
           register={register}
           errors={errors}
-          onChange={(value) => onChange('title', value)}
+          onChange={(e) => onChange('title', e.currentTarget.value)}
         />
       </div>
       <div className='grid grid-cols-2 gap-4'>
@@ -45,7 +45,7 @@ const RentModalRoomInfo: React.FC<RentModalRoomInfoProps> = ({
           maxNumber={15000}
           register={register}
           errors={errors}
-          onChange={(value) => onChange('price', value)}
+          onChange={(e) => onChange('price', e.currentTarget.value)}
           formatPrice
         />
         <SelectComp

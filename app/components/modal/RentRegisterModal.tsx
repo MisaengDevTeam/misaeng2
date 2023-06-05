@@ -12,6 +12,8 @@ import RentModalMap from './rent/RentModalMap';
 import RentModalAmenity from './rent/RentModalAmenity';
 import RentModalPicture from './rent/RentModalPicture';
 import RentModalContact from './rent/RentModalContact';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 interface RentRegisterModalProps {}
 
@@ -54,10 +56,11 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
       pictures: [],
       amenity: [],
       feature: [],
-      uid: '',
+      coordinate: [],
+      uid: currentUser?.id,
       bid: '',
       movedate: new Date().toString(),
-      email: '',
+      email: currentUser?.email,
       phone: '',
       kakaoId: '',
     },
@@ -68,6 +71,7 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
   const movedate = watch('movedate');
   const amenity = watch('amenity');
   const feature = watch('feature');
+  const pictures = watch('pictures');
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -89,26 +93,26 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
   };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
     // if (step != ROOMMATE_REGISTER_STEP.CONTACT) {
     //   return null;
     // }
-    // setIsLoading(true);
-    // axios
-    //   .post(`/api/roommateRegister`, data)
-    //   .then((response) => {
-    //     toast.success('룸메이트 리스팅이 등록되었습니다!');
-    //     setStep(ROOMMATE_REGISTER_STEP.CATEGORY);
-    //     roommateRegisterModal.onClose();
-    //     reset();
-    //   })
-    //   .catch((error) => {
-    //     toast.error(`Something went wrong`);
-    //     console.log(error);
-    //   })
-    //   .finally(() => {
-    //     setIsLoading(false);
-    //   });
+    setIsLoading(true);
+    axios
+      .post(`/api/rentRegister`, data)
+      .then((response) => {
+        toast.success('룸메이트 리스팅이 등록되었습니다!');
+        console.log(response);
+        setStep(RENT_REGISTER_STEP.CATEGORY);
+        rentRegisterModal.onClose();
+        reset();
+      })
+      .catch((error) => {
+        toast.error(`Something went wrong`);
+        console.log(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const bodyContent = (step: number) => {
@@ -144,9 +148,21 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
           />
         );
       case 5:
-        return <RentModalPicture />;
+        return (
+          <RentModalPicture
+            imageSrc={pictures}
+            onChange={(value) => setCustomValue('pictures', value)}
+          />
+        );
       case 6:
-        return <RentModalContact />;
+        return (
+          <RentModalContact
+            register={register}
+            errors={errors}
+            onChange={(subcat, value) => setCustomValue(subcat, value)}
+            currentUser={currentUser}
+          />
+        );
 
       default:
         return 'Error';
@@ -160,15 +176,7 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
       {step == 6 && (
         <Button
           disabled={isLoading}
-          onClick={() => {
-            console.log('submit');
-            console.log(category);
-            console.log(address);
-            console.log(movedate);
-            console.log(amenity);
-            console.log(feature);
-            // handleSubmit(onSubmit);
-          }}
+          onClick={handleSubmit(onSubmit)}
           label={'Submit'}
         />
       )}

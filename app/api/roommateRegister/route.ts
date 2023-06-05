@@ -24,6 +24,7 @@ export async function POST(request: Request) {
     상대흡연여부,
     city,
     district,
+    email,
     userId: uid,
   } = body;
 
@@ -47,9 +48,9 @@ export async function POST(request: Request) {
     상대흡연여부,
     city,
     district,
+    email,
     uid,
   };
-  console.log(body);
 
   // const user = await prisma.roommateListing.create({
   //   data: {

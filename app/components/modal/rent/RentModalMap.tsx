@@ -9,6 +9,7 @@ import Button from '../../Button';
 import { capitalizeFirstLetters } from '@/app/lib/addressFormatter';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import useGoogleMaps from '../../hooks/useGoogleMaps';
 
 interface RentModalMapProps {
   onChange: (subcat: string, value: any) => void;
@@ -25,6 +26,11 @@ const RentModalMap: React.FC<RentModalMapProps> = ({
     -74.0085514, 40.7127543,
   ]);
   const [address, setAddress] = useState<string | null>(null);
+  const [nearbyStations, setNearbyStations] = useState(null);
+  const [linesOneKm, setLinesOneKm] = useState([]);
+  const googleMaps = useGoogleMaps(
+    `${process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY}`
+  );
 
   const handleAddress = useCallback(() => {
     if (address) {
@@ -37,6 +43,11 @@ const RentModalMap: React.FC<RentModalMapProps> = ({
           ]);
 
           onChange('address', res.data.features[0].place_name);
+          onChange('coordinate', [
+            res.data.features[0].geometry.coordinates[0],
+            res.data.features[0].geometry.coordinates[1],
+          ]);
+          console.log(res);
         })
         .catch((error) => {
           toast.error(`Address error`);
