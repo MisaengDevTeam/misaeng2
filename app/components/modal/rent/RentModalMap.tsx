@@ -207,7 +207,7 @@ const RentModalMap: React.FC<RentModalMapProps> = ({
           </div>
         </div>
         <div className='flex items-center justify-center h-full bg-neutral-400 rounded-lg'>
-          <Map initCoordinate={initCoordinate} />
+          <Map initCoordinate={initCoordinate} showRange />
         </div>
       </div>
     </div>

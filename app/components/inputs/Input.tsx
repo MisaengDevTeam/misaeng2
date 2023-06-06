@@ -19,6 +19,7 @@ interface InputProps {
   rentmap?: boolean;
   onChange?: (value: any) => void;
   onEnter?: (value: any) => void;
+  small?: boolean;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -36,6 +37,7 @@ const Input: React.FC<InputProps> = ({
   formatPrice,
   rentmap,
   onEnter,
+  small,
 }) => {
   return (
     <div className='w-full relative'>
@@ -58,6 +60,7 @@ const Input: React.FC<InputProps> = ({
         onChange={onChange}
         onKeyPress={onEnter}
         className={`peer w-full p-4 pt-6 font-light bg-white border-2 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed
+        ${small ? `py-2 px-0` : `p-4 pt-6`}
         ${rentmap ? 'h-[53px]' : 'h-[62px]'}
         ${formatPrice ? 'pl-9' : 'pl-4'}
         ${errors[id] ? 'border-rose-500' : 'border-neutral-300'}
