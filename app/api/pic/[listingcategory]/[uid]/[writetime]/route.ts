@@ -28,17 +28,12 @@ interface IParams {
 }
 
 export async function POST(request: Request, { params }: { params: IParams }) {
-  // const body = await request.json();
-
-  // const { pic } = body;
-
   const { listingcategory, uid, writetime } = params;
 
   const imageName = `${listingcategory}/${uid}/${writetime}/${uuidv4().toString()}`;
   const option = {
     Bucket: bucketName,
     Key: imageName,
-    // body: pic,
   };
   await s3client.send(new PutObjectCommand(option));
   const command = new PutObjectCommand(option);
@@ -47,25 +42,9 @@ export async function POST(request: Request, { params }: { params: IParams }) {
     const signedUrl = await getSignedUrl(s3client, command, {
       expiresIn: 60 * 60,
     });
-    console.log(signedUrl);
     return NextResponse.json({ signedUrl });
-
-    // res.json({ signedUrl })
   } catch (err) {
     console.error(err);
     return null;
-    // next(err);
   }
-
-  // try {
-  //   const command = new GetObjectCommand({
-  //     Bucket: bucketName,
-  //     Key: imageName,
-  //   });
-  //   const url = await getSignedUrl(s3client, command, { expiresIn: 3600 });
-  // } catch {}
-
-  // const data = await s3client.send(command);
-
-  // return NextResponse.json({ signedUrl });
 }

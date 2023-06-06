@@ -87,7 +87,7 @@ const RentModalPicture: React.FC<RentModalPictureProps> = ({
           사진 업로드
         </label>
         {pictures.length > 0
-          ? `총 ${pictures.length}개의 사진이 선택되었습니다. 드래그로 사진 순서를 변경하여 주시기 바랍니다.`
+          ? `총 ${pictures.length}개의 사진이 선택되었습니다. 드래그로 사진 순서를 변경하여 주시기 바랍니다. (사진 순서 변경은 모바일로 아직 불가능합니다.)`
           : `최대 12개의 사진까지 업로드가 가능합니다.`}
         <input
           ref={fileRef}

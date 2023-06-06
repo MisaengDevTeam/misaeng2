@@ -71,19 +71,19 @@ model RentListing {
   buildingId String @db.ObjectId
   category String
   title String
-  bedCount Int
-  bathCount Int
+  bedCount String
+  bathCount String
   price Int
   description String
   address String
   unit String
   imageSrc String[]
-  moveDate DateTime
+  moveDate String
   length String
-  utility Boolean
-  broker Boolean
+  utility String
+  broker String
   createdAt DateTime @default(now())
-  updatedAt DateTime?
+  updatedAt String
   amenity String[]
   feature String[]
   contact String[]

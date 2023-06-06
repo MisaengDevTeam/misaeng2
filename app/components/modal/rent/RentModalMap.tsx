@@ -133,7 +133,6 @@ const RentModalMap: React.FC<RentModalMapProps> = ({
 
           axios
             .post(`/api/building`, { newBid, uniqueStations })
-            .then((res) => console.log(res))
             .catch((error) => console.log(error));
         }
       });

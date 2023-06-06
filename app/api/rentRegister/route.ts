@@ -17,116 +17,59 @@ export async function POST(request: Request) {
     pictures,
     amenity,
     feature,
+    uid,
     bid,
+    utility,
     movedate,
-    email,
-    coordinate,
-    neighborhoodOne,
-    neighborhoodTwo,
     phone,
     kakaoId,
-    uid,
+    writeTime,
+    updateTime,
   } = body;
 
-  // const neighborhood = await prisma.zip.findFirst({
-  //   where: {
-  //     zipcode: address.split(', ')[address.length - 2],
-  //   },
-  // });
+  const listingCheck = await prisma.rentListing.findFirst({
+    where: {
+      buildingId: bid,
+      unit,
+    },
+  });
 
-  // const building = await prisma.building.findFirst({
-  //   where: {
-  //     address: address,
-  //   },
-  // });
+  const userCheck = await prisma.user.findFirst({
+    where: {
+      id: uid,
+    },
+  });
 
-  // if (building) {
-  //   bid = building.id;
-  // } else {
-  //   const newBuilding = await prisma.building.create({
-  //     data: {
-  //       company: '',
-  //       address: address,
-  //       coordinate: coordinate,
-  //       neighborhoodOne: '',
-  //       neighborhoodTwo: '',
-  //       subwayOneKm: [],
-  //     },
-  //   });
-  //   bid = newBuilding.id;
-  // }
+  let rentListing;
 
-  const rentListing = {
-    title,
-    description,
-    price,
-    bed,
-    bath,
-    address,
-    unit,
-    category,
-    bfee,
-    pictures,
-    amenity,
-    feature,
-    bid,
-    movedate,
-    coordinate,
-    neighborhoodOne,
-    neighborhoodTwo,
-    email,
-    phone,
-    kakaoId,
-    uid,
-  };
-
-  // const resListing = {
-  //   category,
-  //   roomtype,
-  //   price,
-  //   length,
-  //   movedate,
-  //   description,
-  //   본인성별,
-  //   본인연령대,
-  //   본인학생,
-  //   본인반려동물,
-  //   본인흡연여부,
-  //   본인MBTI,
-  //   상대성별,
-  //   상대연령대,
-  //   상대학생,
-  //   상대반려동물,
-  //   상대흡연여부,
-  //   city,
-  //   district,
-  //   uid,
-  // };
-  // console.log(body);
-
-  // const user = await prisma.roommateListing.create({
-  //   data: {
-  //     userId String @db.ObjectId
-  //     category String
-  //     city String
-  //     price Int
-  //     roomType String
-  //     moveDate DateTime?
-  //     length String
-  //     utility Boolean
-  //     description String
-  //     amenity String[]
-  //     feature String[]
-  //     imageSrc String[]
-  //     ownerPre String[]
-  //     roommatePre String[]
-  //     coordinate Int[]
-  //     contact String[]
-  //     district String
-  //     createdAt DateTime @default(now())
-  //     updatedAt DateTime?
-  //   },
-  // });
+  if (!listingCheck) {
+    await prisma.rentListing
+      .create({
+        data: {
+          userId: uid,
+          buildingId: bid,
+          category,
+          title,
+          bedCount: bed,
+          bathCount: bath,
+          price: parseInt(price),
+          description,
+          address,
+          unit,
+          imageSrc: pictures,
+          moveDate: movedate,
+          length: '',
+          utility,
+          broker: bfee,
+          amenity,
+          feature,
+          updatedAt: writeTime,
+          contact: [userCheck?.email, phone, kakaoId],
+        },
+      })
+      .then((res) => (rentListing = res))
+      .catch((error) => console.log(error));
+  }
 
   return NextResponse.json(rentListing);
 }

@@ -33,6 +33,7 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
 
   const { data: session } = useSession();
   const currentUser = session?.user;
+  const uid = currentUser?.id;
 
   const rentRegisterModal = useRentRegisterModal();
 
@@ -58,7 +59,7 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
       amenity: [],
       feature: [],
       coordinate: [],
-      uid: currentUser?.id,
+      uid: uid,
       bid: '',
       utility: '',
       neighborhoodOne: '',
@@ -163,7 +164,7 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
     data.pictures = pictureURL;
 
     axios
-      .post(`/api/rentRegister`, data)
+      .post(`/api/rentRegister`, { ...data, uid: uid })
       .then((response) => {
         toast.success('룸메이트 리스팅이 등록되었습니다!');
         console.log(response);
