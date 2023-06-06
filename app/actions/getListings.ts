@@ -18,7 +18,7 @@ export const getListings = async () => {
         return result;
       }, {} as { [key: string]: RentListing[] });
 
-    console.log(groupedMapListings);
+    // console.log(groupedMapListings);
 
     const safeListings = mapListings.map((list) => ({
       ...list,

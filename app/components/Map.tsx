@@ -76,7 +76,7 @@ const Map: React.FC<MapProps> = ({
     }
   }, [initCoordinate, showRange]);
   return (
-    <div className={`w-${width} h-${height}`}>
+    <div className={`w-${width} h-${height} z-15`}>
       <div className='map-container rounded-lg' ref={mapContainer} />
     </div>
   );

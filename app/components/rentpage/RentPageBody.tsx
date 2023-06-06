@@ -3,6 +3,7 @@
 import { RentListing } from '@prisma/client';
 import Image from 'next/image';
 import Map from '../Map';
+import { useState } from 'react';
 
 interface RentPageBodyProps {
   listings: RentListing[];
@@ -13,19 +14,34 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
   listings,
   groupedMapListings,
 }) => {
+  const [isListingOn, setIsListingOn] = useState<boolean>(false);
   return (
-    <div className='flex flex-row'>
-      <div className='w-[50%] xl:w-[65%] h-[70vh]'>
+    <div className='relative flex flex-row'>
+      <div
+        className={`relative ${
+          isListingOn ? 'hidden' : 'flex'
+        } w-full sm:w-[50%] xl:w-[65%] h-[70vh]`}
+      >
         <Map initCoordinate={[-74.0085514, 40.7127503]} height='[70vh]' />
       </div>
-      <div className='w-[50%] xl:w-[35%] h-[70vh] flex flex-col'>
+      <div
+        className={`sm:relative sm:flex w-full sm:w-[50%] xl:w-[35%] sm:h-[70vh] flex flex-col bg-white
+      ${isListingOn ? 'relative h-full' : 'absolute h-1/2 bottom-0'}
+      `}
+      >
+        <div
+          onClick={() => setIsListingOn(!isListingOn)}
+          className={`flex sm:hidden justify-center items-center w-full py-2 border-[1px] border-neutral-500`}
+        >
+          {isListingOn ? `리스팅 닫기` : `리스팅 더보기`}
+        </div>
         <div className='flex flex-row justify-between items-center p-4'>
           <div>Total {listings.length} listings</div>
           <div className='cursor-pointer bg-[#EC662A] text-white py-1 px-4 rounded-lg'>
             전체 리스팅 다시보기
           </div>
         </div>
-        <div className='grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3 p-4 pt-0 overflow-x-hidden	overflow-y-scroll	gap-2'>
+        <div className='grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3 p-4 pt-0 overflow-x-hidden	overflow-y-scroll	gap-2'>
           {listings.map((list) => (
             <div
               key={list.title}

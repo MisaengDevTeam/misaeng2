@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { getListings } from '../actions/getListings';
 import EmptyState from '../components/EmptyState';
 import Searchbar from '../components/Searchbar';
@@ -11,9 +12,9 @@ const RentPage = async () => {
     createdAt: new Date(listing.createdAt),
   }));
 
-  console.log(listings);
+  // console.log(listings);
 
-  console.log(groupedMapListings);
+  // console.log(groupedMapListings);
 
   return (
     <div>
