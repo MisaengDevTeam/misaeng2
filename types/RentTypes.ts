@@ -20,6 +20,7 @@ export const ROOM_TYPE = {
   bedroom: ['Studio', '1 Bedroom', '2 Bedroom', '3 Bedroom', '4+ Bedroom'],
   bathroom: ['Share', '1 Bathroom', '2 Bathroom', '3+ Bathroom'],
   bfee: ['중개비 있음', '중개비 없음'],
+  utility: ['유틸리티 포함', '유틸리티 별도'],
 };
 
 export const AMENITY = [

@@ -80,7 +80,7 @@ const RentModalMap: React.FC<RentModalMapProps> = ({
         if (status === googleMaps.places.PlacesServiceStatus.OK) {
           const stationPromises = results.map(async (station: any) => {
             const name = station.name;
-            console.log(name);
+
             const distance = getDistanceBetweenCoordinates(
               station.geometry.location.lat(),
               station.geometry.location.lng(),

@@ -14,6 +14,7 @@ import RentModalPicture from './rent/RentModalPicture';
 import RentModalContact from './rent/RentModalContact';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import validateInput from '@/app/lib/validateInput';
 
 interface RentRegisterModalProps {}
 
@@ -59,16 +60,25 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
       coordinate: [],
       uid: currentUser?.id,
       bid: '',
+      utility: '',
       neighborhoodOne: '',
       neighborhoodTwo: '',
       movedate: new Date().toString(),
       email: currentUser?.email,
       phone: '',
       kakaoId: '',
+      writeTime: '',
+      updateTime: '',
     },
   });
 
   const category = watch('category');
+  const title = watch('title');
+  const price = watch('price');
+  const bfee = watch('bfee');
+  const bed = watch('bed');
+  const bath = watch('bath');
+  const description = watch('description');
   const address = watch('address');
   const movedate = watch('movedate');
   const amenity = watch('amenity');
@@ -91,16 +101,67 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
   };
 
   const onNext = () => {
+    if (step == 1 && validateInput([category])) {
+      toast.error('카테고리를 선택해주세요');
+      return null;
+    }
+    if (
+      step == 2 &&
+      validateInput([title, price, bfee, movedate, bed, bath, description])
+    ) {
+      toast.error('모든 항목을 선택/작성 해주세요');
+      return null;
+    }
+
+    if (step == 3 && validateInput([bid])) {
+      toast.error('주소를 입력하시고 검색을 통해 지도를 확인해주세요');
+      return null;
+    }
+
+    if (step == 5 && validateInput([pictures])) {
+      toast.error('사진을 업로드해주세요');
+      return null;
+    }
+
     const newStep = step == 6 ? 6 : step + 1;
 
     setStep(newStep);
   };
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    // if (step != ROOMMATE_REGISTER_STEP.CONTACT) {
-    //   return null;
-    // }
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const writeTime = new Date().toISOString();
+    setCustomValue('writeTime', writeTime);
+
+    const pictureURL: string[] = await Promise.all(
+      pictures.map(async (pic: string) => {
+        const resPic = await fetch(pic);
+        const blobPic = await resPic.blob();
+
+        const url = await axios.post(
+          `/api/pic/rentImage/${currentUser?.id}/${writeTime}`
+        );
+
+        const response = await fetch(url.data.signedUrl, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+          body: blobPic,
+        });
+
+        const resultPicture = response.url.split('?')[0];
+
+        return resultPicture;
+      })
+    );
+
+    setCustomValue('pictures', pictureURL);
+
     setIsLoading(true);
+
+    // replace data.pictures with pictureURL before calling the post method
+    data.pictures = pictureURL;
+
     axios
       .post(`/api/rentRegister`, data)
       .then((response) => {
