@@ -5,10 +5,10 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { useEffect, useRef } from 'react';
 
 interface MapProps {
-  coordinate: [number, number];
+  initCoordinate: [number, number];
 }
 
-const Map: React.FC<MapProps> = ({ coordinate }) => {
+const Map: React.FC<MapProps> = ({ initCoordinate }) => {
   const mapContainer = useRef<any>(null);
   const map = useRef<mapboxgl.Map | any>(null);
   mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_GL_ACCESS_TOKEN ?? '';
@@ -17,7 +17,7 @@ const Map: React.FC<MapProps> = ({ coordinate }) => {
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/light-v11',
       pitchWithRotate: false,
-      center: coordinate,
+      center: initCoordinate,
       zoom: 12,
     });
 
@@ -31,15 +31,19 @@ const Map: React.FC<MapProps> = ({ coordinate }) => {
     map.current &&
       map.current.on('load', () => {
         const popUp = new Popup({ closeButton: false, anchor: 'left' }).setHTML(
-          `<div class="popup">You click here: <br/>[${coordinate.toString()}]</div>`
+          `<div class="popup">You click here: <br/>[${initCoordinate.toString()}]</div>`
         );
 
         new Marker(customMarker)
-          .setLngLat(coordinate)
+          .setLngLat(initCoordinate)
           .setPopup(popUp)
           .addTo(map.current);
 
-        map.current.flyTo({ center: coordinate, essential: true, zoom: 13 });
+        map.current.flyTo({
+          center: initCoordinate,
+          essential: true,
+          zoom: 13,
+        });
       });
 
     // Update the size of the custom marker based on the zoom level
@@ -55,7 +59,7 @@ const Map: React.FC<MapProps> = ({ coordinate }) => {
 
     // Add zoom event listener to update marker size on zoom
     map.current.on('zoom', updateMarkerSize);
-  }, [coordinate]);
+  }, [initCoordinate]);
   return (
     <div className='w-full h-[300px]'>
       <div className='map-container rounded-lg' ref={mapContainer} />

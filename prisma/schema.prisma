@@ -127,7 +127,7 @@ model Building {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   company String
   address String
-  coordinate Int[]
+  coordinate Float[]
   neighborhoodOne String
   neighborhoodTwo String
   subwayOneKm String[]
@@ -143,6 +143,7 @@ model BuildingToSubway {
   buildingId String @db.ObjectId
   name   String
   distance Float
+  lines String[]
 
   building Building @relation(fields: [buildingId], references: [id], onDelete: Cascade)
 }

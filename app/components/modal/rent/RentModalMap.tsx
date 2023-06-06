@@ -4,58 +4,174 @@ import { FieldValues, UseFormRegister } from 'react-hook-form';
 import Heading from '../../Heading';
 import Map from '../../Map';
 import Input from '../../inputs/Input';
-import { MouseEvent, useCallback, useState } from 'react';
+import { MouseEvent, useCallback, useEffect, useState } from 'react';
 import Button from '../../Button';
 import { capitalizeFirstLetters } from '@/app/lib/addressFormatter';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
-import useGoogleMaps from '../../hooks/useGoogleMaps';
+import getDistanceBetweenCoordinates from '@/app/lib/distanceCoordinates';
+
+declare const window: any;
+
+interface Station {
+  name: string;
+  distance: number;
+  lines?: string[];
+}
 
 interface RentModalMapProps {
   onChange: (subcat: string, value: any) => void;
   register: UseFormRegister<FieldValues>;
   errors: FieldValues;
+  bid: string;
+  coordinate: [number, number];
 }
 
 const RentModalMap: React.FC<RentModalMapProps> = ({
   onChange,
   register,
   errors,
+  bid,
+  coordinate,
 }) => {
-  const [coordinate, setCoordinate] = useState<[number, number]>([
+  const [googleMaps, setGoogleMaps] = useState<any>(null);
+  const [initCoordinate, setInitCoordinate] = useState<[number, number]>([
     -74.0085514, 40.7127543,
   ]);
   const [address, setAddress] = useState<string | null>(null);
-  const [nearbyStations, setNearbyStations] = useState(null);
-  const [linesOneKm, setLinesOneKm] = useState([]);
-  const googleMaps = useGoogleMaps(
-    `${process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY}`
+  const [isGood, setIsGood] = useState<boolean>(false);
+
+  useEffect(() => {
+    const onScriptLoad = () => {
+      setGoogleMaps(window.google.maps);
+    };
+
+    if (!window.google) {
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY}&libraries=places&callback=initMap`;
+
+      script.async = true;
+      script.defer = true;
+      script.onload = onScriptLoad;
+      window.initMap = onScriptLoad;
+      document.body.appendChild(script);
+      return () => {
+        document.body.removeChild(script);
+      };
+    } else {
+      onScriptLoad();
+    }
+  }, [address, bid, googleMaps]);
+
+  const googlePlace = useCallback(
+    (latitude: number, longitude: number, newBid: string) => {
+      if (!googleMaps) return;
+      const rentalUnitLocation = new googleMaps.LatLng(latitude, longitude);
+      var request = {
+        location: rentalUnitLocation,
+        radius: 1000,
+        type: 'subway_station',
+      };
+      const service = new googleMaps.places.PlacesService(
+        document.createElement('div')
+      );
+
+      service.nearbySearch(request, async (results: any, status: any) => {
+        if (status === googleMaps.places.PlacesServiceStatus.OK) {
+          const stationPromises = results.map(async (station: any) => {
+            const name = station.name;
+            console.log(name);
+            const distance = getDistanceBetweenCoordinates(
+              station.geometry.location.lat(),
+              station.geometry.location.lng(),
+              latitude,
+              longitude
+            );
+
+            let lines;
+            try {
+              lines = await axios.post(`/api/subway`, { name: station.name });
+            } catch (error) {
+              console.error(
+                `Error fetching subway lines for station ${name}:`,
+                error
+              );
+
+              return null;
+            }
+
+            return {
+              name,
+              distance,
+              lines: lines.data,
+            };
+          });
+
+          const stationsArray = await Promise.all(stationPromises);
+
+          let linesOneKm: any[] = [];
+
+          const stationsMap: Record<string, Station> = {};
+          stationsArray.forEach((station) => {
+            if (stationsMap[station.name]) {
+              const existingStation = stationsMap[station.name];
+              existingStation.distance =
+                (existingStation.distance + station.distance) / 2;
+            } else {
+              stationsMap[station.name] = station;
+            }
+            if (station.lines !== undefined) {
+              station.lines.forEach((line: string) => {
+                if (!linesOneKm.includes(line)) {
+                  linesOneKm.push(line);
+                }
+              });
+            }
+          });
+
+          const uniqueStations = Object.values(stationsMap);
+
+          axios
+            .post(`/api/building`, { newBid, uniqueStations })
+            .then((res) => console.log(res))
+            .catch((error) => console.log(error));
+        }
+      });
+    },
+    [googleMaps]
   );
 
-  const handleAddress = useCallback(() => {
+  const handleAddress = useCallback(async () => {
     if (address) {
       axios
         .post(`/api/geocode`, { address })
         .then((res) => {
-          setCoordinate([
-            res.data.features[0].geometry.coordinates[0],
-            res.data.features[0].geometry.coordinates[1],
-          ]);
+          const newCoordinate: [number, number] = [
+            res.data.mapResult.features[0].geometry.coordinates[0],
+            res.data.mapResult.features[0].geometry.coordinates[1],
+          ];
+          const newBid = res.data.newBuilding.id;
 
-          onChange('address', res.data.features[0].place_name);
-          onChange('coordinate', [
-            res.data.features[0].geometry.coordinates[0],
-            res.data.features[0].geometry.coordinates[1],
-          ]);
-          console.log(res);
+          setInitCoordinate(newCoordinate);
+          onChange('coordinate', newCoordinate);
+          onChange('bid', newBid);
+          setIsGood(true);
+
+          return { newCoordinate, newBid };
+        })
+        .then(({ newCoordinate, newBid }) => {
+          googlePlace(newCoordinate[1], newCoordinate[0], newBid);
         })
         .catch((error) => {
           toast.error(`Address error`);
         })
-        .finally(() => {});
+        .finally(() => {
+          setIsGood(false);
+        });
     }
+
     return null;
-  }, [address, onChange]);
+  }, [address, googlePlace, onChange]);
 
   return (
     <div>
@@ -92,7 +208,7 @@ const RentModalMap: React.FC<RentModalMapProps> = ({
           </div>
         </div>
         <div className='flex items-center justify-center h-full bg-neutral-400 rounded-lg'>
-          <Map coordinate={coordinate} />
+          <Map initCoordinate={initCoordinate} />
         </div>
       </div>
     </div>

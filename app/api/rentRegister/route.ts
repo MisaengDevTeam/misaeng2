@@ -21,38 +21,40 @@ export async function POST(request: Request) {
     movedate,
     email,
     coordinate,
+    neighborhoodOne,
+    neighborhoodTwo,
     phone,
     kakaoId,
     uid,
   } = body;
 
-  const neighborhood = await prisma.zip.findFirst({
-    where: {
-      zipcode: address.split(', ')[address.length - 2],
-    },
-  });
+  // const neighborhood = await prisma.zip.findFirst({
+  //   where: {
+  //     zipcode: address.split(', ')[address.length - 2],
+  //   },
+  // });
 
-  const building = await prisma.building.findFirst({
-    where: {
-      address: address,
-    },
-  });
+  // const building = await prisma.building.findFirst({
+  //   where: {
+  //     address: address,
+  //   },
+  // });
 
-  if (building) {
-    bid = building.id;
-  } else {
-    const newBuilding = await prisma.building.create({
-      data: {
-        company: '',
-        address: address,
-        coordinate: coordinate,
-        neighborhoodOne: '',
-        neighborhoodTwo: '',
-        subwayOneKm: [],
-      },
-    });
-    bid = newBuilding.id;
-  }
+  // if (building) {
+  //   bid = building.id;
+  // } else {
+  //   const newBuilding = await prisma.building.create({
+  //     data: {
+  //       company: '',
+  //       address: address,
+  //       coordinate: coordinate,
+  //       neighborhoodOne: '',
+  //       neighborhoodTwo: '',
+  //       subwayOneKm: [],
+  //     },
+  //   });
+  //   bid = newBuilding.id;
+  // }
 
   const rentListing = {
     title,
@@ -70,6 +72,8 @@ export async function POST(request: Request) {
     bid,
     movedate,
     coordinate,
+    neighborhoodOne,
+    neighborhoodTwo,
     email,
     phone,
     kakaoId,

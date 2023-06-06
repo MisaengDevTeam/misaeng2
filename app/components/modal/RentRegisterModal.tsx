@@ -59,6 +59,8 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
       coordinate: [],
       uid: currentUser?.id,
       bid: '',
+      neighborhoodOne: '',
+      neighborhoodTwo: '',
       movedate: new Date().toString(),
       email: currentUser?.email,
       phone: '',
@@ -72,6 +74,8 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
   const amenity = watch('amenity');
   const feature = watch('feature');
   const pictures = watch('pictures');
+  const bid = watch('bid');
+  const coordinate = watch('coordinate');
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -132,8 +136,10 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
       case 3:
         return (
           <RentModalMap
+            bid={bid}
             register={register}
             errors={errors}
+            coordinate={coordinate}
             onChange={(subcat, value) => setCustomValue(subcat, value)}
           />
         );
