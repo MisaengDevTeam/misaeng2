@@ -13,12 +13,15 @@ import { MapListing } from '@/types/RentTypes';
 interface RentPageBodyProps {
   listings: RentListing[];
   mapListings: MapListing;
+  setSafeListings: any;
 }
 
 const RentPageBody: React.FC<RentPageBodyProps> = ({
   listings,
   mapListings,
+  setSafeListings,
 }) => {
+  console.log(listings);
   const [isListingOn, setIsListingOn] = useState<boolean>(false);
   return (
     <div className='relative flex flex-row'>
@@ -31,6 +34,7 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
           initCoordinate={[-74.0085514, 40.7127503]}
           rentmain
           mapListings={mapListings}
+          setSafeListings={setSafeListings}
         />
       </div>
       <div

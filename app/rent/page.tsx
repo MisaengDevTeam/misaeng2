@@ -14,7 +14,7 @@ const RentPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true); // Set loading state to true before fetching data
+      setIsLoading(true);
       try {
         const response = await axios.get(`/api/rentListing/rentListing`);
         console.log(response.data);
@@ -23,7 +23,7 @@ const RentPage = () => {
       } catch (error) {
         console.error('Error fetching data', error);
       } finally {
-        setIsLoading(false); // Set loading state to false after data has been loaded
+        setIsLoading(false);
       }
     };
 
@@ -37,7 +37,13 @@ const RentPage = () => {
   return (
     <div>
       {/* <Searchbar /> */}
-      {<RentPageBody listings={safeListings} mapListings={mapListings} />}
+      {
+        <RentPageBody
+          listings={safeListings}
+          mapListings={mapListings}
+          setSafeListings={setSafeListings}
+        />
+      }
 
       {/* <EmptyState title='렌트찾기' /> */}
     </div>

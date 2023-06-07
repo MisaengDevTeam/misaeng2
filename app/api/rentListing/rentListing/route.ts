@@ -43,7 +43,6 @@ export async function GET(request: Request) {
     .toArray();
 
   const uniqueBids = new Set(rawData.map((rental) => rental.buildingId));
-  // console.log(uniqueBids);
 
   // Fetch building data for each unique bid
 
@@ -61,17 +60,10 @@ export async function GET(request: Request) {
     })
   );
 
-  // console.log(buildingData);
-
   // Create a bid to coor map and neighborhoods map for easy lookup
   const bidToCoorMap: CoorMap = {};
-  // const bidToNeighborhoodsMap = {}
   buildingData.forEach((item) => {
     bidToCoorMap[item.bid] = item.coor;
-    // bidToNeighborhoodsMap[item.bid] = {
-    //   neighborhoodOne: item.neighborhoodOne,
-    //   neighborhoodTwo: item.neighborhoodTwo,
-    // };
   });
 
   rawData.forEach((item) => {
@@ -83,11 +75,40 @@ export async function GET(request: Request) {
         buildingId,
         price: [parseInt(price)],
         coordinate: bidToCoorMap[buildingId],
-        // neighborhoodOne: bidToNeighborhoodsMap[buildingId].neighborhoodOne,
-        // neighborhoodTwo: bidToNeighborhoodsMap[buildingId].neighborhoodTwo,
       };
     }
   });
 
   return NextResponse.json({ recentListings, mapListing });
+}
+
+export async function POST(request: Request) {
+  const body = await request.json();
+  const { buildingId } = body;
+
+  const client = await mgClientPromise;
+  const rentCollection = client.db('misaeng').collection('RentListing');
+  const buildingCollection = client.db('misaeng').collection('Building');
+
+  if (buildingId) {
+    const recentListings = await rentCollection
+      .find(
+        { buildingId: new ObjectId(buildingId) },
+        {
+          projection: {
+            _id: 1,
+            buildingId: 1,
+            bedCount: 1,
+            bathCount: 1,
+            price: 1,
+            imageSrc: 1,
+            moveDate: 1,
+          },
+        }
+      )
+      .sort({ writeTime: -1 })
+      .toArray();
+    return NextResponse.json({ recentListings });
+  }
+  return NextResponse.json({});
 }

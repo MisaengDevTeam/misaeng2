@@ -2,12 +2,12 @@
 
 import mapboxgl, { Marker, Popup } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import { MapListing } from '@/types/RentTypes';
+import axios from 'axios';
 
 interface MarkerObject {
   marker: mapboxgl.Marker;
-  // popup: mapboxgl.Popup;
 }
 interface MapProps {
   initCoordinate: [number, number];
@@ -15,31 +15,42 @@ interface MapProps {
   rentmain?: boolean;
   mapListings?: MapListing;
   hasnavi?: boolean;
+  setSafeListings?: (buildingId: string) => void;
 }
 
-const Map: React.FC<MapProps> = ({
+const MapComponent = memo<MapProps>(function MapComponent({
   initCoordinate,
   showRange,
   rentmain,
   mapListings,
   hasnavi,
-}) => {
+  setSafeListings,
+}) {
   const mapContainer = useRef<any>(null);
-  const mapInstance = useRef(null);
 
   const map = useRef<mapboxgl.Map | any>(null);
   mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_GL_ACCESS_TOKEN ?? '';
 
-  const [markers, setMarkers] = useState<Record<string, MarkerObject>>({});
-
   useEffect(() => {
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/streets-v12',
-      pitchWithRotate: false,
-      center: initCoordinate,
-      zoom: 12,
-    });
+    if (!map.current) {
+      map.current = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: 'mapbox://styles/mapbox/streets-v12',
+        pitchWithRotate: false,
+        center: initCoordinate,
+        zoom: 12,
+      });
+    }
+    const getBuildingData = async (buildingId: string) => {
+      try {
+        const response = await axios.post(`/api/rentListing/rentListing`, {
+          buildingId,
+        });
+        setSafeListings?.(response.data.recentListings);
+      } catch (error) {
+      } finally {
+      }
+    };
 
     if (showRange) {
       // Add marker
@@ -78,53 +89,65 @@ const Map: React.FC<MapProps> = ({
     if (rentmain) {
       if (mapListings) {
         Object.values(mapListings).forEach((building) => {
+          // CREATE A MARKER
           const customMarker = new Image();
           customMarker.src = '/assets/icon/bicon_32.png';
           customMarker.style.width = `20px`;
           customMarker.style.height = `20px`;
-
-          new mapboxgl.Marker(customMarker)
-            .setLngLat(building.coordinate) // Set the marker's coordinates
+          customMarker.style.cursor = `pointer`;
+          const marker = new mapboxgl.Marker(customMarker)
+            .setLngLat(building.coordinate)
             .addTo(map.current);
+
+          // CREATE A POPUP
+          const alwaysVisiblePopup = new Popup({
+            className: 'custom-popup',
+            offset: [0, 0],
+            closeButton: false,
+            closeOnClick: false,
+          }).setHTML(
+            `${
+              building.price.length != 1
+                ? `<span>$${Math.round(
+                    Math.min(...building.price) / 1000
+                  )}k~</span><span>$${Math.round(
+                    Math.max(...building.price) / 1000
+                  )}k</span>`
+                : `<span>$${Math.round(building.price[0] / 1000)}k</span>`
+            }`
+          );
+          alwaysVisiblePopup.setLngLat(building.coordinate).addTo(map.current);
+
+          // CREATE A CLICK TO VIEW BUILDING LISTING
+          const getBuilding = async () => {
+            map.current.flyTo({
+              center: building.coordinate,
+              essential: true,
+              zoom: 15,
+            });
+            getBuildingData?.(building.buildingId);
+          };
+          marker.getElement().addEventListener('click', getBuilding);
+          alwaysVisiblePopup
+            .getElement()
+            .addEventListener('click', getBuilding);
         });
       }
     }
-  }, [hasnavi, initCoordinate, mapListings, rentmain, showRange]);
+  }, [
+    hasnavi,
+    initCoordinate,
+    mapListings,
+    rentmain,
+    setSafeListings,
+    showRange,
+  ]);
 
-  // useEffect(() => {
-  //   if (mapInstance.current && initCoordinate.length > 0) {
-  //     Object.values(markers).forEach((markerObj) => {
-  //       const { marker, popup } = markerObj;
-
-  //       if (
-  //         marker.getLngLat().lat === initCoordinate[1] &&
-  //         marker.getLngLat().lng === initCoordinate[0]
-  //       ) {
-  //         marker.getElement().style.width = '32px';
-  //         marker.getElement().style.height = '32px';
-  //         marker.getElement().style.zIndex = '10000';
-
-  //         // popup.getElement()?.lastChild['style'].backgroundColor = 'white';
-  //         // popup.getElement().lastChild['style'].color = '#EC662A';
-  //         // popup.getElement().lastChild.lastChild['style'].fontSize = '12px';
-  //         // popup.getElement().lastChild['style'].padding = '2px 8px';
-  //       } else {
-  //         marker.getElement().style.width = '24px';
-  //         marker.getElement().style.height = '24px';
-  //         marker.getElement().style.zIndex = '0';
-
-  //         // popup.getElement().lastChild['style'].backgroundColor = '#EC662A';
-  //         // popup.getElement().lastChild['style'].color = 'white';
-  //         // popup.getElement().lastChild.lastChild['style'].fontSize = '10px';
-  //         // popup.getElement().lastChild['style'].padding = '';
-  //       }
-  //     });
-  //   }
-  // }, [initCoordinate, markers]);
   return (
     <div className={`w-full  ${rentmain ? 'h-[70vh]' : 'h-[300px]'}`}>
       <div className='map-container rounded-lg' ref={mapContainer} />
     </div>
   );
-};
-export default Map;
+});
+
+export default MapComponent;
