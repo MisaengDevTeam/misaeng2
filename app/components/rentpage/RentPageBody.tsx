@@ -22,7 +22,7 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
           isListingOn ? 'hidden' : 'flex'
         } w-full sm:w-[50%] xl:w-[65%] h-[70vh]`}
       >
-        <Map initCoordinate={[-74.0085514, 40.7127503]} height='[70vh]' />
+        <Map initCoordinate={[-74.0085514, 40.7127503]} rentmain />
       </div>
       <div
         className={`sm:relative sm:flex w-full sm:w-[50%] xl:w-[35%] sm:h-[70vh] flex flex-col bg-white

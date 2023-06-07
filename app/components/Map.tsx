@@ -6,19 +6,11 @@ import { useEffect, useRef } from 'react';
 
 interface MapProps {
   initCoordinate: [number, number];
-  width?: string;
-  height?: string;
   showRange?: boolean;
-  rentMain?: boolean;
+  rentmain?: boolean;
 }
 
-const Map: React.FC<MapProps> = ({
-  initCoordinate,
-  width = 'full',
-  height = '[300px]',
-  showRange,
-  rentMain,
-}) => {
+const Map: React.FC<MapProps> = ({ initCoordinate, showRange, rentmain }) => {
   const mapContainer = useRef<any>(null);
   const map = useRef<mapboxgl.Map | any>(null);
   mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_GL_ACCESS_TOKEN ?? '';
@@ -76,7 +68,7 @@ const Map: React.FC<MapProps> = ({
     }
   }, [initCoordinate, showRange]);
   return (
-    <div className={`w-${width} h-${height} z-15`}>
+    <div className={`w-full  ${rentmain ? 'h-[70vh]' : 'h-[300px]'}`}>
       <div className='map-container rounded-lg' ref={mapContainer} />
     </div>
   );
