@@ -144,7 +144,9 @@ const MapComponent = memo<MapProps>(function MapComponent({
   ]);
 
   return (
-    <div className={`w-full  ${rentmain ? 'h-[70vh]' : 'h-[300px]'}`}>
+    <div
+      className={`w-full  ${rentmain ? 'h-[35vh] sm:h-[70vh]' : 'h-[300px]'}`}
+    >
       <div className='map-container rounded-lg' ref={mapContainer} />
     </div>
   );
