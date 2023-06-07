@@ -29,16 +29,25 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       disabled={disabled}
       type={type}
-      className={`relative justify-center disabled:opacity-70 disabled:cursor-not-allowed rounded-lg hover:bg-[#EC662A] hover:text-white transition w-full 
-      ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'}
-      ${disabled ? 'bg-gray-800' : 'bg-orange-500'}
-    ${outline ? 'bg-white' : 'bg-orange-500'} 
-    ${outline ? 'border-black' : 'border-orange-500'} 
-    ${outline ? 'text-black' : 'text-white'}
-    ${small ? 'py-1' : 'py-3'}
-    ${small ? 'text-sm' : 'text-md'}
-    ${small ? 'font-light' : 'font-semibold'}
-    ${small ? 'border-[1px]' : 'border-2'}`}
+      className={`relative justify-center rounded-lg hover:bg-[#EC662A] hover:text-white transition w-full 
+      ${
+        disabled
+          ? 'cursor-not-allowed bg-gray-800 opacity-70'
+          : 'cursor-pointer bg-orange-500'
+      }
+      
+    ${
+      outline
+        ? 'bg-white border-black text-black'
+        : 'bg-orange-500 border-orange-500 text-white'
+    } 
+    
+    ${
+      small
+        ? 'py-1 text-sm font-light border-[1px]'
+        : 'py-3 text-md font-semibold border-2'
+    }
+    `}
     >
       {Icon && (
         <Icon

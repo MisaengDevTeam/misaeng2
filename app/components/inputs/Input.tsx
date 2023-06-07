@@ -20,6 +20,7 @@ interface InputProps {
   onChange?: (value: any) => void;
   onEnter?: (value: any) => void;
   small?: boolean;
+  searchbar?: boolean;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -38,13 +39,16 @@ const Input: React.FC<InputProps> = ({
   rentmap,
   onEnter,
   small,
+  searchbar,
 }) => {
   return (
     <div className='w-full relative'>
       {formatPrice && (
         <BiDollar
-          size={24}
-          className='text-neutral-700 absolute top-5 left-2'
+          size={small ? 18 : 24}
+          className={`text-neutral-700 absolute left-2
+          ${small ? 'top-3.5' : 'top-5 '}
+          `}
         />
       )}
       <input
@@ -59,17 +63,24 @@ const Input: React.FC<InputProps> = ({
         type={type}
         onChange={onChange}
         onKeyPress={onEnter}
-        className={`peer w-full p-4 pt-6 font-light bg-white border-2 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed
-        ${small ? `py-2 px-0` : `p-4 pt-6`}
-        ${rentmap ? 'h-[53px]' : 'h-[62px]'}
+        className={`peer font-light bg-white border-[1px] rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed
+        ${searchbar ? `w-full sm:w-[100px]` : `w-full`}
+        ${small ? `py-0 px-0 pt-0` : `p-4 pt-6`}
+        ${small ? `h-[48px]` : rentmap ? 'h-[53px]' : 'h-[62px]'}
         ${formatPrice ? 'pl-9' : 'pl-4'}
         ${errors[id] ? 'border-rose-500' : 'border-neutral-300'}
         ${errors[id] ? 'focus:border-rose-500' : 'focus:border-black'}
         `}
       />
       <label
-        className={`absolute left-4 text-md duration-150 transform -translate-y-3 z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4
-        ${rentmap ? ' top-4' : ' top-5'}
+        className={`absolute left-4 text-md duration-150 transform -translate-y-3 z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 
+        ${
+          small
+            ? 'peer-focus:scale-0 peer-focus:-translate-y-3 top-3'
+            : rentmap
+            ? 'peer-focus:scale-75 peer-focus:-translate-y-4 top-4'
+            : 'peer-focus:scale-75 peer-focus:-translate-y-4 top-5'
+        }
         ${formatPrice ? 'left-9' : 'left-4'}
       ${errors[id] ? 'text-rose-500' : 'text-zinx-400'}`}
       >

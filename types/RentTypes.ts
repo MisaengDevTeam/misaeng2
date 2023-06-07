@@ -53,3 +53,13 @@ export const FEATURE = [
   { label: '욕조', value: 'Bathtube', icon: 'MdOutlineBathtub' },
   { label: '발코니', value: 'Balcony', icon: 'MdOutlineBalcony' },
 ];
+
+interface Building {
+  buildingId: string;
+  coordinate: [number, number];
+  price: number[];
+}
+
+export interface MapListing {
+  [key: string]: Building;
+}

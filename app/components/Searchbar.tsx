@@ -11,11 +11,12 @@ import Container from './Container';
 import SelectComp from './inputs/SelectComp';
 import { ROOM_TYPE, RENT_TYPE } from '@/types/RentTypes';
 import Input from './inputs/Input';
-import { useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import {
   MdOutlineKeyboardDoubleArrowUp,
   MdOutlineKeyboardDoubleArrowDown,
 } from 'react-icons/md';
+import Button from './Button';
 
 interface SearchbarProps {}
 
@@ -35,11 +36,11 @@ const Searchbar: React.FC<SearchbarProps> = ({}) => {
     <div className='w-full shadow-md border-b-[1px] border-neutral-300'>
       <Container>
         <div
-          className={`flex flex-col py-4 sm:flex-row justify-center gap-6 sm:flex sm:opacity-100 translate 
+          className={`flex flex-col justify-center items-center py-4 sm:flex-row gap-2 sm:gap-6 sm:flex sm:opacity-100 transition  border-b-[1px] border-neutral-300
           ${isSearchbarOpen ? 'flex opacity-100' : 'hidden opacity-0'}
           `}
         >
-          <div className='flex flex-row gap-4'>
+          <div className='flex flex-row gap-4 w-[80%] sm:w-auto'>
             <Input
               id={'min'}
               type='number'
@@ -49,6 +50,7 @@ const Searchbar: React.FC<SearchbarProps> = ({}) => {
               length={5}
               formatPrice
               small
+              searchbar
             />
             <Input
               id={'max'}
@@ -59,35 +61,48 @@ const Searchbar: React.FC<SearchbarProps> = ({}) => {
               errors={errors}
               formatPrice
               small
+              searchbar
             />
           </div>
-          <SelectComp
-            placeholder={'렌트 카테고리'}
-            options={RENT_TYPE.map((item) => ({
-              label: item.rentCategory,
-              value: item.rentCategory,
-            }))}
-            onChange={() => {}}
-            small
-          />
-          <SelectComp
-            placeholder={'침실 수'}
-            options={ROOM_TYPE.bedroom.map((value) => ({
-              value,
-              label: value,
-            }))}
-            onChange={() => {}}
-            small
-          />
-          <SelectComp
-            placeholder={'욕실 수'}
-            options={ROOM_TYPE.bathroom.map((value) => ({
-              value,
-              label: value,
-            }))}
-            onChange={() => {}}
-            small
-          />
+          <div className='w-[80%] sm:w-auto'>
+            <SelectComp
+              placeholder={'렌트 카테고리'}
+              options={RENT_TYPE.map((item) => ({
+                label: item.rentCategory,
+                value: item.rentCategory,
+              }))}
+              onChange={() => {}}
+              small
+            />
+          </div>
+          <div className='w-[80%] sm:w-auto'>
+            <SelectComp
+              placeholder={'침실 수'}
+              options={ROOM_TYPE.bedroom.map((value) => ({
+                value,
+                label: value,
+              }))}
+              onChange={() => {}}
+              small
+            />
+          </div>
+          <div className='w-[80%] sm:w-auto'>
+            <SelectComp
+              placeholder={'욕실 수'}
+              options={ROOM_TYPE.bathroom.map((value) => ({
+                value,
+                label: value,
+              }))}
+              onChange={() => {}}
+              small
+            />
+          </div>
+          <div className='w-[80%] sm:w-auto'>
+            <Button
+              onClick={() => setIsSearchbarOpen(!isSearchbarOpen)}
+              label={'리스팅 검색하기'}
+            />
+          </div>
         </div>
         <div
           onClick={() => setIsSearchbarOpen(!isSearchbarOpen)}
@@ -95,12 +110,12 @@ const Searchbar: React.FC<SearchbarProps> = ({}) => {
         >
           {isSearchbarOpen ? (
             <div className='flex flex-row items-center'>
-              <span>검색창 닫기</span>{' '}
+              <span>클릭하여 검색창 닫기</span>{' '}
               <MdOutlineKeyboardDoubleArrowUp size={20} />
             </div>
           ) : (
             <div className='flex flex-row w-full h-full items-center justify-center'>
-              <span>검색창 열기</span>
+              <span>클릭하여 검색창 열기</span>
               <MdOutlineKeyboardDoubleArrowDown size={20} />
             </div>
           )}

@@ -9,30 +9,35 @@ import axios from 'axios';
 
 const RentPage = () => {
   const [safeListings, setSafeListings] = useState([]);
-  const [groupedMapListings, setGroupedMapListings] = useState({});
+  const [mapListings, setMapListings] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(`/api/rentListing/rentListing`);
-      setSafeListings(response.data.listings);
-      setGroupedMapListings(response.data.groupedMapListings);
+      setIsLoading(true); // Set loading state to true before fetching data
+      try {
+        const response = await axios.get(`/api/rentListing/rentListing`);
+        console.log(response.data);
+        setSafeListings(response.data.recentListings);
+        setMapListings(response.data.mapListing);
+      } catch (error) {
+        console.error('Error fetching data', error);
+      } finally {
+        setIsLoading(false); // Set loading state to false after data has been loaded
+      }
     };
 
     fetchData();
   }, []);
 
-  console.log('SafeListings:', safeListings); // This will log safeListings whenever the component re-renders.
-  console.log('GroupedMapListings:', groupedMapListings); // This will log groupedMapListings whenever the component re-renders.
+  if (isLoading) {
+    return <div>Loading...</div>; // You can replace this with a loading spinner or similar
+  }
 
   return (
     <div>
-      <Searchbar />
-      {safeListings && groupedMapListings && (
-        <RentPageBody
-          listings={safeListings}
-          groupedMapListings={groupedMapListings}
-        />
-      )}
+      {/* <Searchbar /> */}
+      {<RentPageBody listings={safeListings} mapListings={mapListings} />}
 
       {/* <EmptyState title='렌트찾기' /> */}
     </div>

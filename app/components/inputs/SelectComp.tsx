@@ -15,7 +15,7 @@ const SelectComp: React.FC<SelectCompProps> = ({
   small,
 }) => {
   return (
-    <div>
+    <div className='w-full sm:w-auto'>
       <Select
         placeholder={placeholder}
         options={options}
@@ -23,9 +23,14 @@ const SelectComp: React.FC<SelectCompProps> = ({
         isClearable={false}
         onChange={(value) => onChange(value.value)}
         classNames={{
-          control: () => `${small ? 'p-1' : 'p-3'} border-2`,
-          input: () => `overflow-hidden ${small ? 'text-sm' : 'text-lg'}`,
-          option: () => `${small ? 'text-sm' : 'text-lg'} hover:bg-orange-200`,
+          control: () =>
+            `${small ? 'p-1 text-[14px] sm:text-sm' : 'p-3 text-sm'} border-2`,
+          input: () =>
+            `overflow-hidden ${small ? 'text-[14px] sm:text-sm' : 'text-lg'}`,
+          option: () =>
+            `${
+              small ? 'text-[14px] sm:text-sm' : 'text-lg'
+            } hover:bg-orange-200`,
         }}
         theme={(theme) => ({
           ...theme,

@@ -4,15 +4,20 @@ import { RentListing } from '@prisma/client';
 import Image from 'next/image';
 import Map from '../Map';
 import { useState } from 'react';
+import {
+  MdOutlineKeyboardDoubleArrowUp,
+  MdOutlineKeyboardDoubleArrowDown,
+} from 'react-icons/md';
+import { MapListing } from '@/types/RentTypes';
 
 interface RentPageBodyProps {
   listings: RentListing[];
-  groupedMapListings: any;
+  mapListings: MapListing;
 }
 
 const RentPageBody: React.FC<RentPageBodyProps> = ({
   listings,
-  groupedMapListings,
+  mapListings,
 }) => {
   const [isListingOn, setIsListingOn] = useState<boolean>(false);
   return (
@@ -22,7 +27,11 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
           isListingOn ? 'hidden' : 'flex'
         } w-full sm:w-[50%] xl:w-[65%] h-[70vh]`}
       >
-        <Map initCoordinate={[-74.0085514, 40.7127503]} rentmain />
+        <Map
+          initCoordinate={[-74.0085514, 40.7127503]}
+          rentmain
+          mapListings={mapListings}
+        />
       </div>
       <div
         className={`sm:relative sm:flex w-full sm:w-[50%] xl:w-[35%] sm:h-[70vh] flex flex-col bg-white
@@ -33,7 +42,17 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
           onClick={() => setIsListingOn(!isListingOn)}
           className={`flex sm:hidden justify-center items-center w-full py-2 border-[1px] border-neutral-500`}
         >
-          {isListingOn ? `리스팅 닫기` : `리스팅 더보기`}
+          {isListingOn ? (
+            <div className='flex flex-row w-full h-full items-center justify-center'>
+              <span>클릭하여 리스팅 닫기</span>
+              <MdOutlineKeyboardDoubleArrowDown size={20} />
+            </div>
+          ) : (
+            <div className='flex flex-row items-center'>
+              <span>클릭하여 리스팅 더보기</span>{' '}
+              <MdOutlineKeyboardDoubleArrowUp size={20} />
+            </div>
+          )}
         </div>
         <div className='flex flex-row justify-between items-center p-4'>
           <div>Total {listings.length} listings</div>

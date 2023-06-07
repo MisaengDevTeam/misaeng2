@@ -89,7 +89,10 @@ export async function POST(request: Request) {
           contact: [userCheck?.email, phone, kakaoId],
         },
       })
-      .then((res) => (rentListing = res))
+      .then((res) => {
+        rentListing = res;
+        console.log(rentListing);
+      })
       .catch((error) => console.log(error));
   }
 

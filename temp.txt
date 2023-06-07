@@ -1,3 +1,5 @@
+const mapContainer = useRef<any>(null);
+
 const response = await axios.get(`/api/rentListing/rentListing`);
   const safeListings = response.data.listings;
   const groupedMapListings = response.data.groupedMapListings;

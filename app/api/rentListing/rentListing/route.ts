@@ -1,27 +1,93 @@
 import prisma from '@/app/lib/prismaDb';
 import { NextResponse } from 'next/server';
 import { RentListing } from '@prisma/client';
+import { ObjectId } from 'mongodb';
+import mgClientPromise from '@/app/lib/mongodb';
+interface CoorMap {
+  [key: string]: [number, number];
+}
+
+interface MapListingItem {
+  buildingId: string;
+  price: number[];
+  coordinate: [number, number];
+}
 
 export async function GET(request: Request) {
-  const mapListings = await prisma.rentListing.findMany({
-    orderBy: {
-      createdAt: 'desc',
-    },
+  const client = await mgClientPromise;
+  const rentCollection = client.db('misaeng').collection('RentListing');
+  const buildingCollection = client.db('misaeng').collection('Building');
+
+  const mapListing: Record<string, MapListingItem> = {};
+
+  const recentListings = await rentCollection
+    .find(
+      {},
+      {
+        projection: {
+          _id: 1,
+          buildingId: 1,
+          bedCount: 1,
+          bathCount: 1,
+          price: 1,
+          imageSrc: 1,
+          moveDate: 1,
+        },
+      }
+    )
+    .sort({ writeTime: -1 })
+    .toArray();
+
+  const rawData = await rentCollection
+    .find({}, { projection: { buildingId: 1, price: 1 } })
+    .toArray();
+
+  const uniqueBids = new Set(rawData.map((rental) => rental.buildingId));
+  // console.log(uniqueBids);
+
+  // Fetch building data for each unique bid
+
+  const buildingData = await Promise.all(
+    Array.from(uniqueBids).map(async (bid) => {
+      const building = await buildingCollection.findOne({
+        _id: new ObjectId(bid),
+      });
+      return {
+        bid: bid.toString(),
+        coor: building?.coordinate,
+        neighborhoodOne: building?.neighborhoodOne,
+        neighborhoodTwo: building?.neighborhoodTwo,
+      };
+    })
+  );
+
+  // console.log(buildingData);
+
+  // Create a bid to coor map and neighborhoods map for easy lookup
+  const bidToCoorMap: CoorMap = {};
+  // const bidToNeighborhoodsMap = {}
+  buildingData.forEach((item) => {
+    bidToCoorMap[item.bid] = item.coor;
+    // bidToNeighborhoodsMap[item.bid] = {
+    //   neighborhoodOne: item.neighborhoodOne,
+    //   neighborhoodTwo: item.neighborhoodTwo,
+    // };
   });
 
-  const groupedMapListings: { [key: string]: RentListing[] } =
-    mapListings.reduce((result, listing) => {
-      if (!result[listing.buildingId]) {
-        result[listing.buildingId] = [];
-      }
-      result[listing.buildingId].push(listing);
-      return result;
-    }, {} as { [key: string]: RentListing[] });
+  rawData.forEach((item) => {
+    const { buildingId, price } = item;
+    if (mapListing[buildingId]) {
+      mapListing[buildingId]['price'].push(price);
+    } else {
+      mapListing[buildingId] = {
+        buildingId,
+        price: [parseInt(price)],
+        coordinate: bidToCoorMap[buildingId],
+        // neighborhoodOne: bidToNeighborhoodsMap[buildingId].neighborhoodOne,
+        // neighborhoodTwo: bidToNeighborhoodsMap[buildingId].neighborhoodTwo,
+      };
+    }
+  });
 
-  const safeListings = mapListings.map((list) => ({
-    ...list,
-    createdAt: list.createdAt.toISOString(),
-  }));
-
-  return NextResponse.json({ listings: safeListings, groupedMapListings });
+  return NextResponse.json({ recentListings, mapListing });
 }

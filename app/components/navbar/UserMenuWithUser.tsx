@@ -2,6 +2,7 @@
 
 import { signOut } from 'next-auth/react';
 import UserMenuItem from './UserMenuItem';
+import { useRouter } from 'next/navigation';
 
 interface UserMenuWithUserProps {
   toggleSession: () => void;
@@ -14,10 +15,23 @@ const UserMenuWithUser: React.FC<UserMenuWithUserProps> = ({
   roommateModalOpen,
   rentModalOpen,
 }) => {
+  const router = useRouter();
   return (
-    <div className='absolute rounded-xl shadow-md border-[1px] border-neutral-600 w-[50vw] md:w-[180px] bg-white overflow-hidden right-0 top-16 md:top-12 text-md z-20'>
-      <UserMenuItem mobileVisible label='렌트 찾기' onClick={() => {}} />
-      <UserMenuItem mobileVisible label='룸메 찾기' onClick={() => {}} />
+    <div className='absolute rounded-xl shadow-md border-[1px] border-neutral-600 w-[50vw] md:w-[180px] bg-white overflow-hidden right-0 top-12 text-md z-20'>
+      <UserMenuItem
+        mobileVisible
+        label='렌트 찾기'
+        onClick={() => {
+          router.push('/rent');
+        }}
+      />
+      <UserMenuItem
+        mobileVisible
+        label='룸메 찾기'
+        onClick={() => {
+          router.push('/roommate');
+        }}
+      />
       <UserMenuItem
         label='렌트찾기 등록하기'
         onClick={() => {
