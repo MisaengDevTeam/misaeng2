@@ -19,6 +19,7 @@ import {
 } from 'react-hook-form';
 import LoadingSpinner from '../LoadingSpinner';
 import Image from 'next/image';
+import LoadingScreen from '../LoadingScreen';
 
 interface LoginModalProps {}
 
@@ -112,22 +113,6 @@ const LoginModal: React.FC<LoginModalProps> = ({}) => {
     </div>
   );
 
-  const loadingScreen = (
-    <div className='absolute top-0 left-0 w-full h-full bg-white/90 rounded-lg flex flex-col justify-center items-center gap-4'>
-      <Image
-        src={`/assets/images/logo/logo_vertical.png`}
-        width={180}
-        height={90}
-        alt='logo'
-      />
-      <LoadingSpinner />
-      <div className='flex flex-col text-center'>
-        <p>로그인 중 입니다.</p>
-        <p>잠시만 기다려주시기 바랍니다.</p>
-      </div>
-    </div>
-  );
-
   return (
     <Modal
       disabled={isLoading}
@@ -136,7 +121,12 @@ const LoginModal: React.FC<LoginModalProps> = ({}) => {
       title={'간편 로그인하기'}
       body={bodyContent}
       footer={footerContent}
-      loadingScreen={loadingScreen}
+      loadingScreen={
+        <LoadingScreen
+          messagetitle='로그인 중 입니다.'
+          messagesubtitle='잠시만 기다려주시기 바랍니다.'
+        />
+      }
       separator
     />
   );

@@ -42,6 +42,28 @@ export async function POST(request: Request) {
 
   let rentListing;
 
+  console.log({
+    userId: uid,
+    buildingId: bid,
+    category,
+    title,
+    bedCount: bed,
+    bathCount: bath,
+    price: parseInt(price),
+    description,
+    address,
+    unit,
+    imageSrc: pictures,
+    moveDate: movedate,
+    length: '',
+    utility,
+    broker: bfee,
+    amenity,
+    feature,
+    updatedAt: writeTime,
+    contact: [userCheck?.email, phone, kakaoId],
+  });
+
   if (!listingCheck) {
     await prisma.rentListing
       .create({

@@ -15,6 +15,9 @@ import RentModalContact from './rent/RentModalContact';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import validateInput from '@/app/lib/validateInput';
+import dateFormatter from '@/app/lib/dateFormatter';
+import LoadingScreen from '../LoadingScreen';
+import { useRouter } from 'next/navigation';
 
 interface RentRegisterModalProps {}
 
@@ -31,11 +34,14 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
   const [step, setStep] = useState(RENT_REGISTER_STEP.CATEGORY);
   const [isLoading, setIsLoading] = useState(false);
 
+  const router = useRouter();
   const { data: session } = useSession();
   const currentUser = session?.user;
   const uid = currentUser?.id;
 
   const rentRegisterModal = useRentRegisterModal();
+
+  const today = dateFormatter(new Date());
 
   const {
     register,
@@ -64,7 +70,7 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
       utility: '',
       neighborhoodOne: '',
       neighborhoodTwo: '',
-      movedate: new Date().toString(),
+      movedate: today,
       email: currentUser?.email,
       phone: '',
       kakaoId: '',
@@ -130,6 +136,8 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
   };
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    setIsLoading(true);
+
     const writeTime = new Date().toISOString();
     setCustomValue('writeTime', writeTime);
 
@@ -158,8 +166,6 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
 
     setCustomValue('pictures', pictureURL);
 
-    setIsLoading(true);
-
     // replace data.pictures with pictureURL before calling the post method
     data.pictures = pictureURL;
 
@@ -167,7 +173,7 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
       .post(`/api/rentRegister`, { ...data, uid: uid })
       .then((response) => {
         toast.success('룸메이트 리스팅이 등록되었습니다!');
-        console.log(response);
+        // console.log(response);
         setStep(RENT_REGISTER_STEP.CATEGORY);
         rentRegisterModal.onClose();
         reset();
@@ -178,6 +184,7 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
       })
       .finally(() => {
         setIsLoading(false);
+        router.refresh();
       });
   };
 
@@ -253,11 +260,18 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
 
   return (
     <Modal
+      disabled={isLoading}
       isOpen={rentRegisterModal.isOpen}
       onClose={rentRegisterModal.onClose}
       title={'렌트 리스팅 등록하기'}
       body={bodyContent(step)}
       footer={footerContent}
+      loadingScreen={
+        <LoadingScreen
+          messagetitle='요청하신 리스팅을 등록 중입니다.'
+          messagesubtitle='잠시만 기다려 주십시오.'
+        />
+      }
     />
   );
 };

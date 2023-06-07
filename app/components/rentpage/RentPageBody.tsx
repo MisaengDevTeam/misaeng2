@@ -44,7 +44,7 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
         <div className='grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3 p-4 pt-0 overflow-x-hidden	overflow-y-scroll	gap-2'>
           {listings.map((list) => (
             <div
-              key={list.title}
+              key={list.imageSrc[0]}
               className='p-1 rounded-lg border-[1px] border-neutral-300 cursor-pointer group hover:border-[#EC662A]'
             >
               <div className='w-full relative overflow-hidden rounded-lg'>
