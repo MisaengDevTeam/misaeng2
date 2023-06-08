@@ -54,8 +54,18 @@ const Modal: React.FC<ModalProps> = ({
         >
           <div className='relative flex flex-col w-full bg-white outline-none focus:outline-none translate h-full lg:h-auto md:h-auto border-0 rounded-lg shadow-lg'>
             {/* HEADER */}
-            <div className='relative flex justify-center items-center p-2 md:p-6 rounded-t-lg border-b'>
-              <div className='text-lg font-semibold'>{title}</div>
+            <div
+              className={`relative flex  items-center p-2 md:p-6 rounded-t-lg border-b
+            ${cardindividual ? 'justify-start' : 'justify-center'}
+            `}
+            >
+              <div
+                className={`text-lg font-semibold
+              ${cardindividual ? 'w-[85%] pl-4' : 'w-full'}
+              `}
+              >
+                {title}
+              </div>
               <button onClick={onClose} className='absolute right-6'>
                 <IoMdClose size={24} />
               </button>

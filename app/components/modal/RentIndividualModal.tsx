@@ -22,6 +22,8 @@ import RentIndiAmenity from './rentindividual/RentIndiAmenity';
 
 import { AMENITY, FEATURE } from '@/types/RentTypes';
 import dateFormatter from '@/app/lib/dateFormatter';
+import MapComponent from '../Map';
+import RentIndiMap from './rentindividual/RentIndiMap';
 
 interface RentRegisterModalProps {
   title: string;
@@ -35,6 +37,7 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({
   const [currentListing, setCurrentListing] = useState<RentListing | null>(
     null
   );
+  const [bulidingInfo, setBuildingInfo] = useState<any>(null);
   const params = useSearchParams();
   const rentlistingid = params?.get('rentlisting');
   const router = useRouter();
@@ -49,7 +52,10 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({
         .post(`/api/rentListing/rentListing`, {
           rentId: rentlistingid,
         })
-        .then((res) => setCurrentListing(res.data.listingInfo[0]))
+        .then((res) => {
+          setCurrentListing(res.data.listingInfo[0]);
+          setBuildingInfo(res.data.buildingInfo[0]);
+        })
         .catch((error) => console.log(error))
         .finally(() => {
           setIsLoading(false);
@@ -67,12 +73,13 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({
 
   const bodyContent = (
     <div className={`h-[70vh] overflow-x-hidden overflow-y-scroll`}>
-      <div className='text-end text-xs text-neutral-700'>
-        작성일: {dateFormatter(new Date(currentListing.createdAt))}
+      <div className='flex justify-between text-xs text-neutral-700'>
+        <div>작성일: {dateFormatter(new Date(currentListing.createdAt))}</div>
+        <div>오늘: {dateFormatter(new Date())}</div>
       </div>
       <RentIndiPicture pictures={currentListing.imageSrc} />
       <hr />
-      <div className='flex flex-col gap-4 p-4'>
+      <div className='flex flex-col gap-6 p-4'>
         <RentIndiBasic
           bed={currentListing.bedCount}
           bath={currentListing.bathCount}
@@ -84,15 +91,16 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({
           description={currentListing.description}
         />
         <RentIndiAmenity
-          title={'건물 편의시설'}
+          title='건물 편의시설'
           items={currentListing.amenity}
           type={AMENITY}
         />
         <RentIndiAmenity
-          title={'방 편의시설'}
+          title='방 편의시설'
           items={currentListing.feature}
           type={FEATURE}
         />
+        <RentIndiMap title='위치' coordinate={bulidingInfo.coordinate} />
       </div>
     </div>
   );

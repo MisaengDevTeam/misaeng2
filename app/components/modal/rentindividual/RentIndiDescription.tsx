@@ -12,7 +12,7 @@ const RentIndiDescription: React.FC<RentIndiDescriptionProps> = ({
   return (
     <div className=''>
       <div className='font-semibold text-lg'>{title}</div>
-      <div className='font-light'>{description}</div>
+      <div className='font-light whitespace-pre-wrap'>{description}</div>
     </div>
   );
 };

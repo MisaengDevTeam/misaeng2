@@ -28,6 +28,7 @@ const Textarea: React.FC<TextareaProps> = ({
         onChange={(e) => onChange(e.currentTarget.value)}
         placeholder={placeholer}
         autoFocus={false}
+        maxLength={512}
         rows={5}
         cols={20}
         className={`w-full  font-light bg-white border-2 border-neutral-300 rounded-md outline-none transition resize-none focus:border-[#EC662A]
