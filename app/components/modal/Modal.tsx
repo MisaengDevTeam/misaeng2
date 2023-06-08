@@ -15,6 +15,7 @@ interface ModalProps {
   actionFunc?: () => void;
   loadingScreen?: React.ReactElement | string;
   separator?: boolean;
+  cardindividual?: boolean;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -27,6 +28,7 @@ const Modal: React.FC<ModalProps> = ({
   disabled,
   separator,
   loadingScreen,
+  cardindividual,
 }) => {
   const [showModal, setShowModal] = useState(isOpen);
 
@@ -59,7 +61,13 @@ const Modal: React.FC<ModalProps> = ({
               </button>
             </div>
             {/* BODY */}
-            <div className='relative py-2 px-6 flex-auto'>{body}</div>
+            <div
+              className={`relative flex-auto
+            ${cardindividual ? 'py-2 px-2' : 'py-2 px-4'}
+            `}
+            >
+              {body}
+            </div>
             {separator && (
               <div className='px-6'>
                 <hr />

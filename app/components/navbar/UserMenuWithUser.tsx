@@ -23,6 +23,7 @@ const UserMenuWithUser: React.FC<UserMenuWithUserProps> = ({
         label='렌트 찾기'
         onClick={() => {
           router.push('/rent');
+          toggleSession();
         }}
       />
       <UserMenuItem
@@ -30,6 +31,7 @@ const UserMenuWithUser: React.FC<UserMenuWithUserProps> = ({
         label='룸메 찾기'
         onClick={() => {
           router.push('/roommate');
+          toggleSession();
         }}
       />
       <UserMenuItem

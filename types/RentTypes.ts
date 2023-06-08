@@ -23,6 +23,12 @@ export const ROOM_TYPE = {
   utility: ['유틸리티 포함', '유틸리티 별도'],
 };
 
+export interface IAmenity {
+  label: string;
+  value: string;
+  icon: string;
+}
+
 export const AMENITY = [
   { label: '24h도어맨', value: 'Doorman', icon: 'MdSecurity' },
   { label: '헬스장', value: 'Gym', icon: 'CgGym' },
