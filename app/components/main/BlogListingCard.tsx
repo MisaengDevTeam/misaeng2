@@ -21,6 +21,7 @@ const BlogListingCard: React.FC<BlogListingCardProps> = ({
         <Image
           src={imageSrc}
           fill
+          sizes='200'
           alt='img'
           className='object-cover h-full w-full group-hover:scale-105 transition'
         />

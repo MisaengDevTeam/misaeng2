@@ -8,6 +8,8 @@ const MainBannerImage = ({}) => {
       <Image
         src={`https://misaeng.s3.amazonaws.com/asset/img/main-1.png`}
         fill
+        sizes='200'
+        priority
         alt='mainbanner'
         className='object-cover h-full w-full brightness-75'
       />
