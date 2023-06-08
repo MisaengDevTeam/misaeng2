@@ -44,6 +44,8 @@ const RentListingCard: React.FC<RentListingCardProps> = ({
     },
     [params, router]
   );
+
+  console.log(list.imageSrc.length);
   return (
     <div
       onClick={() => {
@@ -54,13 +56,17 @@ const RentListingCard: React.FC<RentListingCardProps> = ({
       className='p-1 rounded-lg border-[1px] border-neutral-300 cursor-pointer group hover:border-[#EC662A]'
     >
       <div className='w-full relative overflow-hidden rounded-lg'>
-        <Image
-          src={list.imageSrc[0]}
-          width={200}
-          height={120}
-          className='rounded-lg object-cover h-full w-full group-hover:scale-110 transition'
-          alt='thumbnail'
-        />
+        {list.imageSrc.length != 1 ? (
+          <Image
+            src={list.imageSrc[0]}
+            width={200}
+            height={120}
+            className='rounded-lg object-cover h-[180px] w-full group-hover:scale-110 transition'
+            alt='thumbnail'
+          />
+        ) : (
+          <div className='rounded-lg object-cover h-[180px] w-full group-hover:scale-110 transition bg-[url("/assets/images/logo/logo_square.png")] bg-center bg-no-repeat	'></div>
+        )}
       </div>
       <div className='flex flex-col px-2 mt-1 gap-0'>
         <div className='flex flex-row justify-between'>
