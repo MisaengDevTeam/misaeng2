@@ -87,7 +87,7 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({
   const headerTitle = `${currentListing.title}`;
 
   const bodyContent = (
-    <div className={`h-[58vh] overflow-x-hidden overflow-y-scroll`}>
+    <div className={`h-[57vh] overflow-x-hidden overflow-y-scroll`}>
       <div className='flex justify-between text-xs text-neutral-700'>
         <div className='md:text-sm'>
           작성일: {dateFormatter(new Date(currentListing.createdAt))}
@@ -129,7 +129,7 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({
 
   let footerContent = (
     <div>
-      <div className='flex justify-evenly mb-4'>
+      <div className='flex justify-evenly mb-1'>
         <RentIndiFooterButton
           color='#EC662A'
           label='좋아요'
