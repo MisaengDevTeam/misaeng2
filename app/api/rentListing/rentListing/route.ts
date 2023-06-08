@@ -36,7 +36,7 @@ export async function GET(request: Request) {
         },
       }
     )
-    .sort({ writeTime: -1 })
+    .sort({ writeTime: 1 })
     .toArray();
 
   const rawData = await rentCollection
