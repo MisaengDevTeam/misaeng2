@@ -26,6 +26,7 @@ export async function GET(request: Request) {
       {
         projection: {
           _id: 1,
+          category: 1,
           buildingId: 1,
           bedCount: 1,
           bathCount: 1,
@@ -84,11 +85,11 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const { buildingId } = body;
+  const { rentId, buildingId } = body;
 
   const client = await mgClientPromise;
   const rentCollection = client.db('misaeng').collection('RentListing');
-  const buildingCollection = client.db('misaeng').collection('Building');
+  // const buildingCollection = client.db('misaeng').collection('Building');
 
   if (buildingId) {
     const recentListings = await rentCollection
@@ -97,6 +98,7 @@ export async function POST(request: Request) {
         {
           projection: {
             _id: 1,
+            category: 1,
             buildingId: 1,
             bedCount: 1,
             bathCount: 1,
@@ -109,6 +111,13 @@ export async function POST(request: Request) {
       .sort({ writeTime: -1 })
       .toArray();
     return NextResponse.json({ recentListings });
+  }
+  if (rentId) {
+    const listingInfo = await rentCollection
+      .find({ _id: new ObjectId(rentId) })
+      .toArray();
+    // console.log(listingInfo);
+    return NextResponse.json({ listingInfo });
   }
   return NextResponse.json({});
 }

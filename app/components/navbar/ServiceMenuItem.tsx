@@ -12,7 +12,7 @@ const ServiceMenuItem: React.FC<ServiceMenuItemProps> = ({
   return (
     <div
       onClick={onClick}
-      className='font-light text-base lg:text-xl px-4 py-3 hover:text-[#EC662A] hover:font-semibold cursor-pointer'
+      className='font-light text-base lg:text-xl sm:px-2 lg:px-4 hover:text-[#EC662A] hover:font-semibold cursor-pointer'
     >
       {label}
     </div>

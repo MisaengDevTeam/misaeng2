@@ -9,26 +9,46 @@ import {
   MdOutlineKeyboardDoubleArrowDown,
 } from 'react-icons/md';
 import { MapListing } from '@/types/RentTypes';
+import useRentIndividualModal from '../hooks/useRentIndividualModal';
+import axios from 'axios';
+import RentListingCard from './RentListingCard';
 
 interface RentPageBodyProps {
   listings: RentListing[];
   mapListings: MapListing;
   setSafeListings: any;
+  rentIndividualOpen: () => void;
+  setDefaultListing: () => void;
+  setIndividualListing: (listingInfo: any) => void;
 }
 
 const RentPageBody: React.FC<RentPageBodyProps> = ({
   listings,
   mapListings,
   setSafeListings,
+  setDefaultListing,
+  rentIndividualOpen,
+  setIndividualListing,
 }) => {
-  console.log(listings);
   const [isListingOn, setIsListingOn] = useState<boolean>(false);
+
+  const getBuildingData = async (rentId: string) => {
+    try {
+      const response = await axios.post(`/api/rentListing/rentListing`, {
+        rentId,
+      });
+      setIndividualListing(response.data.listingInfo[0]);
+    } catch (error) {
+    } finally {
+    }
+  };
+
   return (
     <div className='relative flex flex-row'>
       <div
         className={`relative ${
           isListingOn ? 'hidden' : 'flex'
-        } w-full sm:w-[50%] xl:w-[65%] h-[70vh]`}
+        } w-full sm:w-[50%] lg:w-[55%] h-[70vh]`}
       >
         <Map
           initCoordinate={[-74.0085514, 40.7127503]}
@@ -38,7 +58,7 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
         />
       </div>
       <div
-        className={`sm:relative sm:flex w-full sm:w-[50%] xl:w-[35%] sm:h-[70vh] flex flex-col bg-white
+        className={`sm:relative sm:flex w-full sm:w-[50%] lg:w-[45%] sm:h-[70vh] flex flex-col bg-white
       ${isListingOn ? 'relative h-full' : 'absolute h-1/2 bottom-0'}
       `}
       >
@@ -58,41 +78,22 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
             </div>
           )}
         </div>
-        <div className='flex flex-row justify-between items-center p-4'>
+        <div className='flex flex-row justify-between items-center p-4 shadow-md sm:shadow-none'>
           <div>Total {listings.length} listings</div>
-          <div className='cursor-pointer bg-[#EC662A] text-white py-1 px-4 rounded-lg'>
+          <div
+            onClick={setDefaultListing}
+            className='cursor-pointer bg-[#EC662A] text-white py-1 px-4 rounded-lg'
+          >
             전체 리스팅 다시보기
           </div>
         </div>
-        <div className='grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3 p-4 pt-0 overflow-x-hidden	overflow-y-scroll	gap-2'>
+        <div className='grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 p-4 sm:pt-0 overflow-x-hidden overflow-y-scroll gap-2'>
           {listings.map((list) => (
-            <div
-              key={list.imageSrc[0]}
-              className='p-1 rounded-lg border-[1px] border-neutral-300 cursor-pointer group hover:border-[#EC662A]'
-            >
-              <div className='w-full relative overflow-hidden rounded-lg'>
-                <Image
-                  src={list.imageSrc[0]}
-                  width={200}
-                  height={120}
-                  className='rounded-lg object-cover h-full w-full group-hover:scale-110 transition'
-                  alt='thumbnail'
-                />
-              </div>
-              <div className='flex flex-col px-1 mt-1 gap-0'>
-                <div className='flex flex-row justify-between'>
-                  <div className='text-sm'>{list.category}</div>
-                  <div className='text-sm'>$ {list.price.toLocaleString()}</div>
-                </div>
-                <div className='flex flex-row justify-between'>
-                  <div className='text-sm'>{list.bedCount}</div>
-                  <div className='text-sm'>{list.bathCount}</div>
-                </div>
-                <div className='text-sm text-end'>
-                  입주 가능일: {list.moveDate}
-                </div>
-              </div>
-            </div>
+            <RentListingCard
+              key={(list as any)._id}
+              rentIndividualOpen={rentIndividualOpen}
+              list={list}
+            />
           ))}
         </div>
       </div>

@@ -8,7 +8,7 @@ interface ServiceMenuProps {}
 const ServiceMenu: React.FC<ServiceMenuProps> = ({}) => {
   const router = useRouter();
   return (
-    <div className='xl:absolute xl:left-[50%] xl:transform xl:-translate-x-[50%] hidden md:flex flex-row gap-1 md:gap-3 '>
+    <div className='xl:absolute xl:left-[50%] xl:transform xl:-translate-x-[50%] hidden md:flex flex-row gap-1 lg:gap-3 '>
       <ServiceMenuItem label='렌트찾기' onClick={() => router.push('/rent')} />
       <ServiceMenuItem
         label='룸메찾기'
