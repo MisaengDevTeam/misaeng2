@@ -45,7 +45,6 @@ const RentListingCard: React.FC<RentListingCardProps> = ({
     [params, router]
   );
 
-  console.log(list.imageSrc.length);
   return (
     <div
       onClick={() => {
