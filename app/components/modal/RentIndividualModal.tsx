@@ -31,6 +31,7 @@ import { BsHeart, BsHeartFill } from 'react-icons/bs';
 import { FaRegShareSquare } from 'react-icons/fa';
 import { RiAlarmWarningLine } from 'react-icons/ri';
 import RentIndiFooterButton from './rentindividual/RentIndiFooterButton';
+import RentIndiDetail from './rentindividual/RentIndiDetail';
 
 interface RentRegisterModalProps {
   title: string;
@@ -78,16 +79,10 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({
   const rentIndividualModal = useRentIndividualModal();
   if (!currentListing) return null;
 
-  console.log('listingInfo');
-  console.log(currentListing);
-  console.log('buildingInfo');
-  console.log(buildingInfo);
-  console.log('buildingToSubwayInfo');
-  console.log(buildingToSubwayInfo);
   const headerTitle = `${currentListing.title}`;
 
   const bodyContent = (
-    <div className={`h-[62vh] overflow-x-hidden overflow-y-scroll`}>
+    <div className={`h-[61vh] overflow-x-hidden overflow-y-scroll`}>
       <div className='flex justify-between text-xs text-neutral-700'>
         <div className='md:text-sm'>
           작성일: {dateFormatter(new Date(currentListing.createdAt))}
@@ -116,6 +111,12 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({
           title='방 편의시설'
           items={currentListing.feature}
           type={FEATURE}
+        />
+        <RentIndiDetail
+          title='기타사항'
+          category={currentListing.category}
+          broker={currentListing.broker}
+          utility={currentListing.utility}
         />
         <RentIndiMap title='위치' coordinate={buildingInfo.coordinate} />
         <RentIndiSubway title='주변 지하철' subway={buildingToSubwayInfo} />

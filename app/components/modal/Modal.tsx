@@ -51,14 +51,14 @@ const Modal: React.FC<ModalProps> = ({
         {/* MODAL CONTENT */}
         <div
           className={`translate duration-300 
-          ${rentindividual ? 'h-[80vh]' : 'h-full'}
+          ${rentindividual ? 'h-[80vh] sm:h-[85vh]' : 'h-full'}
         ${showModal ? `translate-y-0` : `translate-y-full`}
         ${showModal ? `opacity-100` : `opacity-0`}`}
         >
           <div className='relative flex flex-col w-full bg-white outline-none focus:outline-none translate h-full lg:h-auto md:h-auto border-0 rounded-lg shadow-lg'>
             {/* HEADER */}
             <div
-              className={`relative flex  items-center p-2 md:p-6 rounded-t-lg border-b h-[5%]
+              className={`relative flex  items-center p-2 md:p-6 rounded-t-lg border-b h-[5%] sm:h-auto
             ${rentindividual ? 'justify-start' : 'justify-center'}
             `}
             >
@@ -75,7 +75,7 @@ const Modal: React.FC<ModalProps> = ({
             </div>
             {/* BODY */}
             <div
-              className={`relative flex-auto h-80%]
+              className={`relative flex-auto h-77%]
             ${rentindividual ? 'py-2 px-2' : 'py-2 px-4'}
             `}
             >
@@ -87,7 +87,9 @@ const Modal: React.FC<ModalProps> = ({
               </div>
             )}
             {/* FOOTER */}
-            <div className='flex flex-col gap-4 px-6 h-[15%]'>{footer}</div>
+            <div className='flex flex-col gap-4 px-6 mb-2 h-[15%]'>
+              {footer}
+            </div>
           </div>
         </div>
         {disabled && loadingScreen}

@@ -117,12 +117,44 @@ export async function POST(request: Request) {
   }
   if (rentId) {
     const listingInfo = await rentCollection
-      .find({ _id: new ObjectId(rentId) })
+      .find(
+        { _id: new ObjectId(rentId) },
+        {
+          projection: {
+            _id: 1,
+            amenity: 1,
+            bathCount: 1,
+            bedCount: 1,
+            broker: 1,
+            buildingId: 1,
+            category: 1,
+            contact: 1,
+            createdAt: 1,
+            description: 1,
+            feature: 1,
+            imageSrc: 1,
+            length: 1,
+            moveDate: 1,
+            price: 1,
+            title: 1,
+            userId: 1,
+            utility: 1,
+          },
+        }
+      )
       .toArray();
     const buildingInfo = await buildingCollection
-      .find({
-        _id: listingInfo[0].buildingId,
-      })
+      .find(
+        {
+          _id: listingInfo[0].buildingId,
+        },
+        {
+          projection: {
+            _id: 1,
+            coordinate: 1,
+          },
+        }
+      )
       .toArray();
     const buildingToSubwayInfo = await buildingToSubwayCollection
       .find({

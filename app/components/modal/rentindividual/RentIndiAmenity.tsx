@@ -29,7 +29,7 @@ const RentIndiAmenity: React.FC<RentIndiAmenityProps> = ({
         {items.map((item) => (
           <div
             key={item}
-            className='flex justify-center items-center py-1 px-2 border-[1px] border-[#EC662A] rounded-full font-light'
+            className='flex justify-center items-center py-1 px-2 border-[1px] border-[#EC662A] rounded-full font-light text-[12px] sm:text-sm md:text-base'
           >
             {findLabelByValue(item, type as IAmenity[])}
           </div>
