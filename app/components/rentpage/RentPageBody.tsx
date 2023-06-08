@@ -32,20 +32,6 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
 }) => {
   const [isListingOn, setIsListingOn] = useState<boolean>(false);
 
-  // const getBuildingData = async (rentId: string) => {
-  //   try {
-  //     const response = await axios.post(`/api/rentListing/rentListing`, {
-  //       rentId,
-  //     });
-  //     setIndividualListing({
-  //       listingInfo: response.data.listingInfo[0],
-  //       buildingInfo: response.data.buildingInfo[0],
-  //     });
-  //   } catch (error) {
-  //   } finally {
-  //   }
-  // };
-
   return (
     <div className='relative flex flex-row'>
       <div

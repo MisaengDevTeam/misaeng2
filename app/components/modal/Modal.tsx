@@ -15,7 +15,7 @@ interface ModalProps {
   actionFunc?: () => void;
   loadingScreen?: React.ReactElement | string;
   separator?: boolean;
-  cardindividual?: boolean;
+  rentindividual?: boolean;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -28,7 +28,7 @@ const Modal: React.FC<ModalProps> = ({
   disabled,
   separator,
   loadingScreen,
-  cardindividual,
+  rentindividual,
 }) => {
   const [showModal, setShowModal] = useState(isOpen);
 
@@ -45,10 +45,13 @@ const Modal: React.FC<ModalProps> = ({
 
   return (
     <div className='fixed flex justify-center items-center overflow-x-hidden overflow-y-auto inset-0 z-50 outline-none focus:outline-none bg-neutral-800/70'>
-      <div className='relative w-[90vw] md:w-3/6 lg:w-2/6 xl:2-2/5 my-6 mx-auto h:auto'>
+      <div
+        className={`relative w-[90vw] md:w-3/6 lg:w-2/6 xl:2-2/5 my-6 mx-auto h:auto`}
+      >
         {/* MODAL CONTENT */}
         <div
-          className={`translate duration-300 h-full 
+          className={`translate duration-300 
+          ${rentindividual ? 'h-[80vh]' : 'h-full'}
         ${showModal ? `translate-y-0` : `translate-y-full`}
         ${showModal ? `opacity-100` : `opacity-0`}`}
         >
@@ -56,12 +59,12 @@ const Modal: React.FC<ModalProps> = ({
             {/* HEADER */}
             <div
               className={`relative flex  items-center p-2 md:p-6 rounded-t-lg border-b
-            ${cardindividual ? 'justify-start' : 'justify-center'}
+            ${rentindividual ? 'justify-start' : 'justify-center'}
             `}
             >
               <div
                 className={`text-lg font-semibold
-              ${cardindividual ? 'w-[85%] pl-4' : 'w-full'}
+              ${rentindividual ? 'w-[85%] pl-4' : 'w-full'}
               `}
               >
                 {title}
@@ -73,7 +76,7 @@ const Modal: React.FC<ModalProps> = ({
             {/* BODY */}
             <div
               className={`relative flex-auto
-            ${cardindividual ? 'py-2 px-2' : 'py-2 px-4'}
+            ${rentindividual ? 'py-2 px-2' : 'py-2 px-4'}
             `}
             >
               {body}
