@@ -64,14 +64,24 @@ const RentListingCard: React.FC<RentListingCardProps> = ({
       </div>
       <div className='flex flex-col px-2 mt-1 gap-0'>
         <div className='flex flex-row justify-between'>
-          <div className='text-[12px]'>{list.category}</div>
-          <div className='text-[12px]'>$ {list.price.toLocaleString()}</div>
+          <div className='text-[12px] md:text-sm xl:text-[14px]'>
+            {list.category}
+          </div>
+          <div className='text-[12px] md:text-sm xl:text-[14px]'>
+            $ {list.price.toLocaleString()}
+          </div>
         </div>
         <div className='flex flex-row justify-between'>
-          <div className='text-[12px]'>{list.bedCount}</div>
-          <div className='text-[12px]'>{list.bathCount}</div>
+          <div className='text-[12px] md:text-sm xl:text-[14px]'>
+            {list.bedCount}
+          </div>
+          <div className='text-[12px] md:text-sm xl:text-[14px]'>
+            {list.bathCount}
+          </div>
         </div>
-        <div className='text-[12px] text-end'>입주 가능일: {list.moveDate}</div>
+        <div className='text-[12px] md:text-sm xl:text-[14px] text-end'>
+          입주 가능일: {list.moveDate}
+        </div>
       </div>
     </div>
   );

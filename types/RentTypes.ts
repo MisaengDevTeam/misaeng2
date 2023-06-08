@@ -1,3 +1,5 @@
+import { ObjectId } from 'mongodb';
+
 export const RENT_TYPE = [
   {
     rentCategory: '단기 렌트',
@@ -27,6 +29,14 @@ export interface IAmenity {
   label: string;
   value: string;
   icon: string;
+}
+
+export interface IBuildingToSubwayInfo {
+  _id: ObjectId;
+  buildingId: ObjectId;
+  name: string;
+  distance: number;
+  lines: string[];
 }
 
 export const AMENITY = [

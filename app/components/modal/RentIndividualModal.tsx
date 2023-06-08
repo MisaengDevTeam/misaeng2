@@ -3,7 +3,7 @@
 import { useSession } from 'next-auth/react';
 import Modal from './Modal';
 import useRentIndividualModal from '../hooks/useRentIndividualModal';
-import { useCallback, useEffect, useState } from 'react';
+import { MouseEvent, useCallback, useEffect, useState } from 'react';
 import Button from '../Button';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import axios from 'axios';
@@ -20,10 +20,17 @@ import RentIndiBasic from './rentindividual/RentIndiBasic';
 import RentIndiDescription from './rentindividual/RentIndiDescription';
 import RentIndiAmenity from './rentindividual/RentIndiAmenity';
 
-import { AMENITY, FEATURE } from '@/types/RentTypes';
+import { AMENITY, FEATURE, IBuildingToSubwayInfo } from '@/types/RentTypes';
 import dateFormatter from '@/app/lib/dateFormatter';
 import MapComponent from '../Map';
 import RentIndiMap from './rentindividual/RentIndiMap';
+import RentIndiSubway from './rentindividual/RentIndiSubway';
+import RentIndiReview from './rentindividual/RentIndiReview';
+
+import { BsHeart, BsHeartFill } from 'react-icons/bs';
+import { FaRegShareSquare } from 'react-icons/fa';
+import { RiAlarmWarningLine } from 'react-icons/ri';
+import RentIndiFooterButton from './rentindividual/RentIndiFooterButton';
 
 interface RentRegisterModalProps {
   title: string;
@@ -37,13 +44,15 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({
   const [currentListing, setCurrentListing] = useState<RentListing | null>(
     null
   );
-  const [bulidingInfo, setBuildingInfo] = useState<any>(null);
+  const [buildingInfo, setBuildingInfo] = useState<any>(null);
+  const [buildingToSubwayInfo, setBuildingToSubwayInfo] = useState<any>(null);
   const params = useSearchParams();
   const rentlistingid = params?.get('rentlisting');
   const router = useRouter();
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const currentUser = session?.user;
+  const [like, setLike] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -55,6 +64,7 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({
         .then((res) => {
           setCurrentListing(res.data.listingInfo[0]);
           setBuildingInfo(res.data.buildingInfo[0]);
+          setBuildingToSubwayInfo(res.data.buildingToSubwayInfo);
         })
         .catch((error) => console.log(error))
         .finally(() => {
@@ -68,14 +78,21 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({
   const rentIndividualModal = useRentIndividualModal();
   if (!currentListing) return null;
 
+  console.log('listingInfo');
   console.log(currentListing);
+  console.log('buildingInfo');
+  console.log(buildingInfo);
+  console.log('buildingToSubwayInfo');
+  console.log(buildingToSubwayInfo);
   const headerTitle = `${currentListing.title}`;
 
   const bodyContent = (
     <div className={`h-[70vh] overflow-x-hidden overflow-y-scroll`}>
       <div className='flex justify-between text-xs text-neutral-700'>
-        <div>작성일: {dateFormatter(new Date(currentListing.createdAt))}</div>
-        <div>오늘: {dateFormatter(new Date())}</div>
+        <div className='md:text-sm'>
+          작성일: {dateFormatter(new Date(currentListing.createdAt))}
+        </div>
+        <div className='md:text-sm'>오늘: {dateFormatter(new Date())}</div>
       </div>
       <RentIndiPicture pictures={currentListing.imageSrc} />
       <hr />
@@ -100,12 +117,43 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({
           items={currentListing.feature}
           type={FEATURE}
         />
-        <RentIndiMap title='위치' coordinate={bulidingInfo.coordinate} />
+        <RentIndiMap title='위치' coordinate={buildingInfo.coordinate} />
+        <RentIndiSubway title='주변 지하철' subway={buildingToSubwayInfo} />
+        <RentIndiReview
+          title='리뷰'
+          subtitle='최신 리뷰부터 순차적이며, 최대 10개까지 표시됩니다.'
+        />
       </div>
     </div>
   );
 
-  let footerContent = <></>;
+  let footerContent = (
+    <div>
+      <div className='flex justify-evenly mb-4'>
+        <RentIndiFooterButton
+          color='#EC662A'
+          label='좋아요'
+          onClick={() => {
+            setLike(!like);
+          }}
+          icon={like ? BsHeartFill : BsHeart}
+        />
+        <RentIndiFooterButton
+          color='#9DCAEB'
+          label='공유하기'
+          onClick={() => {}}
+          icon={FaRegShareSquare}
+        />
+        <RentIndiFooterButton
+          color='#D0342C'
+          label='신고하기'
+          onClick={() => {}}
+          icon={RiAlarmWarningLine}
+        />
+      </div>
+      <Button onClick={() => {}} label={'판매자 연락하기'} />
+    </div>
+  );
 
   return (
     <Modal
@@ -116,6 +164,7 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({
       body={bodyContent}
       footer={footerContent}
       cardindividual
+      separator
     />
   );
 };
