@@ -65,10 +65,7 @@ const RentPage = () => {
 
   return (
     <div>
-      <RentIndividualModal
-        title='THIS IS RENT INDIVIDUAL PAGE TITLE'
-        individualListing={individualListing}
-      />
+      <RentIndividualModal />
       <RentPageBody
         listings={safeListings}
         mapListings={mapListings}

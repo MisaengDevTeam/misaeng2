@@ -106,7 +106,7 @@ model RoommateListing {
   selfstatus  String
   selfpet  String
   selfsmoke  String
-  selfbmti  String
+  selfmbti  String
   rmgender  String
   rmage  String
   rmstatus  String
@@ -114,11 +114,11 @@ model RoommateListing {
   rmsmoke  String
   city  String
   district  String
-
+  contact String[]
 
   
   createdAt DateTime @default(now())
-  updatedAt DateTime?
+  updatedAt String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

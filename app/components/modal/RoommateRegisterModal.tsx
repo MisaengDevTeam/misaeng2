@@ -26,6 +26,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import validateInput from '@/app/lib/validateInput';
 import { useSession } from 'next-auth/react';
+import dateFormatter from '@/app/lib/dateFormatter';
 
 interface RoommateRegisterModalProps {}
 
@@ -47,11 +48,15 @@ const ICONS: { [key: string]: IconType } = {
 const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
   const { data: session } = useSession();
   const currentUser = session?.user;
+  const uid = currentUser?.id;
+  const email = currentUser?.email;
 
   const roommateRegisterModal = useRoommateRegisterModal();
 
   const [step, setStep] = useState(ROOMMATE_REGISTER_STEP.CATEGORY);
   const [isLoading, setIsLoading] = useState(false);
+
+  const today = dateFormatter(new Date());
 
   const {
     register,
@@ -64,9 +69,9 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
     defaultValues: {
       category: '',
       roomtype: '',
-      price: 0,
+      price: null,
       length: '',
-      movedate: new Date().toString(),
+      movedate: today,
       description: '',
       본인성별: '',
       본인연령대: '',
@@ -81,8 +86,8 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
       상대흡연여부: '',
       city: null,
       district: '',
-      uid: currentUser?.id,
-      email: currentUser?.email,
+      uid: uid,
+      email: email,
       phone: '',
       kakaoId: '',
     },
@@ -164,7 +169,7 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
     }
     setIsLoading(true);
     axios
-      .post(`/api/roommateRegister`, data)
+      .post(`/api/roommateRegister`, { ...data, uid: uid, email: email })
       .then((response) => {
         console.log(response);
         toast.success('룸메이트 리스팅이 등록되었습니다!');

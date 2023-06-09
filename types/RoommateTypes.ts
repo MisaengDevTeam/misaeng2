@@ -154,3 +154,98 @@ export const ROOMMATE_ROOM_INFO = {
     '발코니',
   ],
 };
+
+export const SEARCH_TYPES = {
+  CATEGORY: [
+    { label: '룸메 찾아요', value: '룸메 찾아요' },
+    { label: '방 찾아요', value: '방 찾아요' },
+    { label: '같이 방 찾아요', value: '같이 방 찾아요' },
+  ],
+
+  GENDER: [
+    { label: '남자', value: '남자' },
+    { label: '여자', value: '여자' },
+  ],
+  STATUS: [
+    { label: '학생', value: '학생' },
+    { label: '직장인', value: '직장인' },
+    { label: '비공개', value: '비공개' },
+  ],
+  ROOMTYPE: [
+    { label: 'MasterBedroom', value: 'MasterBedroom' },
+    { label: 'Second', value: 'Second' },
+    { label: 'Flexed', value: 'Flexed' },
+    { label: 'Other', value: 'Other' },
+  ],
+  LENGTH: [
+    { label: '단기 (주 단위)', value: 'short' },
+    { label: '중기 (월 단위)', value: 'mid' },
+    { label: '장기 (연 단위)', value: 'long' },
+  ],
+  AGE: [
+    { label: '19-23세', value: '19-23세' },
+    { label: '24-28세', value: '24-28세' },
+    { label: '29-33세', value: '29-33세' },
+    { label: '34-38세', value: '34-38세' },
+    { label: '39-43세', value: '39-43세' },
+    { label: '44-49세', value: '44-49세' },
+    { label: '50세이상', value: '50세이상' },
+  ],
+  PET: [
+    { label: '강아지', value: '강아지' },
+    { label: '고양이', value: '고양이' },
+    { label: '그 외', value: '그 외' },
+    { label: '없음', value: '없음' },
+  ],
+  SMOKE: [
+    { label: '흡연', value: '흡연' },
+    { label: '비흡연', value: '비흡연' },
+  ],
+  MBTI: [
+    { label: 'ENTP', value: 'ENTP' },
+    { label: 'ESTP', value: 'ESTP' },
+    { label: 'ESFP', value: 'ESFP' },
+    { label: 'ENFP', value: 'ENFP' },
+    { label: 'INTP', value: 'INTP' },
+    { label: 'ISTP', value: 'ISTP' },
+    { label: 'ISFP', value: 'ISFP' },
+    { label: 'INFP', value: 'INFP' },
+    { label: 'ESFJ', value: 'ESFJ' },
+    { label: 'ENFJ', value: 'ENFJ' },
+    { label: 'ENTJ', value: 'ENTJ' },
+    { label: 'ESTJ', value: 'ESTJ' },
+    { label: 'ISFJ', value: 'ISFJ' },
+    { label: 'INFJ', value: 'INFJ' },
+    { label: 'INTJ', value: 'INTJ' },
+    { label: 'ISTJ', value: 'ISTJ' },
+  ],
+  CITY: [
+    { label: '', value: '' },
+    { label: '', value: '' },
+    { label: '', value: '' },
+  ],
+  NEIGHBORHOOD: [
+    { label: '', value: '' },
+    { label: '', value: '' },
+    { label: '', value: '' },
+  ],
+};
+
+export const MBTI_TYPE = {
+  ENTP: '뜨거운 논쟁을 즐기는 변론가',
+  ESTP: '모험을 즐기는 사업가',
+  ESFP: '자유로운 영혼의 연예인',
+  ENFP: '재기발랄한 활동가',
+  INTP: '논리적인 사색가',
+  ISTP: '만능재주꾼',
+  ISFP: '호기심 많은 예술가',
+  INFP: '열정적인 중재자',
+  ESFJ: '사교적 외교관',
+  ENFJ: '정의로운 사회운동가',
+  ENTJ: '대담한 통솔자',
+  ESTJ: '엄격한 관리자',
+  ISFJ: '용감한 수호자',
+  INFJ: '선의의 옹호자',
+  INTJ: '용의주도한 전략가',
+  ISTJ: '청렴결백한 논리주의자',
+};

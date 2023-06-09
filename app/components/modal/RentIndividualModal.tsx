@@ -28,15 +28,9 @@ import { RiAlarmWarningLine } from 'react-icons/ri';
 import RentIndiFooterButton from './rentindividual/RentIndiFooterButton';
 import RentIndiDetail from './rentindividual/RentIndiDetail';
 
-interface RentRegisterModalProps {
-  title: string;
-  individualListing: any;
-}
+interface RentRegisterModalProps {}
 
-const RentRegisterModal: React.FC<RentRegisterModalProps> = ({
-  title,
-  individualListing,
-}) => {
+const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
   const [currentListing, setCurrentListing] = useState<RentListing | null>(
     null
   );

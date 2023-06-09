@@ -11,70 +11,61 @@ export async function POST(request: Request) {
     length,
     movedate,
     description,
-    본인성별,
-    본인연령대,
-    본인학생,
-    본인반려동물,
-    본인흡연여부,
-    본인MBTI,
-    상대성별,
-    상대연령대,
-    상대학생,
-    상대반려동물,
-    상대흡연여부,
+    본인성별: selfgender,
+    본인연령대: selfage,
+    본인학생: selfstatus,
+    본인반려동물: selfpet,
+    본인흡연여부: selfsmoke,
+    본인MBTI: selfmbti,
+    상대성별: rmgender,
+    상대연령대: rmage,
+    상대학생: rmstatus,
+    상대반려동물: rmpet,
+    상대흡연여부: rmsmoke,
     city,
     district,
     email,
-    userId: uid,
+    kakaoId,
+    phone,
+
+    uid: userId,
   } = body;
 
-  const resListing = {
-    category,
-    roomtype,
-    price,
-    length,
-    movedate,
-    description,
-    본인성별,
-    본인연령대,
-    본인학생,
-    본인반려동물,
-    본인흡연여부,
-    본인MBTI,
-    상대성별,
-    상대연령대,
-    상대학생,
-    상대반려동물,
-    상대흡연여부,
-    city,
-    district,
-    email,
-    uid,
-  };
+  // console.log(uid, email);
 
-  // const user = await prisma.roommateListing.create({
-  //   data: {
-  //     userId String @db.ObjectId
-  //     category String
-  //     city String
-  //     price Int
-  //     roomType String
-  //     moveDate DateTime?
-  //     length String
-  //     utility Boolean
-  //     description String
-  //     amenity String[]
-  //     feature String[]
-  //     imageSrc String[]
-  //     ownerPre String[]
-  //     roommatePre String[]
-  //     coordinate Int[]
-  //     contact String[]
-  //     district String
-  //     createdAt DateTime @default(now())
-  //     updatedAt DateTime?
-  //   },
-  // });
+  let roommateListing;
 
-  return NextResponse.json(resListing);
+  await prisma.roommateListing
+    .create({
+      data: {
+        userId,
+        category,
+        roomtype,
+        price: parseInt(price),
+        length,
+        movedate,
+        description,
+        selfgender,
+        selfage,
+        selfstatus,
+        selfpet,
+        selfsmoke,
+        selfmbti,
+        rmgender,
+        rmage,
+        rmstatus,
+        rmpet,
+        rmsmoke,
+        city,
+        district,
+        contact: [email, phone, kakaoId],
+      },
+    })
+    .then((res) => {
+      roommateListing = res;
+      console.log(res);
+    })
+    .catch((error) => console.log(error));
+
+  return NextResponse.json(roommateListing);
 }
