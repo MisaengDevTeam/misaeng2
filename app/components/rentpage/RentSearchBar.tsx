@@ -2,32 +2,26 @@
 
 import { FieldValues, useForm, SubmitHandler } from 'react-hook-form';
 
-import RentSearchSelect from '../inputs/rentsearch/RentSearchSelect';
-import RentSearchButton from '../inputs/rentsearch/RentSearchButton';
+import SearchSelect from '../inputs/search/SearchSelect';
+import SearchButton from '../inputs/search/SearchButton';
 import { SEARCH_OPTIONS } from '@/types/RentTypes';
 import axios from 'axios';
 import { useState } from 'react';
 
-interface RentSearchBarProps {
+interface SearchBarProps {
   isSearchOn: boolean;
   setSafeListings: any;
   setMapListings: any;
 }
 
-const RentSearchBar: React.FC<RentSearchBarProps> = ({
+const SearchBar: React.FC<SearchBarProps> = ({
   isSearchOn,
   setSafeListings,
   setMapListings,
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const {
-    handleSubmit,
-    setValue,
-    watch,
-    reset,
-    formState: { errors },
-  } = useForm<FieldValues>({
+  const { handleSubmit, setValue } = useForm<FieldValues>({
     defaultValues: {
       rentMinPrice: null,
       bed: null,
@@ -89,45 +83,45 @@ ${isSearchOn ? 'opacity-100 h-auto w-full' : 'opacity-0 h-[0px] w-[0px]'}
             $
           </label>
         </div>
-        <RentSearchSelect
+        <SearchSelect
           placeholder={'침실'}
           options={SEARCH_OPTIONS.bed}
           onChange={(value) => {
             setCustomValue('bed', value);
           }}
         />
-        <RentSearchSelect
+        <SearchSelect
           placeholder={'화장실'}
           options={SEARCH_OPTIONS.bath}
           onChange={(value) => setCustomValue('bath', value)}
         />
-        <RentSearchSelect
+        <SearchSelect
           placeholder={'기간'}
           options={SEARCH_OPTIONS.category}
           onChange={(value) => setCustomValue('category', value)}
         />
-        <RentSearchSelect
+        <SearchSelect
           placeholder={'지하철'}
           disabled
           multiple
           options={SEARCH_OPTIONS.subway}
           onChange={(value) => setCustomValue('subway', value)}
         />
-        <RentSearchSelect
+        <SearchSelect
           placeholder={'평점'}
           disabled
           lastItemToHide
           options={SEARCH_OPTIONS.review}
           onChange={(value) => setCustomValue('review', value)}
         />
-        <RentSearchSelect
+        <SearchSelect
           placeholder={'중개비'}
           disabled
           lastItemToHide
           options={SEARCH_OPTIONS.broker}
           onChange={(value) => setCustomValue('broker', value)}
         />
-        <RentSearchButton
+        <SearchButton
           disabled={isLoading}
           label='검색'
           onClick={handleSubmit(onSubmit)}
@@ -136,4 +130,4 @@ ${isSearchOn ? 'opacity-100 h-auto w-full' : 'opacity-0 h-[0px] w-[0px]'}
     </div>
   );
 };
-export default RentSearchBar;
+export default SearchBar;

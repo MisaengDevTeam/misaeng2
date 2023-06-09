@@ -3,26 +3,21 @@
 import { useSession } from 'next-auth/react';
 import Modal from './Modal';
 import useRentIndividualModal from '../hooks/useRentIndividualModal';
-import { MouseEvent, useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '../Button';
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import axios from 'axios';
-import toast from 'react-hot-toast';
-import LoadingScreen from '../LoadingScreen';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { RentListing } from '@prisma/client';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import Image from 'next/image';
 import RentIndiPicture from './rentindividual/RentIndiPicture';
 import RentIndiBasic from './rentindividual/RentIndiBasic';
 import RentIndiDescription from './rentindividual/RentIndiDescription';
 import RentIndiAmenity from './rentindividual/RentIndiAmenity';
 
-import { AMENITY, FEATURE, IBuildingToSubwayInfo } from '@/types/RentTypes';
+import { AMENITY, FEATURE } from '@/types/RentTypes';
 import dateFormatter from '@/app/lib/dateFormatter';
-import MapComponent from '../Map';
 import RentIndiMap from './rentindividual/RentIndiMap';
 import RentIndiSubway from './rentindividual/RentIndiSubway';
 import RentIndiReview from './rentindividual/RentIndiReview';

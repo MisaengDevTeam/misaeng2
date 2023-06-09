@@ -11,7 +11,7 @@ interface RentSearchSelectProps {
   disabled?: boolean;
 }
 
-const RentSearchSelect: React.FC<RentSearchSelectProps> = ({
+const SearchSelect: React.FC<RentSearchSelectProps> = ({
   placeholder,
   lastItemToHide,
   options,
@@ -26,9 +26,8 @@ const RentSearchSelect: React.FC<RentSearchSelectProps> = ({
       isDisabled={disabled}
       isSearchable={false}
       isClearable={false}
-      className={`${
-        lastItemToHide ? 'hidden lg:block' : 'block'
-      }  text-[12px] sm:text-sm`}
+      className={`
+      ${lastItemToHide ? 'hidden lg:block' : 'block'}  text-[12px] sm:text-sm`}
       classNames={{
         control: () => `border-2 text-[12px] sm:text-sm truncate`,
         input: () => `overflow-hidden text-[12px] `,
@@ -49,4 +48,4 @@ const RentSearchSelect: React.FC<RentSearchSelectProps> = ({
     />
   );
 };
-export default RentSearchSelect;
+export default SearchSelect;

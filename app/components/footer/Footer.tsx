@@ -21,7 +21,7 @@ const Footer = ({}) => {
       <FooterCopyright
         address={'20 River Rd, New York, NY, 10044'}
         email={'misaeng.dev@gmail.com'}
-        copyright={'ⓒ2022, Misaeng, Inc, All Rights Reserved'}
+        copyright={'ⓒ 2023, Misaeng, Inc, All Rights Reserved'}
       />
     </div>
   );
