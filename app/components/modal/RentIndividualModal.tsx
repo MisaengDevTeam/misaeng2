@@ -137,7 +137,6 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({
         <RentIndiFooterButton
           color='#9DCAEB'
           label='공유하기'
-          onClick={() => {}}
           icon={FaRegShareSquare}
         />
         <RentIndiFooterButton
