@@ -26,13 +26,13 @@ const RentSearchSelect: React.FC<RentSearchSelectProps> = ({
       isDisabled={disabled}
       isSearchable={false}
       isClearable={false}
-      className={` ${
+      className={`${
         lastItemToHide ? 'hidden lg:block' : 'block'
       }  text-[12px] sm:text-sm`}
       classNames={{
-        control: () => `border-2 text-[12px] sm:text-sm `,
+        control: () => `border-2 text-[12px] sm:text-sm truncate`,
         input: () => `overflow-hidden text-[12px] `,
-        option: () => `text-[yuj12px] hover:bg-orange-200`,
+        option: () => `text-[12px] hover:bg-orange-200 truncate`,
       }}
       onChange={(value) => {
         onChange(value.value);

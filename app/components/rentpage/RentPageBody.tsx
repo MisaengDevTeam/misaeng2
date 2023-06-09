@@ -1,7 +1,6 @@
 'use client';
 
 import { RentListing } from '@prisma/client';
-import Image from 'next/image';
 import Map from '../Map';
 import { useState } from 'react';
 import {
@@ -9,8 +8,6 @@ import {
   MdOutlineKeyboardDoubleArrowDown,
 } from 'react-icons/md';
 import { MapListing } from '@/types/RentTypes';
-import useRentIndividualModal from '../hooks/useRentIndividualModal';
-import axios from 'axios';
 import { TbHomeSearch } from 'react-icons/tb';
 import { IoClose } from 'react-icons/io5';
 import RentListingCard from './RentListingCard';

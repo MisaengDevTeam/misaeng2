@@ -9,12 +9,14 @@ interface RentIndiSubwayProps {
 }
 
 const RentIndiSubway: React.FC<RentIndiSubwayProps> = ({ title, subway }) => {
+  const sortedSubway = subway!.sort((a, b) => a.distance - b.distance);
+
   return (
     <div className='flex flex-col gap-2'>
       <div className='font-semibold text-lg'>{title}</div>
       <div className='flex flex-col gap-1'>
         {subway &&
-          subway.map((station) => (
+          sortedSubway.map((station) => (
             <div key={station._id.toString()}>
               {station.lines.length != 0 && (
                 <div>
@@ -23,12 +25,7 @@ const RentIndiSubway: React.FC<RentIndiSubwayProps> = ({ title, subway }) => {
               )}
               <div className='flex flex-row gap-1'>
                 {station.lines.map((line) => (
-                  <div
-                    className={`${subwayMarker(line)}${station.lines.indexOf(
-                      line
-                    )}`}
-                    key={line}
-                  >
+                  <div className={`${subwayMarker(line)}}`} key={line}>
                     {line}
                   </div>
                 ))}

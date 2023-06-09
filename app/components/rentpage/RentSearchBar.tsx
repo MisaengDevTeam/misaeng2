@@ -1,20 +1,12 @@
 'use client';
 
-import {
-  RegisterOptions,
-  FieldValues,
-  UseFormRegisterReturn,
-  useForm,
-  SubmitHandler,
-} from 'react-hook-form';
+import { FieldValues, useForm, SubmitHandler } from 'react-hook-form';
 
-import Input from '../inputs/Input';
-import Select from 'react-select';
 import RentSearchSelect from '../inputs/rentsearch/RentSearchSelect';
-import Button from '../Button';
 import RentSearchButton from '../inputs/rentsearch/RentSearchButton';
 import { SEARCH_OPTIONS } from '@/types/RentTypes';
 import axios from 'axios';
+import { useState } from 'react';
 
 interface RentSearchBarProps {
   isSearchOn: boolean;
@@ -27,8 +19,9 @@ const RentSearchBar: React.FC<RentSearchBarProps> = ({
   setSafeListings,
   setMapListings,
 }) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const {
-    register,
     handleSubmit,
     setValue,
     watch,
@@ -54,32 +47,22 @@ const RentSearchBar: React.FC<RentSearchBarProps> = ({
     });
   };
 
-  const rentMinPrice = watch('rentMinPrice');
-  const bed = watch('bed');
-  const bath = watch('bath');
-  const category = watch('category');
-  const subway = watch('subway');
-  const review = watch('review');
-  const broker = watch('broker');
-
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    setIsLoading(true);
     try {
       axios
         .post(`/api/rentListing/rentListing`, { rentOption: data })
         .then((response) => {
-          // console.log(response);
           setSafeListings?.(response.data.searchedListing);
           setMapListings?.(response.data.searchedMapListing);
+        })
+        .catch((error) => console.log(error))
+        .finally(() => {
+          setIsLoading(false);
         });
-    } catch (error) {}
-
-    // console.log({ rentOption: data });
-    // console.log(rentMinPrice.target.value);
-    // console.log(bed.value);
-    // console.log(bath.value);
-    // console.log(category.value);
-    // console.log(subway.value);
-    // console.log(review.value);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -88,7 +71,7 @@ const RentSearchBar: React.FC<RentSearchBarProps> = ({
 ${isSearchOn ? 'opacity-100 h-auto w-full' : 'opacity-0 h-[0px] w-[0px]'}
 `}
     >
-      <div className='grid xl:flex grid-cols-3 lg:grid-cols-4 xl:flex-row justify-center pl-[56px] md:pl-[72px] py-4 pr-4 gap-2 md:gap-x-4 md:gap-y-2'>
+      <div className='grid grid-cols-3 lg:grid-cols-4 justify-center pl-[56px] md:pl-[72px] py-4 pr-4 gap-2 md:gap-x-4 md:gap-y-2 xl:gap-x-8 2xl:flex 2xl:flex-row 2xl:gap-2 3xl:gap-3'>
         <div className='relative w-auto h-auto'>
           <input
             type='number'
@@ -144,7 +127,11 @@ ${isSearchOn ? 'opacity-100 h-auto w-full' : 'opacity-0 h-[0px] w-[0px]'}
           options={SEARCH_OPTIONS.broker}
           onChange={(value) => setCustomValue('broker', value)}
         />
-        <RentSearchButton label='검색' onClick={handleSubmit(onSubmit)} />
+        <RentSearchButton
+          disabled={isLoading}
+          label='검색'
+          onClick={handleSubmit(onSubmit)}
+        />
       </div>
     </div>
   );
