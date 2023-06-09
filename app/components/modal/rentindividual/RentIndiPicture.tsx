@@ -29,6 +29,7 @@ const RentIndiPicture: React.FC<RentIndiPictureProps> = ({ pictures }) => {
               <Image
                 src={image}
                 fill
+                sizes='200'
                 className='object-contain fill h-full w-full'
                 alt='rent_image'
               />

@@ -11,7 +11,10 @@ import {
 import { MapListing } from '@/types/RentTypes';
 import useRentIndividualModal from '../hooks/useRentIndividualModal';
 import axios from 'axios';
+import { TbHomeSearch } from 'react-icons/tb';
+import { IoClose } from 'react-icons/io5';
 import RentListingCard from './RentListingCard';
+import RentSearchBar from './RentSearchBar';
 
 interface RentPageBodyProps {
   listings: RentListing[];
@@ -31,6 +34,7 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
   setIndividualListing,
 }) => {
   const [isListingOn, setIsListingOn] = useState<boolean>(false);
+  const [isSearchOn, setIsSearchOn] = useState<boolean>(false);
 
   return (
     <div className='relative flex flex-row'>
@@ -45,6 +49,20 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
           mapListings={mapListings}
           setSafeListings={setSafeListings}
         />
+        <RentSearchBar isSearchOn={isSearchOn} />
+        <div
+          onClick={() => setIsSearchOn(!isSearchOn)}
+          className={`absolute flex justify-center items-center h-[36px] bg-[#EC662A] left-3 md:left-5 top-3 md:top-5 rounded-full border-[2px] border-[#FFFFFF] bg-[#EC662A] gap-1 cursor-pointer
+        ${isSearchOn ? 'w-[36px]' : 'w-[72px]'}
+        `}
+        >
+          {isSearchOn ? (
+            <IoClose size={20} color='#fff' />
+          ) : (
+            <TbHomeSearch size={20} color='#fff' />
+          )}
+          {isSearchOn ? '' : <p className='text-[#fff] text-sm'>검색</p>}
+        </div>
       </div>
       <div
         className={`sm:relative sm:flex w-full sm:w-[50%] lg:w-[45%] sm:h-[70vh] flex flex-col bg-white

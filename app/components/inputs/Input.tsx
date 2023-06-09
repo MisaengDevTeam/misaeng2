@@ -73,6 +73,7 @@ const Input: React.FC<InputProps> = ({
         `}
       />
       <label
+        htmlFor={id}
         className={`absolute left-4 text-md duration-150 transform -translate-y-3 z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 
         ${
           small

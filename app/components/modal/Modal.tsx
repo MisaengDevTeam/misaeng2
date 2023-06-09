@@ -58,13 +58,17 @@ const Modal: React.FC<ModalProps> = ({
           <div className='relative flex flex-col w-full bg-white outline-none focus:outline-none translate h-full lg:h-auto md:h-auto border-0 rounded-lg shadow-lg'>
             {/* HEADER */}
             <div
-              className={`relative flex  items-center p-2 md:p-6 rounded-t-lg border-b h-[5%] sm:h-auto
+              className={`relative flex items-center p-2 md:p-6 rounded-t-lg border-b h-[5%] sm:h-auto truncate
             ${rentindividual ? 'justify-start' : 'justify-center'}
             `}
             >
               <div
-                className={`text-lg font-semibold
-              ${rentindividual ? 'w-[85%] pl-4' : 'w-full'}
+                className={`text-lg font-semibold truncate
+              ${
+                rentindividual
+                  ? 'w-[85%] pl-4 text-start'
+                  : 'w-full text-center'
+              }
               `}
               >
                 {title}
@@ -75,8 +79,8 @@ const Modal: React.FC<ModalProps> = ({
             </div>
             {/* BODY */}
             <div
-              className={`relative flex-auto h-77%]
-            ${rentindividual ? 'py-2 px-2' : 'py-2 px-4'}
+              className={`relative flex-auto h-[77%]
+            ${rentindividual ? 'py-2 px-2' : 'p-4 sm:p-6'}
             `}
             >
               {body}
@@ -87,7 +91,11 @@ const Modal: React.FC<ModalProps> = ({
               </div>
             )}
             {/* FOOTER */}
-            <div className='flex flex-col gap-4 px-6 mb-2 h-[15%]'>
+            <div
+              className={`flex flex-col gap-4 h-[15%] 
+            ${rentindividual ? 'mb-2 px-6' : 'mb-4 px-4 sm:px-6 sm:mb-6'}
+            `}
+            >
               {footer}
             </div>
           </div>

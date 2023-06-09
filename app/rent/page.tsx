@@ -52,7 +52,7 @@ const RentPage = () => {
 
   // console.log(router);
 
-  // rentIndividualModal.onOpen();
+  if (rentlistingid) console.log('hi');
 
   if (isLoading) {
     return <LoadingScreen />; // You can replace this with a loading spinner or similar
@@ -64,20 +64,14 @@ const RentPage = () => {
         title='THIS IS RENT INDIVIDUAL PAGE TITLE'
         individualListing={individualListing}
       />
-
-      {/* <Searchbar /> */}
-      {
-        <RentPageBody
-          listings={safeListings}
-          mapListings={mapListings}
-          setSafeListings={setSafeListings}
-          setDefaultListing={setDefaultListing}
-          rentIndividualOpen={rentIndividualModal.onOpen}
-          setIndividualListing={setIndividualListing}
-        />
-      }
-
-      {/* <EmptyState title='렌트찾기' /> */}
+      <RentPageBody
+        listings={safeListings}
+        mapListings={mapListings}
+        setSafeListings={setSafeListings}
+        setDefaultListing={setDefaultListing}
+        rentIndividualOpen={rentIndividualModal.onOpen}
+        setIndividualListing={setIndividualListing}
+      />
     </div>
   );
 };
