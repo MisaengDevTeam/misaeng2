@@ -52,7 +52,7 @@ const RentPage = () => {
 
   // console.log(router);
 
-  if (rentlistingid) console.log('hi');
+  // if (rentlistingid) console.log('hi');
 
   if (isLoading) {
     return <LoadingScreen />; // You can replace this with a loading spinner or similar
@@ -71,6 +71,7 @@ const RentPage = () => {
         setDefaultListing={setDefaultListing}
         rentIndividualOpen={rentIndividualModal.onOpen}
         setIndividualListing={setIndividualListing}
+        setMapListings={setMapListings}
       />
     </div>
   );

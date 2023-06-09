@@ -20,6 +20,7 @@ interface RentPageBodyProps {
   listings: RentListing[];
   mapListings: MapListing;
   setSafeListings: any;
+  setMapListings: any;
   rentIndividualOpen: () => void;
   setDefaultListing: () => void;
   setIndividualListing: (listingInfo: any) => void;
@@ -32,6 +33,7 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
   setDefaultListing,
   rentIndividualOpen,
   setIndividualListing,
+  setMapListings,
 }) => {
   const [isListingOn, setIsListingOn] = useState<boolean>(false);
   const [isSearchOn, setIsSearchOn] = useState<boolean>(false);
@@ -49,7 +51,11 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
           mapListings={mapListings}
           setSafeListings={setSafeListings}
         />
-        <RentSearchBar isSearchOn={isSearchOn} />
+        <RentSearchBar
+          isSearchOn={isSearchOn}
+          setSafeListings={setSafeListings}
+          setMapListings={setMapListings}
+        />
         <div
           onClick={() => setIsSearchOn(!isSearchOn)}
           className={`absolute flex justify-center items-center h-[36px] bg-[#EC662A] left-3 md:left-5 top-3 md:top-5 rounded-full border-[2px] border-[#FFFFFF] bg-[#EC662A] gap-1 cursor-pointer

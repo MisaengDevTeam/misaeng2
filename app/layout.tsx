@@ -36,6 +36,7 @@ export default async function RootLayout({
             <RentRegisterModal />
             <RoommateRegisterModal />
             <Navbar />
+            <div className='w-full h-[65px] sm:h-[89px] md:h-[81px]'></div>
             {children}
             <Footer />
           </SessProvider>

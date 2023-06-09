@@ -85,7 +85,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const { rentId, buildingId } = body;
+  const { rentId, buildingId, rentOption } = body;
 
   const client = await mgClientPromise;
   const rentCollection = client.db('misaeng').collection('RentListing');
@@ -167,6 +167,119 @@ export async function POST(request: Request) {
       buildingInfo,
       buildingToSubwayInfo,
     });
+  }
+
+  if (rentOption) {
+    const {
+      bed: bedCount,
+      bath: bathCount,
+      rentMinPrice: price,
+      review: generalRate,
+      broker,
+      category,
+      subway,
+    } = rentOption;
+
+    const searchedMapListing: Record<string, MapListingItem> = {};
+
+    let query: {
+      bedCount?: string;
+      bathCount?: string;
+      price?: { $gt: number };
+      generalRate?: { $gt: number };
+      broker?: string;
+      category?: string;
+      subway?: string;
+    } = {};
+
+    if (bedCount != null) {
+      query.bedCount = bedCount;
+    }
+    if (bathCount != null) {
+      query.bathCount = bathCount;
+    }
+    if (price != null) {
+      query.price = { $gt: parseInt(price) };
+    }
+    if (generalRate != null) {
+      // query the review collection later
+    }
+    if (category != null) {
+      query.category = category;
+    }
+    if (broker != null) {
+      query.broker = broker;
+    }
+    if (subway != null) {
+      // query the buildingToSubway collection later
+    }
+
+    const searchedListing = await rentCollection
+      .find(query, {
+        projection: {
+          _id: 1,
+          amenity: 1,
+          bathCount: 1,
+          bedCount: 1,
+          broker: 1,
+          buildingId: 1,
+          category: 1,
+          contact: 1,
+          createdAt: 1,
+          description: 1,
+          feature: 1,
+          imageSrc: 1,
+          length: 1,
+          moveDate: 1,
+          price: 1,
+          title: 1,
+          userId: 1,
+          utility: 1,
+        },
+      })
+      .toArray();
+
+    const rawData = await rentCollection
+      .find(query, { projection: { buildingId: 1, price: 1 } })
+      .toArray();
+
+    const uniqueBids = new Set(rawData.map((rental) => rental.buildingId));
+
+    const buildingData = await Promise.all(
+      Array.from(uniqueBids).map(async (bid) => {
+        const building = await buildingCollection.findOne({
+          _id: new ObjectId(bid),
+        });
+        return {
+          bid: bid.toString(),
+          coor: building?.coordinate,
+          neighborhoodOne: building?.neighborhoodOne,
+          neighborhoodTwo: building?.neighborhoodTwo,
+        };
+      })
+    );
+
+    const bidToCoorMap: CoorMap = {};
+    buildingData.forEach((item) => {
+      bidToCoorMap[item.bid] = item.coor;
+    });
+
+    rawData.forEach((item) => {
+      const { buildingId, price } = item;
+      if (searchedMapListing[buildingId]) {
+        searchedMapListing[buildingId]['price'].push(price);
+      } else {
+        searchedMapListing[buildingId] = {
+          buildingId,
+          price: [parseInt(price)],
+          coordinate: bidToCoorMap[buildingId],
+        };
+      }
+    });
+
+    // console.log(bedCount);
+    // console.log(rentOption);
+    return NextResponse.json({ searchedListing, searchedMapListing });
   }
   return NextResponse.json({});
 }

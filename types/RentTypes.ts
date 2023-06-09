@@ -79,3 +79,58 @@ interface Building {
 export interface MapListing {
   [key: string]: Building;
 }
+
+export const SEARCH_OPTIONS = {
+  bed: [
+    { label: 'Studio', value: 'Studio' },
+    { label: '1 Bedroom', value: '1 Bedroom' },
+    { label: '2 Bedroom', value: '2 Bedroom' },
+    { label: '3 Bedroom', value: '3 Bedroom' },
+    { label: '4+ Bedroom', value: '4+ Bedroom' },
+  ],
+  bath: [
+    { label: 'Share', value: 'Share' },
+    { label: '1 Bathroom', value: '1 Bathroom' },
+    { label: '2 Bathroom', value: '2 Bathroom' },
+    { label: '3+ Bathroom', value: '3+ Bathroom' },
+  ],
+  subway: [
+    { label: '1', value: '1' },
+    { label: '2', value: '2' },
+    { label: '3', value: '3' },
+    { label: '4', value: '4' },
+    { label: '5', value: '5' },
+    { label: '6', value: '6' },
+    { label: '7', value: '7' },
+    { label: 'A', value: 'A' },
+    { label: 'C', value: 'C' },
+    { label: 'E', value: 'E' },
+    { label: 'B', value: 'B' },
+    { label: 'D', value: 'D' },
+    { label: 'F', value: 'F' },
+    { label: 'M', value: 'M' },
+    { label: 'G', value: 'G' },
+    { label: 'L', value: 'L' },
+    { label: 'J', value: 'J' },
+    { label: 'Z', value: 'Z' },
+    { label: 'N', value: 'N' },
+    { label: 'Q', value: 'Q' },
+    { label: 'R', value: 'R' },
+    { label: 'W', value: 'W' },
+  ],
+  category: [
+    { label: '단기 렌트', value: '단기 렌트' },
+    { label: '중기 렌트', value: '중기 렌트' },
+    { label: '장기 렌트', value: '장기 렌트' },
+  ],
+  review: [
+    { label: '1점 이상', value: '1' },
+    { label: '2점 이상', value: '2' },
+    { label: '3점 이상', value: '3' },
+    { label: '4점 이상', value: '4' },
+  ],
+  broker: [
+    { label: '중개비 있음', value: '중개비 있음' },
+    { label: '중개비 없음', value: '중개비 없음' },
+  ],
+};

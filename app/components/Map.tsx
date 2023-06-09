@@ -2,7 +2,7 @@
 
 import mapboxgl, { Marker, Popup } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { MapListing } from '@/types/RentTypes';
 import axios from 'axios';
 
@@ -27,12 +27,14 @@ const MapComponent = memo<MapProps>(function MapComponent({
   setSafeListings,
 }) {
   const mapContainer = useRef<any>(null);
-
   const map = useRef<mapboxgl.Map | any>(null);
+  const markersRef = useRef<mapboxgl.Marker[]>([]); // Store the markers here
+  const popupsRef = useRef<mapboxgl.Popup[]>([]); // Store the popups here
+
   mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_GL_ACCESS_TOKEN ?? '';
 
   useEffect(() => {
-    if (showRange) {
+    if (!map.current) {
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
         style: 'mapbox://styles/mapbox/streets-v12',
@@ -40,6 +42,27 @@ const MapComponent = memo<MapProps>(function MapComponent({
         center: initCoordinate,
         zoom: 12,
       });
+
+      const nav = new mapboxgl.NavigationControl({
+        visualizePitch: true,
+      });
+      map.current.addControl(nav, rentmain ? 'bottom-right' : 'top-right');
+    }
+
+    // console.log(mapListings);
+    if (showRange && map.current) {
+      map.current = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: 'mapbox://styles/mapbox/streets-v12',
+        pitchWithRotate: false,
+        center: initCoordinate,
+        zoom: 12,
+      });
+
+      const nav = new mapboxgl.NavigationControl({
+        visualizePitch: true,
+      });
+      map.current.addControl(nav, rentmain ? 'bottom-right' : 'top-right');
       // Add marker
       const customMarker = document.createElement('div');
       customMarker.style.width = '140px';
@@ -69,15 +92,7 @@ const MapComponent = memo<MapProps>(function MapComponent({
       // Add zoom event listener to update marker size on zoom
       map.current.on('zoom', updateMarkerSize);
     }
-    if (rentmain && !map.current) {
-      map.current = new mapboxgl.Map({
-        container: mapContainer.current,
-        style: 'mapbox://styles/mapbox/streets-v12',
-        pitchWithRotate: false,
-        center: initCoordinate,
-        zoom: 12,
-      });
-
+    if (rentmain) {
       const getBuildingData = async (buildingId: string) => {
         try {
           const response = await axios.post(`/api/rentListing/rentListing`, {
@@ -89,44 +104,13 @@ const MapComponent = memo<MapProps>(function MapComponent({
         }
       };
 
-      // if (showRange) {
-      //   // Add marker
-      //   const customMarker = document.createElement('div');
-      //   customMarker.style.width = '140px';
-      //   customMarker.style.height = '140px';
-      //   customMarker.style.borderRadius = '50%';
-      //   customMarker.style.background = 'rgb(236, 102, 42, 0.7)';
-
-      //   new Marker(customMarker).setLngLat(initCoordinate).addTo(map.current);
-
-      //   map.current.flyTo({
-      //     center: initCoordinate,
-      //     essential: true,
-      //     zoom: 13,
-      //   });
-
-      //   // map.current &&
-      //   //   map.current.on('load', () => {
-
-      //   //   });
-
-      //   // Update the size of the custom marker based on the zoom level
-      //   const updateMarkerSize = () => {
-      //     const zoom = map.current.getZoom();
-      //     const size = 140 * (1 / Math.pow(2, 13.5 - zoom));
-      //     customMarker.style.width = `${size}px`;
-      //     customMarker.style.height = `${size}px`;
-      //   };
-
-      //   // Set initial marker size
-      //   updateMarkerSize();
-
-      //   // Add zoom event listener to update marker size on zoom
-      //   map.current.on('zoom', updateMarkerSize);
-      // }
-
-      // if (rentmain) {
       if (mapListings) {
+        // Remove all the markers and popups
+        markersRef.current.forEach((marker) => marker.remove());
+        markersRef.current = [];
+        popupsRef.current.forEach((popup) => popup.remove());
+        popupsRef.current = [];
+
         Object.values(mapListings).forEach((building) => {
           // CREATE A MARKER
           const customMarker = new Image();
@@ -137,6 +121,7 @@ const MapComponent = memo<MapProps>(function MapComponent({
           const marker = new mapboxgl.Marker(customMarker)
             .setLngLat(building.coordinate)
             .addTo(map.current);
+          markersRef.current.push(marker);
 
           // CREATE A POPUP
           const alwaysVisiblePopup = new Popup({
@@ -156,6 +141,7 @@ const MapComponent = memo<MapProps>(function MapComponent({
             }`
           );
           alwaysVisiblePopup.setLngLat(building.coordinate).addTo(map.current);
+          popupsRef.current.push(alwaysVisiblePopup);
 
           // CREATE A CLICK TO VIEW BUILDING LISTING
           const getBuilding = async () => {
@@ -172,7 +158,6 @@ const MapComponent = memo<MapProps>(function MapComponent({
             .addEventListener('click', getBuilding);
         });
       }
-      // }
     }
   }, [
     hasnavi,
@@ -182,8 +167,6 @@ const MapComponent = memo<MapProps>(function MapComponent({
     setSafeListings,
     showRange,
   ]);
-
-  useEffect(() => {}, [initCoordinate, showRange]);
 
   return (
     <div
