@@ -246,7 +246,15 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
       default:
         return <div />;
     }
-  }, [step, setValue, categoryOptions, subCategoryOptions, register, errors]);
+  }, [
+    step,
+    setValue,
+    categoryOptions,
+    subCategoryOptions,
+    register,
+    errors,
+    currentUser,
+  ]);
 
   const footerContent = (
     <div className='flex flex-row justify-between gap-8'>
