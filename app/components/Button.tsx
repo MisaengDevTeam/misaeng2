@@ -29,7 +29,7 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       disabled={disabled}
       type={type}
-      className={`relative justify-center rounded-lg hover:bg-[#EC662A] hover:text-white transition w-full 
+      className={`relative justify-center rounded-lg hover:bg-[#EC662A] hover:text-white transition w-full h-full
       ${
         disabled
           ? 'cursor-not-allowed bg-gray-800 opacity-70'

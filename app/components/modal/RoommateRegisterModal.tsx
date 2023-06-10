@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import useRoommateRegisterModal from '../hooks/useRoommateRegisterModal';
 import Modal from './Modal';
 import {
@@ -159,9 +159,9 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
     setStep(newStep);
   };
 
-  function addSpace(str: string) {
+  const addSpace = useCallback((str: string) => {
     return str.slice(0, 2) + ' ' + str.slice(2);
-  }
+  }, []);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     if (step != ROOMMATE_REGISTER_STEP.CONTACT) {

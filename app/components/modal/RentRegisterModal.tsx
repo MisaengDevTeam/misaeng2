@@ -225,7 +225,6 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
       case 5:
         return (
           <RentModalPicture
-            imageSrc={pictures}
             onChange={(value) => setCustomValue('pictures', value)}
           />
         );

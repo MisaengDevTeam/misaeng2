@@ -77,7 +77,7 @@ const RoommatePageSearchBar: React.FC<RoommatePageSearchBarProps> = ({
         })
         .catch((error) => console.log(error))
         .finally(() => {
-          // setIsSearchbarOn(false); // Close Searchbar After Search
+          setIsSearchbarOn(false); // Close Searchbar After Search
           setIsLoading(false);
         });
     } catch (error) {

@@ -1,0 +1,28 @@
+if (step == 2) {
+    bodyContent = (
+      <div className='flex flex-col gap-2 md:gap-4'>
+        <Heading title='상품에 대해서 설명해주세요 (2/5)' />
+      </div>
+    );
+  }
+  if (step == 3) {
+    bodyContent = (
+      <div className='flex flex-col gap-2 md:gap-4'>
+        <Heading title='회원님의 대략적 위치를 알려주세요 (3/5)' />
+      </div>
+    );
+  }
+  if (step == 4) {
+    bodyContent = (
+      <div className='flex flex-col gap-2 md:gap-4'>
+        <Heading title='판매하시는 상품 사진을 올려주세요 (4/5)' />
+      </div>
+    );
+  }
+  if (step == 5) {
+    bodyContent = (
+      <div className='flex flex-col gap-2 md:gap-4'>
+        <Heading title='연락 방식을 선택해주세요 (5/5)' />
+      </div>
+    );
+  }

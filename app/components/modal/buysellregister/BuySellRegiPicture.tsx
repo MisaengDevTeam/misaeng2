@@ -1,24 +1,19 @@
 'use client';
 
-import Heading from '../../Heading';
-import Image from 'next/image';
-import { ChangeEvent, MouseEvent, useCallback, useRef, useState } from 'react';
-import { TbPhotoPlus } from 'react-icons/tb';
 import { resizeAdImage } from '@/app/lib/imageResizer';
-import Button from '../../Button';
+import { ChangeEvent, useCallback, useRef, useState } from 'react';
+import Heading from '../../Heading';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import ImagePreview from '../../ImagePreview';
 
-declare global {
-  var cloudinary: any;
-}
-
-interface RentModalPictureProps {
+interface BuySellRegiPictureProps {
   onChange: (value: File[] | string[]) => void;
 }
 
-const RentModalPicture: React.FC<RentModalPictureProps> = ({ onChange }) => {
+const BuySellRegiPicture: React.FC<BuySellRegiPictureProps> = ({
+  onChange,
+}) => {
   const [pictures, setPictures] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
 
@@ -69,11 +64,7 @@ const RentModalPicture: React.FC<RentModalPictureProps> = ({ onChange }) => {
   );
 
   return (
-    <div>
-      <Heading
-        title='렌트하시는 방의 사진을 보내주세요 (5/6)'
-        subtitle='사진은 미생 회원님의 핸드폰으로 찍어주신 사진으로도 충분합니다. 충분한 햇빛 또는 조명에서 가로 방향으로 촬영한 사진을 업로드해주시기 바랍니다.'
-      />
+    <>
       <div className='flex flex-col items-center'>
         <label
           className={`bg-[#EC662A] w-[50%] text-center py-2 my-4 rounded-xl text-white cursor-pointer shadow-md border-[2px] border-[#EC662A] transition 
@@ -108,7 +99,7 @@ const RentModalPicture: React.FC<RentModalPictureProps> = ({ onChange }) => {
           ))}
         </div>
       </DndProvider>
-    </div>
+    </>
   );
 };
-export default RentModalPicture;
+export default BuySellRegiPicture;
