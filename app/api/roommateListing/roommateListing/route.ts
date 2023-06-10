@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { ObjectId } from 'mongodb';
 import mgClientPromise from '@/app/lib/mongodb';
-import { MdQueryStats } from 'react-icons/md';
 
 export async function GET(request: Request) {
   const client = await mgClientPromise;
@@ -128,9 +127,7 @@ export async function POST(request: Request) {
       query.district = district;
     }
 
-    const searchedListings = await roommateCollection
-      .find(MdQueryStats)
-      .toArray();
+    const searchedListings = await roommateCollection.find(query).toArray();
     return NextResponse.json({ searchedListings });
   }
 }
