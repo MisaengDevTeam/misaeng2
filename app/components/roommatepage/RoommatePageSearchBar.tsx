@@ -35,7 +35,7 @@ const RoommatePageSearchBar: React.FC<RoommatePageSearchBarProps> = ({}) => {
 
   return (
     <div
-      className={`w-full h-auto shadow-sm bg-neutral-100 ${
+      className={`w-full h-auto shadow-sm bg-neutral-200  cursor-pointer hover:bg-neutral-100 transition ${
         isSearchbarOn ? 'pb-4' : 'pb-0'
       }`}
     >
