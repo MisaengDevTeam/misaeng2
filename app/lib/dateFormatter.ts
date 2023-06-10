@@ -3,6 +3,6 @@ export default function dateFormatter(date: Date): string {
   const day = String(date.getDate()).padStart(2, '0');
   const year = String(date.getFullYear());
 
-  const formattedDate = `${month}-${day}-${year}`;
+  const formattedDate = `${month}/${day}/${year}`;
   return formattedDate;
 }

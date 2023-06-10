@@ -69,16 +69,16 @@ const RoommateListingCard: React.FC<RoommateListingCardProps> = ({
         rentIndividualOpen();
         handleClick(id);
       }}
-      className='flex flex-col justify-center p-4 gap-2 w-full bg-white rounded-lg hover:shadow-lg transition cursor-pointer border'
+      className='flex flex-col justify-center p-3 gap-2 w-full bg-white rounded-lg hover:shadow-lg transition cursor-pointer border'
     >
       <div
-        className={`w-[60%] text-center text-[#fff] py-1/2 font-light text-[12px] rounded-full ${categoryColorizer(
+        className={`w-full text-center text-[#fff] py-1/2 font-light text-[12px] rounded-full ${categoryColorizer(
           category
         )} `}
       >
         {category}
       </div>
-      <div className='flex justify-center w-full relatvie'>
+      <div className='flex justify-center w-full relative'>
         <Image
           className='w-[100%] h-auto rounded-t-lg'
           width={0}

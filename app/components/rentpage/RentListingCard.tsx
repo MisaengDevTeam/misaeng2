@@ -55,17 +55,34 @@ const RentListingCard: React.FC<RentListingCardProps> = ({
       className='p-1 rounded-lg border-[1px] border-neutral-300 cursor-pointer group hover:border-[#EC662A]'
     >
       <div className='w-full relative overflow-hidden rounded-lg'>
-        {list.imageSrc.length != 1 ? (
+        <div className='relative '>
           <Image
-            src={list.imageSrc[0]}
-            width={200}
-            height={120}
-            className='rounded-lg object-cover h-[180px] w-full group-hover:scale-110 transition'
+            src={
+              list.imageSrc.length != 1
+                ? list.imageSrc[0]
+                : '/assets/images/logo/logo_square.png'
+            }
+            width={0}
+            height={0}
+            sizes='100%'
+            className='aspect-square w-[100%] h-auto rounded-lg object-cover w-full group-hover:scale-110 transition'
             alt='thumbnail'
           />
+        </div>
+        {/* {list.imageSrc.length != 1 ? (
+          <div className='relative '>
+            <Image
+              src={list.imageSrc[0]}
+              width={0}
+              height={0}
+              sizes='100%'
+              className='aspect-square w-[100%] h-auto rounded-lg object-cover w-full group-hover:scale-110 transition'
+              alt='thumbnail'
+            />
+          </div>
         ) : (
-          <div className='rounded-lg object-cover h-[180px] w-full group-hover:scale-110 transition bg-[url("/assets/images/logo/logo_square.png")] bg-center bg-no-repeat	'></div>
-        )}
+          <div className='aspect-square rounded-lg object-cover h-[180px] w-full group-hover:scale-110 transition bg-[url("/assets/images/logo/logo_square.png")] bg-center bg-no-repeat	'></div>
+        )} */}
       </div>
       <div className='flex flex-col px-2 mt-1 gap-0'>
         <div className='flex flex-row justify-between'>
