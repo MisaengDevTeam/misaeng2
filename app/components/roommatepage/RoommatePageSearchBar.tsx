@@ -6,10 +6,20 @@ import SearchButton from '../inputs/search/SearchButton';
 import SearchSelect from '../inputs/search/SearchSelect';
 import { SEARCH_TYPES, ROOMMATE_MAP } from '@/types/RoommateTypes';
 import { useRouter } from 'next/navigation';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import axios from 'axios';
+import { RoommateListing } from '@prisma/client';
 
-interface RoommatePageSearchBarProps {}
+interface RoommatePageSearchBarProps {
+  setListings: (listings: RoommateListing[]) => void;
+  setDefaultListing: () => void;
+}
 
-const RoommatePageSearchBar: React.FC<RoommatePageSearchBarProps> = ({}) => {
+const RoommatePageSearchBar: React.FC<RoommatePageSearchBarProps> = ({
+  setListings,
+  setDefaultListing,
+}) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSearchbarOn, setIsSearchbarOn] = useState(false);
   const [selectedCity, setSelectedCity] = useState<{
     label: string;
@@ -25,6 +35,30 @@ const RoommatePageSearchBar: React.FC<RoommatePageSearchBarProps> = ({}) => {
     return Object.keys(ROOMMATE_MAP).map((key) => ({ label: key, value: key }));
   }, []);
 
+  const { handleSubmit, setValue } = useForm<FieldValues>({
+    defaultValues: {
+      category: null,
+      gender: null,
+      status: null,
+      roomtype: null,
+      length: null,
+      mbti: null,
+      age: null,
+      pet: null,
+      smoke: null,
+      city: null,
+      district: null,
+    },
+  });
+
+  const setCustomValue = (id: string, value: any) => {
+    setValue(id, value, {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
+  };
+
   useEffect(() => {
     if (selectedCity) {
       setLocationOptions(
@@ -32,6 +66,24 @@ const RoommatePageSearchBar: React.FC<RoommatePageSearchBarProps> = ({}) => {
       );
     }
   }, [selectedCity]);
+
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    setIsLoading(true);
+    try {
+      axios
+        .post(`/api/roommateListing/roommateListing`, { roommateOption: data })
+        .then((response) => {
+          setListings(response.data.searchedListings);
+        })
+        .catch((error) => console.log(error))
+        .finally(() => {
+          // setIsSearchbarOn(false); // Close Searchbar After Search
+          setIsLoading(false);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div
@@ -54,77 +106,93 @@ const RoommatePageSearchBar: React.FC<RoommatePageSearchBarProps> = ({}) => {
               <SearchSelect
                 placeholder={'카테고리'}
                 options={SEARCH_TYPES.CATEGORY}
-                onChange={() => {}}
+                onChange={(value) => {
+                  setCustomValue('category', value);
+                }}
               />
               <SearchSelect
                 placeholder={'성별'}
                 options={SEARCH_TYPES.GENDER}
-                onChange={() => {}}
+                onChange={(value) => {
+                  setCustomValue('gender', value);
+                }}
               />
               <SearchSelect
                 placeholder={'학생/직장인'}
                 options={SEARCH_TYPES.STATUS}
-                onChange={() => {}}
+                onChange={(value) => {
+                  setCustomValue('status', value);
+                }}
               />
               <SearchSelect
                 placeholder={'방 종류'}
                 options={SEARCH_TYPES.ROOMTYPE}
-                onChange={() => {}}
+                onChange={(value) => {
+                  setCustomValue('roomtype', value);
+                }}
               />
               <SearchSelect
                 placeholder={'희망 기간'}
                 options={SEARCH_TYPES.LENGTH}
-                onChange={() => {}}
+                onChange={(value) => {
+                  setCustomValue('length', value);
+                }}
               />
               <SearchSelect
                 placeholder={'MBTI'}
                 options={SEARCH_TYPES.MBTI}
-                onChange={() => {}}
+                onChange={(value) => {
+                  setCustomValue('mbti', value);
+                }}
               />
               <SearchSelect
                 placeholder={'연령'}
                 options={SEARCH_TYPES.AGE}
-                onChange={() => {}}
+                onChange={(value) => {
+                  setCustomValue('age', value);
+                }}
               />
               <SearchSelect
                 placeholder={'반려동물'}
                 options={SEARCH_TYPES.PET}
-                onChange={() => {}}
+                onChange={(value) => {
+                  setCustomValue('pet', value);
+                }}
               />
               <SearchSelect
                 placeholder={'흡연'}
                 options={SEARCH_TYPES.SMOKE}
-                onChange={() => {}}
+                onChange={(value) => {
+                  setCustomValue('smoke', value);
+                }}
               />
               <SearchSelect
                 placeholder={'도시'}
                 options={cityOptions}
-                onChange={(value) =>
-                  setSelectedCity({ label: value, value: value })
-                }
+                onChange={(value) => {
+                  setSelectedCity({ label: value, value: value });
+
+                  setCustomValue('city', value);
+                }}
               />
 
               {selectedCity && (
                 <SearchSelect
                   placeholder={'위치'}
                   options={locationOptions}
-                  onChange={() => {}}
+                  onChange={(value) => {
+                    setCustomValue('district', value);
+                  }}
                 />
               )}
             </div>
             <div className='w-[100%] h-[36px] flex justify-center'>
               <div className='flex w-[50%] gap-4 justify-center'>
+                <SearchButton label={'초기화'} onClick={setDefaultListing} />
                 <SearchButton
-                  label={'초기화'}
-                  onClick={() => {
-                    router.refresh();
-                  }}
-                />
-                <SearchButton
+                  disabled={isLoading}
                   label={'검색'}
-                  onClick={() => {
-                    setIsSearchbarOn(!isSearchbarOn);
-                  }}
+                  onClick={handleSubmit(onSubmit)}
                 />
               </div>
             </div>

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { ObjectId } from 'mongodb';
 import mgClientPromise from '@/app/lib/mongodb';
+import { MdQueryStats } from 'react-icons/md';
 
 export async function GET(request: Request) {
   const client = await mgClientPromise;
@@ -30,38 +31,106 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const { roommateId } = body;
+  const { roommateId, roommateOption } = body;
 
   const client = await mgClientPromise;
   const roommateCollection = client.db('misaeng').collection('RoommateListing');
+  if (roommateId) {
+    const listingInfo = await roommateCollection
+      .find(
+        { _id: new ObjectId(roommateId) }
+        // {
+        //   projection: {
+        //     _id: 1,
+        //     amenity: 1,
+        //     bathCount: 1,
+        //     bedCount: 1,
+        //     broker: 1,
+        //     buildingId: 1,
+        //     category: 1,
+        //     contact: 1,
+        //     createdAt: 1,
+        //     description: 1,
+        //     feature: 1,
+        //     imageSrc: 1,
+        //     length: 1,
+        //     moveDate: 1,
+        //     price: 1,
+        //     title: 1,
+        //     userId: 1,
+        //     utility: 1,
+        //   },
+        // }
+      )
+      .toArray();
+    return NextResponse.json({ listingInfo });
+  }
+  if (roommateOption) {
+    const {
+      category,
+      gender,
+      status,
+      roomtype,
+      length,
+      mbti,
+      age,
+      pet,
+      smoke,
+      city,
+      district,
+    } = roommateOption;
 
-  const listingInfo = await roommateCollection
-    .find(
-      { _id: new ObjectId(roommateId) }
-      // {
-      //   projection: {
-      //     _id: 1,
-      //     amenity: 1,
-      //     bathCount: 1,
-      //     bedCount: 1,
-      //     broker: 1,
-      //     buildingId: 1,
-      //     category: 1,
-      //     contact: 1,
-      //     createdAt: 1,
-      //     description: 1,
-      //     feature: 1,
-      //     imageSrc: 1,
-      //     length: 1,
-      //     moveDate: 1,
-      //     price: 1,
-      //     title: 1,
-      //     userId: 1,
-      //     utility: 1,
-      //   },
-      // }
-    )
-    .toArray();
+    let query: {
+      category?: string;
+      selfgender?: string;
+      selfstatus?: string;
+      roomtype?: string;
+      length?: string;
+      selfmbti?: string;
+      selfage?: string;
+      selfpet?: string;
+      selfsmoke?: string;
+      city?: string;
+      district?: string;
+    } = {};
 
-  return NextResponse.json({ listingInfo });
+    if (category != null) {
+      query.category = category;
+    }
+    if (gender != null) {
+      query.selfgender = gender;
+    }
+    if (status != null) {
+      query.selfstatus = status;
+    }
+    if (roomtype != null) {
+      query.roomtype = roomtype;
+    }
+    if (length != null) {
+      query.length = length;
+    }
+    if (mbti != null) {
+      query.selfmbti = mbti;
+    }
+    if (age != null) {
+      query.selfage = age;
+    }
+    if (pet != null) {
+      query.selfpet = pet;
+    }
+    if (smoke != null) {
+      query.selfsmoke = smoke;
+    }
+    if (city != null) {
+      query.city = city;
+    }
+    if (district != null) {
+      query.district = district;
+    }
+
+    const searchedListings = await roommateCollection
+      .find(MdQueryStats)
+      .toArray();
+    return NextResponse.json({ searchedListings });
+  }
 }

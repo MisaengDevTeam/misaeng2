@@ -101,7 +101,7 @@ const RoommateIndividualModal: React.FC<
   const detailArray = [`$ ${price.toLocaleString()}`, movedate, length];
 
   const bodyContent = (
-    <div className='flex flex-col gap-4 h-[60vh] overflow-y-scroll px-2 mb-4'>
+    <div className='flex flex-col gap-4 h-[60vh] overflow-y-scroll p-4'>
       <div className='flex justify-center w-full relatvie'>
         <Image
           className='w-[80%] h-auto rounded-lg border border-[#EC662A]'

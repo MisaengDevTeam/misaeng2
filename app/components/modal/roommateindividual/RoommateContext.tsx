@@ -37,7 +37,7 @@ const RoommateContext: React.FC<RoommateContextProps> = ({
   return (
     <div className='flex flex-col gap-2'>
       <div className='font-semibold text-lg'>{title}</div>
-      <div className='font-light whitespace-pre-wrap px-2'>
+      <div className='font-light whitespace-pre-wrap'>
         <p className='mb-1'>{`안녕하세요,`}</p>
         <p className='mb-1'>{`< ${
           MBTI_TYPE[selfmbti as keyof typeof MBTI_TYPE]
@@ -66,7 +66,7 @@ const RoommateContext: React.FC<RoommateContextProps> = ({
         }`}</p>
         <p className='mb-1'>{`  뉴욕에서 같이 즐겁게 생활하실 룸메이트 찾았으면 좋겠습니다.`}</p>
         <p className='mb-1 flex items-center'>
-          {`  감사합니다 `}
+          {`감사합니다 `}
           <CgSmile />
         </p>
       </div>
