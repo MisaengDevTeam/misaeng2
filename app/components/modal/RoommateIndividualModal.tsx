@@ -113,21 +113,7 @@ const RoommateIndividualModal: React.FC<
         />
       </div>
       <RoommateLocation city={city} district={district} />
-      <RoommateContext
-        title='간단한 자기소개'
-        category={category}
-        selfgender={selfgender}
-        selfstatus={selfstatus}
-        selfage={selfage}
-        selfmbti={selfmbti}
-        selfpet={selfpet}
-        selfsmoke={selfsmoke}
-        rmgender={rmgender}
-        rmstatus={rmstatus}
-        rmage={rmage}
-        rmpet={rmpet}
-        rmsmoke={rmsmoke}
-      />
+      <RoommateContext title='간단한 자기소개' description={description} />
       <RoommateIndiAttr title='저는요?' arr={selfArray} />
       <RoommateIndiAttr title='제가 찾는 룸메는요?' arr={rmArray} />
       <RoommateIndiAttr

@@ -112,6 +112,7 @@ export const ROOMMATE_MAP = {
     { value: 'Weehawken', label: 'Weehawken' },
     { value: 'Hoboken', label: 'Hoboken' },
     { value: 'Jersey City', label: 'Jersey City' },
+    { value: 'Etc', label: 'Etc' },
   ],
   Bronx: [
     { value: 'Morrisania', label: 'Morrisania' },
@@ -120,6 +121,7 @@ export const ROOMMATE_MAP = {
     { value: 'West Bronx', label: 'West Bronx' },
     { value: 'Morris Park', label: 'Morris Park' },
     { value: 'East Bronx', label: 'East Bronx' },
+    { value: 'Etc', label: 'Etc' },
   ],
   StatenIsland: [{ value: 'Staten Island', label: 'Staten Island' }],
 };
@@ -157,32 +159,38 @@ export const ROOMMATE_ROOM_INFO = {
 
 export const SEARCH_TYPES = {
   CATEGORY: [
+    { label: '전체 검색', value: null },
     { label: '룸메 찾아요', value: '룸메 찾아요' },
     { label: '방 찾아요', value: '방 찾아요' },
     { label: '같이 방 찾아요', value: '같이 방 찾아요' },
   ],
 
   GENDER: [
+    { label: '전체 검색', value: null },
     { label: '남자', value: '남자' },
     { label: '여자', value: '여자' },
   ],
   STATUS: [
+    { label: '전체 검색', value: null },
     { label: '학생', value: '학생' },
     { label: '직장인', value: '직장인' },
     { label: '비공개', value: '비공개' },
   ],
   ROOMTYPE: [
+    { label: '전체 검색', value: null },
     { label: 'MasterBedroom', value: 'MasterBedroom' },
     { label: 'Second', value: 'Second' },
     { label: 'Flexed', value: 'Flexed' },
     { label: 'Other', value: 'Other' },
   ],
   LENGTH: [
+    { label: '전체 검색', value: null },
     { label: '단기 (주 단위)', value: 'short' },
     { label: '중기 (월 단위)', value: 'mid' },
     { label: '장기 (연 단위)', value: 'long' },
   ],
   AGE: [
+    { label: '전체 검색', value: null },
     { label: '19-23세', value: '19-23세' },
     { label: '24-28세', value: '24-28세' },
     { label: '29-33세', value: '29-33세' },
@@ -192,16 +200,19 @@ export const SEARCH_TYPES = {
     { label: '50세이상', value: '50세이상' },
   ],
   PET: [
+    { label: '전체 검색', value: null },
     { label: '강아지', value: '강아지' },
     { label: '고양이', value: '고양이' },
     { label: '그 외', value: '그 외' },
     { label: '없음', value: '없음' },
   ],
   SMOKE: [
+    { label: '전체 검색', value: null },
     { label: '흡연', value: '흡연' },
     { label: '비흡연', value: '비흡연' },
   ],
   MBTI: [
+    { label: '전체 검색', value: null },
     { label: 'ENTP', value: 'ENTP' },
     { label: 'ESTP', value: 'ESTP' },
     { label: 'ESFP', value: 'ESFP' },
@@ -254,12 +265,12 @@ export const roommateContext = {
   category: {
     '방 찾아요': '입주할 수 있는 방을 찾고 있는',
     '룸메 찾아요': '같이 살 룸메이트를 찾고 있는',
-    '같이 방 찾아요': '앞으로 같이 입주할 방과 룸메이트를 찾고 있는',
+    '같이 방 찾아요': '룸메이트도 찾고 같이 입주할 방도 찾고 있는',
   },
   status: {
-    학생: '앞으로 학생으로 지내게 될 예정이며, ',
-    직장인: '앞으로 직장인으로 지내게 될 예정이며, ',
-    비공개: '지금은 자세히 알려드리기는 조금 어렵습니다만, ',
+    학생: '앞으로 공부하는 학생으로 지낼 예정이며, ',
+    직장인: '앞으로 직장인으로 일하게 될 예정이며, ',
+    비공개: '직업은 자세히 알려드리기는 조금 어렵습니다만, ',
   },
   pet: {
     '강아지': '너무나 사랑스러운 강아지가 있고',

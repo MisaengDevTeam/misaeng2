@@ -66,12 +66,12 @@ const RmRoomInfo: React.FC<RmRoomInfoProps> = ({
         onChange={(value) => onChange('length', value)}
         small
       />
-      <Textarea
+      {/* <Textarea
         id={'description'}
         onChange={(value) => onChange('description', value)}
         placeholer='회원님의 자기소개 또는 방에 대한 간략한 내용을 입력해주세요'
         small
-      />
+      /> */}
     </div>
   );
 };

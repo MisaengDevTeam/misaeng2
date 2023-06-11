@@ -27,6 +27,8 @@ import toast from 'react-hot-toast';
 import validateInput from '@/app/lib/validateInput';
 import { useSession } from 'next-auth/react';
 import dateFormatter from '@/app/lib/dateFormatter';
+import Textarea from '../inputs/Textarea';
+import introductionGenerator from '@/app/lib/introductionGenerator';
 
 interface RoommateRegisterModalProps {}
 
@@ -35,6 +37,7 @@ enum ROOMMATE_REGISTER_STEP {
   ROOMINFO,
   SELFPRE,
   ROOMMATEPRE,
+  DESCRIPTION,
   LOCATION,
   CONTACT,
 }
@@ -131,7 +134,7 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
       return null;
     }
 
-    if (step == 2 && validateInput([price, length, movedate, description])) {
+    if (step == 2 && validateInput([price, length, movedate])) {
       toast.error('모든 항목을 선택/작성 해주세요');
       return null;
     }
@@ -141,20 +144,41 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
       return null;
     }
 
-    if (
-      step == 4 &&
-      validateInput([rmgender, rmage, rmstatus, rmpet, rmsmoke])
-    ) {
-      toast.error('반드시 한 가지씩 선택 해주세요');
-      return null;
+    if (step == 4) {
+      if (validateInput([rmgender, rmage, rmstatus, rmpet, rmsmoke])) {
+        toast.error('반드시 한 가지씩 선택 해주세요');
+
+        return null;
+      } else {
+        const generatedIntroduction = introductionGenerator(
+          category,
+          gender,
+          status,
+          age,
+          mbti,
+          pet,
+          smoke,
+          rmpet,
+          rmsmoke
+        );
+        setCustomValue('description', generatedIntroduction);
+      }
     }
 
-    if (step == 5 && validateInput([city, district])) {
+    // if (
+    //   step == 5 &&
+    //   validateInput([description])
+    // ) {
+    //   toast.error('반드시 한 가지씩 선택 해주세요');
+    //   return null;
+    // }
+
+    if (step == 6 && validateInput([city, district])) {
       toast.error('지역을 선택해주세요');
       return null;
     }
 
-    const newStep = step == 6 ? 6 : step + 1;
+    const newStep = step == 7 ? 7 : step + 1;
 
     setStep(newStep);
   };
@@ -188,7 +212,7 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
 
   let bodyContent = (
     <div className='flex flex-col gap-2 md:gap-4'>
-      <Heading title='카테고리를 선택해주세요 (1/6)' />
+      <Heading title='카테고리를 선택해주세요 (1/7)' />
       {ROOMMATE_TYPE.map((item) => {
         return (
           <CategoryInput
@@ -207,7 +231,7 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
   if (step == 2) {
     bodyContent = (
       <div className='flex flex-col gap-2'>
-        <Heading title='현재 거주하시는 방 또는 희망하시는 방에 대해 알려주세요 (2/6)' />
+        <Heading title='현재 거주하시는 방 또는 희망하시는 방에 대해 알려주세요 (2/7)' />
         <RmRoomInfo
           register={register}
           errors={errors}
@@ -220,7 +244,7 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
   if (step == 3) {
     bodyContent = (
       <div className='flex flex-col gap-2'>
-        <Heading title='미생 회원님에 대해 알려주세요 (3/6)' />
+        <Heading title='미생 회원님에 대해 알려주세요 (3/7)' />
 
         {Object.entries(ROOMMATE_SELF_PRE).map(([key, value]) => (
           <div key={key}>
@@ -245,7 +269,7 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
   if (step == 4) {
     bodyContent = (
       <div className='flex flex-col gap-2'>
-        <Heading title='찾으시는 룸메이트에 대해 알려주세요 (4/6)' />
+        <Heading title='찾으시는 룸메이트에 대해 알려주세요 (4/7)' />
         {Object.entries(ROOMMATE_ROOMMATE_PRE).map(([key, value]) => (
           <div key={key}>
             <RmSelfPre
@@ -265,17 +289,38 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
     );
   }
 
+  if (step == 5) {
+    bodyContent = (
+      <div className='flex flex-col gap-2'>
+        <Heading
+          title='간략한 자기소개입니다. (5/7)'
+          subtitle='기본으로 제공되는 자기소개 이외에 수정하고 싶으신 부분이 있으시면 수정하여 주시기 바랍니다.'
+        />
+        <div className='h-[420px] sm:h-[240px]'>
+          <Textarea
+            id={'description'}
+            value={description}
+            onChange={(value) => {
+              setCustomValue('description', value);
+            }}
+            small
+          />
+        </div>
+      </div>
+    );
+  }
+
   const cityOptions = Object.keys(ROOMMATE_MAP).map((key) => ({
     value: key,
     label: key,
   }));
   const districtOptions = ROOMMATE_MAP[city as keyof typeof ROOMMATE_MAP];
 
-  if (step == 5) {
+  if (step == 6) {
     bodyContent = (
       <div className='flex flex-col gap-2'>
         <Heading
-          title='현재 거주하시는 위치 또는 방을 찾으시는 위치를 선택해주세요 (5/6)'
+          title='현재 거주하시는 위치 또는 방을 찾으시는 위치를 선택해주세요 (6/7)'
           subtitle='저희 미생은 회원님의 개인정보보호 및 안전을 위하여 정확한 주소를 묻지 않습니다.'
         />
         <SelectComp
@@ -296,11 +341,11 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
     );
   }
 
-  if (step == 6) {
+  if (step == 7) {
     bodyContent = (
       <div className='flex flex-col gap-2'>
         <Heading
-          title='선호하시는 연락방식을 입력하여 주세요 (6/6)'
+          title='선호하시는 연락방식을 입력하여 주세요 (7/7)'
           subtitle={`최소한 한 가지 이상의 연락 방식은 입력해 주시기 바랍니다. 원치 않는 연락 방식은 해당 항목은 비워두시기 바랍니다. 다양한 연락방식은 회원님의 리스팅에 대한 접근성을 높여 더 많은 연락을 받으실 수 있습니다.`}
         />
         <div className='flex flex-col gap-4 mt-4'>
@@ -335,8 +380,8 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
   let footerContent = (
     <div className='flex flex-row justify-between gap-8'>
       {step > 1 && <Button onClick={onBack} label={'Back'} />}
-      {step < 6 && <Button onClick={onNext} label={'Next'} />}
-      {step == 6 && (
+      {step < 7 && <Button onClick={onNext} label={'Next'} />}
+      {step == 7 && (
         <Button
           disabled={isLoading}
           onClick={handleSubmit(onSubmit)}
