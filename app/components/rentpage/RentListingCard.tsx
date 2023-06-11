@@ -58,7 +58,7 @@ const RentListingCard: React.FC<RentListingCardProps> = ({
         <div className='relative '>
           <Image
             src={
-              list.imageSrc.length != 0
+              list.imageSrc[0] != ''
                 ? list.imageSrc[0]
                 : '/assets/images/logo/logo_square.png'
             }
@@ -69,20 +69,6 @@ const RentListingCard: React.FC<RentListingCardProps> = ({
             alt='thumbnail'
           />
         </div>
-        {/* {list.imageSrc.length != 1 ? (
-          <div className='relative '>
-            <Image
-              src={list.imageSrc[0]}
-              width={0}
-              height={0}
-              sizes='100%'
-              className='aspect-square w-[100%] h-auto rounded-lg object-cover w-full group-hover:scale-110 transition'
-              alt='thumbnail'
-            />
-          </div>
-        ) : (
-          <div className='aspect-square rounded-lg object-cover h-[180px] w-full group-hover:scale-110 transition bg-[url("/assets/images/logo/logo_square.png")] bg-center bg-no-repeat	'></div>
-        )} */}
       </div>
       <div className='flex flex-col px-2 mt-1 gap-0'>
         <div className='flex flex-row justify-between'>
