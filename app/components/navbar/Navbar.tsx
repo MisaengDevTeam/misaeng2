@@ -15,7 +15,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
   const currentUser = session?.user;
 
   return (
-    <div className='fixed w-full shadow-md z-10 bg-[#fff]'>
+    <div className='fixed w-full shadow-md z-20 bg-[#fff]'>
       <div className='py-1 sm:py-4 border-b'>
         <Container>
           <div className='relative flex flex-row justify-between items-center'>

@@ -78,12 +78,12 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
         >
           {isListingOn ? (
             <div className='flex flex-row w-full h-full items-center justify-center'>
-              <span>클릭하여 리스팅 닫기</span>
+              <span>클릭하여 리스팅 닫기++++++</span>
               <MdOutlineKeyboardDoubleArrowDown size={20} />
             </div>
           ) : (
             <div className='flex flex-row items-center'>
-              <span>클릭하여 리스팅 더보기</span>{' '}
+              <span>클릭하여 리스팅만 보기</span>{' '}
               <MdOutlineKeyboardDoubleArrowUp size={20} />
             </div>
           )}

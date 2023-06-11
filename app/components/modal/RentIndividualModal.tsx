@@ -71,7 +71,7 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
   const headerTitle = `${currentListing.title}`;
 
   const bodyContent = (
-    <div className={`h-[61vh] overflow-x-hidden overflow-y-scroll`}>
+    <div className={`h-[100%] sm:h-[61vh] overflow-x-hidden overflow-y-scroll`}>
       <div className='flex justify-between text-xs text-neutral-700'>
         <div className='md:text-sm'>
           작성일: {dateFormatter(new Date(currentListing.createdAt))}
@@ -118,7 +118,7 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
   );
 
   let footerContent = (
-    <div>
+    <div className='h-full my-2'>
       <div className='flex justify-evenly'>
         <RentIndiFooterButton
           color='#EC662A'
@@ -140,7 +140,9 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
           icon={RiAlarmWarningLine}
         />
       </div>
-      <Button onClick={() => {}} label={'판매자 연락하기'} />
+      <div className='w-full h-[56px] sm:h-auto mt-2'>
+        <Button onClick={() => {}} label={'판매자 연락하기'} />
+      </div>
     </div>
   );
 

@@ -245,7 +245,7 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
   if (step == 4) {
     bodyContent = (
       <div className='flex flex-col gap-2'>
-        <Heading title='찾으시는 룸메이트에 대해 알려주세요 4/6)' />
+        <Heading title='찾으시는 룸메이트에 대해 알려주세요 (4/6)' />
         {Object.entries(ROOMMATE_ROOMMATE_PRE).map(([key, value]) => (
           <div key={key}>
             <RmSelfPre

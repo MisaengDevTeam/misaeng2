@@ -58,8 +58,12 @@ const Modal: React.FC<ModalProps> = ({
           <div className='relative flex flex-col w-full bg-white outline-none focus:outline-none translate h-full lg:h-auto md:h-auto border-0 rounded-lg shadow-lg'>
             {/* HEADER */}
             <div
-              className={`relative flex items-center p-2 md:p-6 rounded-t-lg border-b h-[5%] sm:h-auto truncate
-            ${rentindividual ? 'justify-start' : 'justify-center'}
+              className={`relative flex items-center rounded-t-lg border-b h-[5%] sm:h-auto truncate
+            ${
+              rentindividual
+                ? 'justify-start p-6 md:p-4 '
+                : 'justify-center p-2 md:p-6 '
+            }
             `}
             >
               <div
@@ -79,7 +83,7 @@ const Modal: React.FC<ModalProps> = ({
             </div>
             {/* BODY */}
             <div
-              className={`relative flex-auto h-[77%]
+              className={`relative flex-auto h-[70%]
             ${rentindividual ? 'py-2 px-2' : 'p-4 sm:p-6'}
             `}
             >
@@ -93,7 +97,9 @@ const Modal: React.FC<ModalProps> = ({
             {/* FOOTER */}
             <div
               className={`flex flex-col gap-4 h-[15%] 
-            ${rentindividual ? 'mb-2 px-6' : 'mb-4 px-4 sm:px-6 sm:mb-6'}
+            ${
+              rentindividual ? 'mb-8 px-6 sm:mb-4' : 'mb-4 px-4 sm:px-6 sm:mb-6'
+            }
             `}
             >
               {footer}

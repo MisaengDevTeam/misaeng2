@@ -15,7 +15,7 @@ const RoommatePageBody: React.FC<RoommatePageBodyProps> = ({
   RoommateIndividualOpen,
 }) => {
   return (
-    <div className='py-4 h-auto max-h-[600px] overflow-y-scroll overflow-x-hidden'>
+    <div className='py-4 h-auto max-h-[80vh] overflow-y-scroll overflow-x-hidden'>
       <Container>
         <div className='grid grid-cols-2 sm:grid-cols-4 md::grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-4'>
           {listings?.map((listing) => {
