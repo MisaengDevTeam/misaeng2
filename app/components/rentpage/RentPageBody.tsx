@@ -50,6 +50,7 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
         />
         <RentSearchBar
           isSearchOn={isSearchOn}
+          setIsSearchOn={setIsSearchOn}
           setSafeListings={setSafeListings}
           setMapListings={setMapListings}
         />

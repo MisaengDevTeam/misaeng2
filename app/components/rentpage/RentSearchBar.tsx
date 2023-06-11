@@ -12,12 +12,14 @@ interface SearchBarProps {
   isSearchOn: boolean;
   setSafeListings: any;
   setMapListings: any;
+  setIsSearchOn: (setIsSearchOn: boolean) => void;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({
   isSearchOn,
   setSafeListings,
   setMapListings,
+  setIsSearchOn,
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -52,6 +54,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
         })
         .catch((error) => console.log(error))
         .finally(() => {
+          setIsSearchOn(!isSearchOn);
           setIsLoading(false);
         });
     } catch (error) {

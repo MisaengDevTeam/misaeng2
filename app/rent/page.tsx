@@ -23,7 +23,7 @@ const RentPage = () => {
       setIsLoading(true);
       try {
         const response = await axios.get(`/api/rentListing/rentListing`);
-        console.log(response.data.recentListings);
+
         setSafeListings(response.data.recentListings);
         setInitListings(response.data.recentListings);
         setMapListings(response.data.mapListing);
