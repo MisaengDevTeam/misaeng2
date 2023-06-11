@@ -36,7 +36,7 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
   const [isSearchOn, setIsSearchOn] = useState<boolean>(false);
 
   return (
-    <div className='relative flex flex-row'>
+    <div className='relative flex flex-row h-[93vh] sm:h-auto'>
       <div
         className={`relative ${
           isListingOn ? 'hidden' : 'flex'
@@ -69,7 +69,7 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
       </div>
       <div
         className={`sm:relative sm:flex w-full sm:w-[50%] lg:w-[45%] sm:h-[70vh] flex flex-col bg-white
-      ${isListingOn ? 'relative h-full' : 'absolute h-1/2 bottom-0'}
+      ${isListingOn ? 'relative h-full' : 'absolute h-[63%] bottom-0'}
       `}
       >
         <div
@@ -78,7 +78,7 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
         >
           {isListingOn ? (
             <div className='flex flex-row w-full h-full items-center justify-center'>
-              <span>클릭하여 리스팅 닫기++++++</span>
+              <span>클릭하여 리스팅 닫기</span>
               <MdOutlineKeyboardDoubleArrowDown size={20} />
             </div>
           ) : (
