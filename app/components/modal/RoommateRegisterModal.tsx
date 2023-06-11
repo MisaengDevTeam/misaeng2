@@ -29,6 +29,7 @@ import { useSession } from 'next-auth/react';
 import dateFormatter from '@/app/lib/dateFormatter';
 import Textarea from '../inputs/Textarea';
 import introductionGenerator from '@/app/lib/introductionGenerator';
+import LoadingScreen from '../LoadingScreen';
 
 interface RoommateRegisterModalProps {}
 
@@ -398,6 +399,12 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
       title={'룸메찾기 등록하기'}
       body={bodyContent}
       footer={footerContent}
+      loadingScreen={
+        <LoadingScreen
+          messagetitle='요청하신 리스팅을 등록 중입니다.'
+          messagesubtitle='잠시만 기다려 주십시오.'
+        />
+      }
     />
   );
 };
