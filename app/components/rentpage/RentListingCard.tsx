@@ -58,7 +58,7 @@ const RentListingCard: React.FC<RentListingCardProps> = ({
         <div className='relative '>
           <Image
             src={
-              list.imageSrc.length != 1
+              list.imageSrc.length != 0
                 ? list.imageSrc[0]
                 : '/assets/images/logo/logo_square.png'
             }
