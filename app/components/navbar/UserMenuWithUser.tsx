@@ -40,7 +40,7 @@ const UserMenuWithUser: React.FC<UserMenuWithUserProps> = ({
         mobileVisible
         label='사고팔기'
         onClick={() => {
-          router.push('/roommate');
+          router.push('/buysell');
           toggleSession();
         }}
       />
