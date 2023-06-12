@@ -24,6 +24,12 @@ const MyPage: React.FC<pageProps> = ({}) => {
   return (
     <div className='w-full h-auto'>
       <Container>
+        <div className='flex justify-center w-full gap-8 py-4 border-b border-neutral-500'>
+          <div>개인 정보 관리</div>
+          <div>렌트 목록 관리</div>
+          <div>룸메 목록 관리</div>
+          <div>사고팔기 목록 관리</div>
+        </div>
         <div className='flex flex-col sm:flex-row justify-center w-full gap-4 py-4 sm:py-8'>
           <div className='flex flex-col justify-center items-center w-full sm:w-[340px] border-2 border-neutral-100 shadow-lg rounded-xl p-4 gap-6'>
             <div className='flex flex-col justify-center items-center w-full mt-4'>
@@ -57,13 +63,26 @@ const MyPage: React.FC<pageProps> = ({}) => {
             </div>
           </div>
           <div className='flex flex-col sm:flex-row w-full max-w-[860px] border-2 border-neutral-100 shadow-lg rounded-xl p-4 sm:p-8 gap-4 sm:gap-8'>
-            <div className='flex flex-col gap-6 w-full bg-blue-300'>
-              <MyPageInput label='이름' onChange={() => {}} />
+            <div className='flex flex-col gap-6 w-full'>
+              <MyPageInput label='이름' length={20} onChange={() => {}} />
               <MyPageInput
                 label='이메일'
                 value={currentUser?.email || ''}
                 onChange={() => {}}
                 disabled={currentUser?.email ? true : false}
+              />
+              <MyPageInput
+                label='연락처'
+                type='number'
+                placeholder='전화번호'
+                length={10}
+                onChange={() => {}}
+              />
+              <MyPageInput label='닉네임' length={20} onChange={() => {}} />
+              <MyPageInput
+                label='카톡 아이디'
+                length={32}
+                onChange={() => {}}
               />
             </div>
             <div className='w-full bg-green-300'>f</div>

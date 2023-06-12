@@ -36,3 +36,11 @@ html, body, :root {
 .mapboxgl-popup.custom-popup .mapboxgl-popup-tip {
   border-top-color: transparent;
 }
+
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
