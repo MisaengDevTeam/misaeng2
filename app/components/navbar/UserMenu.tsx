@@ -18,14 +18,19 @@ interface User {
 
 interface UserMenuProps {
   currentUser?: User | null;
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
 }
 
-const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
+const UserMenu: React.FC<UserMenuProps> = ({
+  currentUser,
+  isOpen,
+  setIsOpen,
+}) => {
   const rentRegisterModal = useRentRegisterModal();
   const roommateRegisterModal = useRoommateRegisterModal();
   const buySellRegisterModal = useBuySellRegisterModal();
   const loginModal = useLoginModal();
-  const [isOpen, setIsOpen] = useState(loginModal.isOpen);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -33,8 +38,12 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   }, [currentUser]);
 
   const toggleOpen = useCallback(() => {
-    setIsOpen((value) => !value);
-  }, []);
+    setIsOpen(!isOpen);
+  }, [isOpen, setIsOpen]);
+
+  const closeUserMenu = useCallback(() => {
+    setIsOpen(false);
+  }, [setIsOpen]);
 
   if (isLoading) {
     return <div />;
@@ -68,6 +77,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
           </div>
           {isOpen && (
             <UserMenuWithUser
+              closeUserMenu={closeUserMenu}
               rentModalOpen={rentRegisterModal.onOpen}
               roommateModalOpen={roommateRegisterModal.onOpen}
               buysellModalOpen={buySellRegisterModal.onOpen}

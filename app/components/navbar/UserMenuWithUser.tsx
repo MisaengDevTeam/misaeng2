@@ -8,12 +8,14 @@ interface UserMenuWithUserProps {
   roommateModalOpen: () => void;
   rentModalOpen: () => void;
   buysellModalOpen: () => void;
+  closeUserMenu: () => void;
 }
 
 const UserMenuWithUser: React.FC<UserMenuWithUserProps> = ({
   roommateModalOpen,
   rentModalOpen,
   buysellModalOpen,
+  closeUserMenu,
 }) => {
   const router = useRouter();
   return (
@@ -21,7 +23,8 @@ const UserMenuWithUser: React.FC<UserMenuWithUserProps> = ({
       <UserMenuItem
         mobileVisible
         label='렌트 찾기'
-        onClick={() => {
+        onClick={async () => {
+          closeUserMenu();
           router.push('/rent');
         }}
       />
@@ -29,6 +32,7 @@ const UserMenuWithUser: React.FC<UserMenuWithUserProps> = ({
         mobileVisible
         label='룸메 찾기'
         onClick={() => {
+          closeUserMenu();
           router.push('/roommate');
         }}
       />
@@ -36,42 +40,51 @@ const UserMenuWithUser: React.FC<UserMenuWithUserProps> = ({
         mobileVisible
         label='사고팔기'
         onClick={() => {
+          closeUserMenu();
           router.push('/buysell');
         }}
       />
       <UserMenuItem
         label='렌트찾기 등록하기'
         onClick={() => {
+          closeUserMenu();
           rentModalOpen();
         }}
       />
       <UserMenuItem
         label='룸메찾기 등록하기'
         onClick={() => {
+          closeUserMenu();
           roommateModalOpen();
         }}
       />
       <UserMenuItem
         label='사고팔기 등록하기'
         onClick={() => {
+          closeUserMenu();
           buysellModalOpen();
         }}
       />
       <UserMenuItem
         label='마이 페이지'
         onClick={() => {
+          closeUserMenu();
           router.push('/mypage');
         }}
       />
       <UserMenuItem
         label='고객 센터'
         onClick={() => {
+          closeUserMenu();
           router.push('/customer');
         }}
       />
       <UserMenuItem
         label='로그 아웃'
-        onClick={() => signOut({ callbackUrl: '/' })}
+        onClick={() => {
+          closeUserMenu();
+          signOut({ callbackUrl: '/' });
+        }}
       />
     </div>
   );
