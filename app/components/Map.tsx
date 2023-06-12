@@ -65,8 +65,8 @@ const MapComponent = memo<MapProps>(function MapComponent({
       map.current.addControl(nav, rentmain ? 'bottom-right' : 'top-right');
       // Add marker
       const customMarker = document.createElement('div');
-      customMarker.style.width = '140px';
-      customMarker.style.height = '140px';
+      customMarker.style.width = '180px';
+      customMarker.style.height = '180px';
       customMarker.style.borderRadius = '50%';
       customMarker.style.background = 'rgb(236, 102, 42, 0.7)';
 

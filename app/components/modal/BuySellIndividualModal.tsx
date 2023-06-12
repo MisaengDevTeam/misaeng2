@@ -17,6 +17,10 @@ import Image from 'next/image';
 import useBuySellIndividualModal from '../hooks/useBuySellIndividualModal';
 import BuySellIndiPicture from './buysellindividual/BuySellIndiPicture';
 import dateFormatter from '@/app/lib/dateFormatter';
+import BuySellIndiInfo from './buysellindividual/BuySellIndiInfo';
+import MapComponent from '../Map';
+import Heading from '../Heading';
+import { BUY_SELL_STATUS } from '@/types/BuySellTypes';
 
 interface BuySellIndividualModalProps {}
 
@@ -65,7 +69,7 @@ const BuySellIndividualModal: React.FC<BuySellIndividualModalProps> = ({}) => {
   if (!currentListing) return null;
 
   const bodyContent = (
-    <div className='flex flex-col h-[60vh] overflow-y-scroll'>
+    <div className='flex flex-col h-[60vh] overflow-y-scroll overflow-x-hidden'>
       <div className='flex justify-between text-xs text-neutral-700'>
         <div className='md:text-sm'>
           작성일: {dateFormatter(new Date(currentListing.createdAt))}
@@ -75,22 +79,48 @@ const BuySellIndividualModal: React.FC<BuySellIndividualModalProps> = ({}) => {
       <BuySellIndiPicture pictures={currentListing.pictures} />
       <hr />
       <div className='flex flex-col justify-center items-center gap-6 p-4'>
-        <div className='font-bold text-lg'>{currentListing.title}</div>
-        <div className='w-[70%]'>
-          <div className='flex justify-between'>
-            <div>물건 상태: </div>
-            <div>{`${currentListing.status}`}</div>
-          </div>
-
-          <div>{`가격: $ ${currentListing.price.toLocaleString()}`}</div>
-          <div>{`${currentListing.status}`}</div>
+        <div className='font-bold text-lg w-full md:w-[80%] text-center'>
+          {currentListing.title}
+        </div>
+        <div className='flex flex-col w-full md:w-[80%] gap-2'>
+          <BuySellIndiInfo
+            label='물건 상태'
+            description={
+              BUY_SELL_STATUS.find(
+                (item) => item.value === currentListing.status
+              )?.label || ''
+            }
+          />
+          <BuySellIndiInfo
+            label='가격'
+            description={`$ ${currentListing.price.toLocaleString()}`}
+          />
+          <BuySellIndiInfo
+            label='카테고리'
+            description={`${currentListing.category} / ${currentListing.subcategory}`}
+          />
+          <BuySellIndiInfo
+            label='작성일'
+            description={dateFormatter(new Date(currentListing.createdAt))}
+          />
+        </div>
+        <div className='w-full'>
+          <Heading title='상품 상세 설명' />
+          <div>{currentListing.description}</div>
+        </div>
+        <div className='w-full'>
+          <Heading title='판매자 위치' />
+          <MapComponent
+            showRange
+            initCoordinate={currentListing.coordinate as [number, number]}
+          />
         </div>
       </div>
     </div>
   );
 
   const footerContent = (
-    <div>
+    <div className='mt-6 sm:mt-0'>
       <div className='flex justify-evenly'>
         <RentIndiFooterButton
           color='#EC662A'
