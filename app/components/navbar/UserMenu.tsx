@@ -8,6 +8,7 @@ import useLoginModal from '../hooks/useLoginModal';
 import Avatar from '../Avatar';
 import useRoommateRegisterModal from '../hooks/useRoommateRegisterModal';
 import useRentRegisterModal from '../hooks/useRentRegisterModal';
+import useBuySellRegisterModal from '../hooks/useBuySellRegisterModal';
 
 interface User {
   email?: string | null | undefined;
@@ -22,6 +23,7 @@ interface UserMenuProps {
 const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const rentRegisterModal = useRentRegisterModal();
   const roommateRegisterModal = useRoommateRegisterModal();
+  const buySellRegisterModal = useBuySellRegisterModal();
   const loginModal = useLoginModal();
   const [isOpen, setIsOpen] = useState(loginModal.isOpen);
   const [isLoading, setIsLoading] = useState(true);
@@ -73,6 +75,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
               toggleSession={toggleUserSession}
               rentModalOpen={rentRegisterModal.onOpen}
               roommateModalOpen={roommateRegisterModal.onOpen}
+              buysellModalOpen={buySellRegisterModal.onOpen}
             />
           )}
         </div>

@@ -8,12 +8,14 @@ interface UserMenuWithUserProps {
   toggleSession: () => void;
   roommateModalOpen: () => void;
   rentModalOpen: () => void;
+  buysellModalOpen: () => void;
 }
 
 const UserMenuWithUser: React.FC<UserMenuWithUserProps> = ({
   toggleSession,
   roommateModalOpen,
   rentModalOpen,
+  buysellModalOpen,
 }) => {
   const router = useRouter();
   return (
@@ -35,6 +37,14 @@ const UserMenuWithUser: React.FC<UserMenuWithUserProps> = ({
         }}
       />
       <UserMenuItem
+        mobileVisible
+        label='사고팔기'
+        onClick={() => {
+          router.push('/roommate');
+          toggleSession();
+        }}
+      />
+      <UserMenuItem
         label='렌트찾기 등록하기'
         onClick={() => {
           rentModalOpen();
@@ -45,6 +55,13 @@ const UserMenuWithUser: React.FC<UserMenuWithUserProps> = ({
         label='룸메찾기 등록하기'
         onClick={() => {
           roommateModalOpen();
+          toggleSession();
+        }}
+      />
+      <UserMenuItem
+        label='사고팔기 등록하기'
+        onClick={() => {
+          buysellModalOpen();
           toggleSession();
         }}
       />
