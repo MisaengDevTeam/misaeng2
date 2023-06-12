@@ -80,6 +80,7 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
       pictures: '',
       address: null,
       uid: uid,
+      coordinate: null,
       email: email,
       phone: '',
       kakaoId: '',
@@ -122,7 +123,9 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
         .post(`/api/geocode`, { searchAddress })
         .then((res) => {
           setCoordinate(res.data.newCoordinate);
+          console.log(res.data.newCoordinate);
           setCustomValue('address', res.data.newAddress);
+          setCustomValue('coordinate', res.data.newCoordinate);
         })
 
         .catch((error) => {

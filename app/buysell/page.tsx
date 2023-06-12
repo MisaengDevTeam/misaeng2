@@ -1,17 +1,22 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Container from '../components/Container';
 import EmptyState from '../components/EmptyState';
 import ListingBody from '../components/buysellpage/ListingBody';
 import SearchCategory from '../components/buysellpage/SearchCategory';
-import useBuySellRegisterModal from '../components/hooks/useBuySellRegisterModal';
 import { BUY_SELL_CATEGORY } from '@/types/BuySellTypes';
 import axios from 'axios';
 import { BuySellListing } from '@prisma/client';
 import LoadingScreen from '../components/LoadingScreen';
+import useBuySellIndividualModal from '../components/hooks/useBuySellIndividualModal';
+import useBuySellRegisterModal from '../components/hooks/useBuySellRegisterModal';
+import BuySellIndividualModal from '../components/modal/BuySellIndividualModal';
+import { useSearchParams } from 'next/navigation';
 
 const BuySellPage = ({}) => {
+  const hasModalOpened = useRef(false);
+
   const [isCategoryBoxOpen, setIsCategoryBoxOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [initListings, setInitListings] = useState<BuySellListing[] | null>(
@@ -19,7 +24,9 @@ const BuySellPage = ({}) => {
   );
   const [listings, setListings] = useState<BuySellListing[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
   const buySellRegisterModal = useBuySellRegisterModal();
+  const buySellIndividualModal = useBuySellIndividualModal();
 
   useEffect(() => {
     setIsLoading(true);
@@ -38,12 +45,23 @@ const BuySellPage = ({}) => {
     fetchData();
   }, []);
 
+  const params = useSearchParams();
+  const buysellid = params?.get('buyselllisting');
+
+  useEffect(() => {
+    if (!hasModalOpened.current && buysellid && buySellIndividualModal.onOpen) {
+      buySellIndividualModal.onOpen();
+      hasModalOpened.current = true;
+    }
+  }, [buySellIndividualModal, buySellIndividualModal.onOpen, buysellid]);
+
   if (isLoading) {
     return <LoadingScreen />;
   }
 
   return (
     <div className='w-full flex'>
+      <BuySellIndividualModal />
       <Container>
         {/* <div className='flex flex-row justify-center items-center bg-green-300 py-4'>
           SEARCH BAR
@@ -65,7 +83,10 @@ const BuySellPage = ({}) => {
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
           />
-          <ListingBody listings={listings} />
+          <ListingBody
+            listings={listings}
+            buySellIndividualOpen={buySellIndividualModal.onOpen}
+          />
         </div>
       </Container>
       {/* <div

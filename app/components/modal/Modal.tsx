@@ -61,7 +61,7 @@ const Modal: React.FC<ModalProps> = ({
               className={`relative flex items-center rounded-t-lg border-b h-[5%] sm:h-auto truncate
             ${
               rentindividual
-                ? 'justify-start p-6 md:p-4 '
+                ? 'justify-start p-5 md:p-4 '
                 : 'justify-center p-2 md:p-6 '
             }
             `}
@@ -70,7 +70,7 @@ const Modal: React.FC<ModalProps> = ({
                 className={`text-lg font-semibold truncate
               ${
                 rentindividual
-                  ? 'w-[85%] pl-4 text-start'
+                  ? 'w-[85%] pl-1 text-start'
                   : 'w-full text-center'
               }
               `}

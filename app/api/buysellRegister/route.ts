@@ -17,6 +17,7 @@ export async function POST(request: Request) {
     email,
     phone,
     kakaoId,
+    coordinate,
   } = body;
 
   let buysellListing;
@@ -33,6 +34,7 @@ export async function POST(request: Request) {
         description,
         pictures: pictures,
         address,
+        coordinate,
         contact: [email, phone, kakaoId],
       },
     })

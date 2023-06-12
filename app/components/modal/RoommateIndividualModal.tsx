@@ -31,8 +31,9 @@ const RoommateIndividualModal: React.FC<
   const roommateid = params?.get('roommatelisting');
   const router = useRouter();
   const { data: session } = useSession();
-  const [isLoading, setIsLoading] = useState(false);
   const currentUser = session?.user;
+  const [isLoading, setIsLoading] = useState(false);
+
   const [like, setLike] = useState(false);
   const roommateIndividualModal = useRoommateIndividualModal();
 
@@ -64,8 +65,6 @@ const RoommateIndividualModal: React.FC<
   }, []);
 
   if (!currentListing) return null;
-
-  console.log(currentListing);
 
   const {
     category,

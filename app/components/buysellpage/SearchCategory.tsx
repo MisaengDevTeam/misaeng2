@@ -6,7 +6,7 @@ interface SearchCategoryProps {
   isCategoryBoxOpen: boolean;
   setIsCategoryBoxOpen: (isOpen: boolean) => void;
   selectedCategory: string | null;
-  setSelectedCategory: (category: string) => void;
+  setSelectedCategory: (category: string | null) => void;
 }
 
 const SearchCategory: React.FC<SearchCategoryProps> = ({
@@ -41,19 +41,31 @@ const SearchCategory: React.FC<SearchCategoryProps> = ({
         
         `}
         >
-          {BUY_SELL_CATEGORY[
-            selectedCategory as keyof typeof BUY_SELL_CATEGORY
-          ].map((item) => (
+          <div className='flex flex-col justify-between h-full'>
+            <div>
+              {BUY_SELL_CATEGORY[
+                selectedCategory as keyof typeof BUY_SELL_CATEGORY
+              ].map((item) => (
+                <div
+                  onClick={() => {
+                    setIsCategoryBoxOpen(!isCategoryBoxOpen);
+                  }}
+                  className='cursor-pointer hover:bg-orange-300 transition text-center py-2 rounded-xl'
+                  key={item}
+                >
+                  {item}
+                </div>
+              ))}
+            </div>
             <div
               onClick={() => {
-                setIsCategoryBoxOpen(!isCategoryBoxOpen);
+                setSelectedCategory(null);
               }}
-              className='cursor-pointer hover:bg-orange-300 transition text-center py-2 rounded-xl'
-              key={item}
+              className='py-2 text-center cursor-pointer'
             >
-              {item}
+              메뉴 축소 하기
             </div>
-          ))}
+          </div>
         </div>
       )}
     </div>

@@ -136,6 +136,7 @@ model BuySellListing {
   pictures String[]
   address String
   contact String[]
+  coordinate Float[]
   
   createdAt DateTime @default(now())
   updatedAt String?
