@@ -2,15 +2,12 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Container from '../components/Container';
-import EmptyState from '../components/EmptyState';
 import ListingBody from '../components/buysellpage/ListingBody';
 import SearchCategory from '../components/buysellpage/SearchCategory';
-import { BUY_SELL_CATEGORY } from '@/types/BuySellTypes';
 import axios from 'axios';
 import { BuySellListing } from '@prisma/client';
 import LoadingScreen from '../components/LoadingScreen';
 import useBuySellIndividualModal from '../components/hooks/useBuySellIndividualModal';
-import useBuySellRegisterModal from '../components/hooks/useBuySellRegisterModal';
 import BuySellIndividualModal from '../components/modal/BuySellIndividualModal';
 import { useSearchParams } from 'next/navigation';
 
@@ -25,7 +22,6 @@ const BuySellPage = ({}) => {
   const [listings, setListings] = useState<BuySellListing[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const buySellRegisterModal = useBuySellRegisterModal();
   const buySellIndividualModal = useBuySellIndividualModal();
 
   useEffect(() => {
@@ -90,12 +86,6 @@ const BuySellPage = ({}) => {
           />
         </div>
       </Container>
-      {/* <div
-        onClick={buySellRegisterModal.onOpen}
-        className='bg-[#EC662A] text-[#FFFFFF] p-2 cursor-pointer'
-      >
-        OPEN MODAL
-      </div> */}
     </div>
   );
 };

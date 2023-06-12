@@ -4,14 +4,15 @@ import Image from 'next/image';
 
 interface AvatarProps {
   imgsrc?: string | null | undefined;
+  mypage?: boolean;
 }
 
-const Avatar: React.FC<AvatarProps> = ({ imgsrc }) => {
+const Avatar: React.FC<AvatarProps> = ({ imgsrc, mypage }) => {
   return (
     <Image
-      className='rounded-full'
-      height='30'
-      width='30'
+      className='rounded-full border border-neutral-200'
+      height={mypage ? '160' : '30'}
+      width={mypage ? '160' : '30'}
       alt='Avatar'
       src={imgsrc || '/assets/images/avatar/default_avatar.png'}
     />

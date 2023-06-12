@@ -56,7 +56,6 @@ const ListingBody: React.FC<ListingBodyProps> = ({
           <div
             onClick={() => {
               buySellIndividualOpen();
-              // console.log((listing as any)._id);
               handleClick((listing as any)._id);
             }}
             key={listing.id}

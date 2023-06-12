@@ -5,14 +5,12 @@ import UserMenuItem from './UserMenuItem';
 import { useRouter } from 'next/navigation';
 
 interface UserMenuWithUserProps {
-  toggleSession: () => void;
   roommateModalOpen: () => void;
   rentModalOpen: () => void;
   buysellModalOpen: () => void;
 }
 
 const UserMenuWithUser: React.FC<UserMenuWithUserProps> = ({
-  toggleSession,
   roommateModalOpen,
   rentModalOpen,
   buysellModalOpen,
@@ -25,7 +23,6 @@ const UserMenuWithUser: React.FC<UserMenuWithUserProps> = ({
         label='렌트 찾기'
         onClick={() => {
           router.push('/rent');
-          toggleSession();
         }}
       />
       <UserMenuItem
@@ -33,7 +30,6 @@ const UserMenuWithUser: React.FC<UserMenuWithUserProps> = ({
         label='룸메 찾기'
         onClick={() => {
           router.push('/roommate');
-          toggleSession();
         }}
       />
       <UserMenuItem
@@ -41,32 +37,38 @@ const UserMenuWithUser: React.FC<UserMenuWithUserProps> = ({
         label='사고팔기'
         onClick={() => {
           router.push('/buysell');
-          toggleSession();
         }}
       />
       <UserMenuItem
         label='렌트찾기 등록하기'
         onClick={() => {
           rentModalOpen();
-          toggleSession();
         }}
       />
       <UserMenuItem
         label='룸메찾기 등록하기'
         onClick={() => {
           roommateModalOpen();
-          toggleSession();
         }}
       />
       <UserMenuItem
         label='사고팔기 등록하기'
         onClick={() => {
           buysellModalOpen();
-          toggleSession();
         }}
       />
-      <UserMenuItem label='마이 페이지' onClick={() => {}} />
-      <UserMenuItem label='고객 센터' onClick={() => {}} />
+      <UserMenuItem
+        label='마이 페이지'
+        onClick={() => {
+          router.push('/mypage');
+        }}
+      />
+      <UserMenuItem
+        label='고객 센터'
+        onClick={() => {
+          router.push('/customer');
+        }}
+      />
       <UserMenuItem
         label='로그 아웃'
         onClick={() => signOut({ callbackUrl: '/' })}

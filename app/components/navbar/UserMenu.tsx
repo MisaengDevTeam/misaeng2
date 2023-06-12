@@ -36,10 +36,6 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
     setIsOpen((value) => !value);
   }, []);
 
-  const toggleUserSession = useCallback(() => {
-    setIsOpen(false);
-  }, []);
-
   if (isLoading) {
     return <div />;
   }
@@ -72,7 +68,6 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
           </div>
           {isOpen && (
             <UserMenuWithUser
-              toggleSession={toggleUserSession}
               rentModalOpen={rentRegisterModal.onOpen}
               roommateModalOpen={roommateRegisterModal.onOpen}
               buysellModalOpen={buySellRegisterModal.onOpen}

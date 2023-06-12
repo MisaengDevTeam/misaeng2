@@ -1,17 +1,11 @@
 'use client';
 
-import { MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import useBuySellRegisterModal from '../hooks/useBuySellRegisterModal';
 import Modal from './Modal';
 
 // Submit form
-import {
-  FieldValues,
-  RegisterOptions,
-  SubmitHandler,
-  UseFormRegisterReturn,
-  useForm,
-} from 'react-hook-form';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 
 // Types
 import { BUY_SELL_CATEGORY, BUY_SELL_STATUS } from '@/types/BuySellTypes';
@@ -22,12 +16,12 @@ import { useSession } from 'next-auth/react';
 import Input from '../inputs/Input';
 import Textarea from '../inputs/Textarea';
 import MapComponent from '../Map';
-import RentModalPicture from './rent/RentModalPicture';
 import BuySellRegiPicture from './buysellregister/BuySellRegiPicture';
 import { capitalizeFirstLetters } from '@/app/lib/addressFormatter';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import validateInput from '@/app/lib/validateInput';
 
 interface BuySellRegisterModalProps {}
 
@@ -77,7 +71,7 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
       price: null,
       status: null,
       description: null,
-      pictures: '',
+      pictures: null,
       address: null,
       uid: uid,
       coordinate: null,
@@ -99,6 +93,12 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
   );
 
   const pictures = watch('pictures');
+  const category = watch('category');
+  const subcategory = watch('subcategory');
+  const title = watch('title');
+  const price = watch('price');
+  const status = watch('status');
+  const description = watch('description');
   const address = watch('address');
 
   // Options
@@ -144,28 +144,27 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
   };
 
   const onNext = () => {
-    // if (step == 1 && validateInput([category])) {
-    //   toast.error('카테고리를 선택해주세요');
-    //   return null;
-    // }
+    if (step == 1 && validateInput([category, subcategory])) {
+      // console.log(category);
+      // console.log(subcategory);
+      toast.error('카테고리를 선택해주세요');
+      return null;
+    }
 
-    // if (step == 2 && validateInput([price, length, movedate, description])) {
-    //   toast.error('모든 항목을 선택/작성 해주세요');
-    //   return null;
-    // }
+    if (step == 2 && validateInput([title, price, status, description])) {
+      toast.error('모든 항목을 선택/작성 해주세요');
+      return null;
+    }
 
-    // if (step == 3 && validateInput([gender, age, status, pet, smoke, mbti])) {
-    //   toast.error('반드시 한 가지씩 선택 해주세요');
-    //   return null;
-    // }
+    if (step == 3 && validateInput([address, coordinate])) {
+      toast.error('도로명 주소를 입력하시고 검색을 눌러주세요');
+      return null;
+    }
 
-    // if (
-    //   step == 4 &&
-    //   validateInput([rmgender, rmage, rmstatus, rmpet, rmsmoke])
-    // ) {
-    //   toast.error('반드시 한 가지씩 선택 해주세요');
-    //   return null;
-    // }
+    if (step == 4 && validateInput([pictures])) {
+      toast.error('사진을 등록해주세요');
+      return null;
+    }
 
     // if (step == 5 && validateInput([city, district])) {
     //   toast.error('지역을 선택해주세요');
@@ -213,8 +212,7 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
     axios
       .post(`/api/buysellRegister`, { ...data, uid: uid, email: email })
       .then((response) => {
-        toast.success('룸메이트 리스팅이 등록되었습니다!');
-
+        toast.success('사고팔기 리스팅이 등록되었습니다!');
         setStep(BUY_SELL_REGISTER_STEP.CATEGORY);
         buySellRegisterModal.onClose();
         reset();
