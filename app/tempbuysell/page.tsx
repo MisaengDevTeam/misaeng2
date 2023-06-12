@@ -48,7 +48,7 @@ const BuySellPage = ({}) => {
             onClick={() => {
               setIsCategoryBoxOpen(!isCategoryBoxOpen);
             }}
-            className='w-full flex justify-center items-center md:hidden py-2 bg-[#EC662A] text-[#fff] rounded-xl'
+            className='w-full flex justify-center items-center md:hidden py-2 mb-3 bg-[#EC662A] text-[#fff] rounded-xl'
           >
             {isCategoryBoxOpen
               ? '카테고리 닫기'

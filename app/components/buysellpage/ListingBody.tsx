@@ -10,7 +10,7 @@ interface ListingBodyProps {
 
 const ListingBody: React.FC<ListingBodyProps> = ({ listings }) => {
   return (
-    <div className='w-full h-full relative'>
+    <div className='w-full h-full relative h-auto max-h-[80vh] overflow-y-scroll overflow-x-hidden border-dashed border-t md:border-none border-[#EC662A]'>
       <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 3xl:grid-cols-8 gap-2 md:gap-4 md:pl-4 pt-4 md:pt-0'>
         {listings?.map((listing) => (
           <div key={listing.id} className='relative cursor-pointer group'>
