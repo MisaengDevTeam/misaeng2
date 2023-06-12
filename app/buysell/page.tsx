@@ -82,6 +82,7 @@ const BuySellPage = ({}) => {
             setIsCategoryBoxOpen={setIsCategoryBoxOpen}
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
+            setListings={setListings}
           />
           <ListingBody
             listings={listings}

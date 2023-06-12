@@ -64,70 +64,22 @@ export async function POST(request: Request) {
       .toArray();
     return NextResponse.json({ listingInfo });
   }
-  // if (roommateOption) {
-  //   const {
-  //     category,
-  //     gender,
-  //     status,
-  //     roomtype,
-  //     length,
-  //     mbti,
-  //     age,
-  //     pet,
-  //     smoke,
-  //     city,
-  //     district,
-  //   } = roommateOption;
+  if (buysellOption) {
+    const { category, subcategory } = buysellOption;
 
-  //   let query: {
-  //     category?: string;
-  //     selfgender?: string;
-  //     selfstatus?: string;
-  //     roomtype?: string;
-  //     length?: string;
-  //     selfmbti?: string;
-  //     selfage?: string;
-  //     selfpet?: string;
-  //     selfsmoke?: string;
-  //     city?: string;
-  //     district?: string;
-  //   } = {};
+    let query: {
+      category?: string;
+      subcategory?: string;
+    } = {};
 
-  //   if (category != null) {
-  //     query.category = category;
-  //   }
-  //   if (gender != null) {
-  //     query.selfgender = gender;
-  //   }
-  //   if (status != null) {
-  //     query.selfstatus = status;
-  //   }
-  //   if (roomtype != null) {
-  //     query.roomtype = roomtype;
-  //   }
-  //   if (length != null) {
-  //     query.length = length;
-  //   }
-  //   if (mbti != null) {
-  //     query.selfmbti = mbti;
-  //   }
-  //   if (age != null) {
-  //     query.selfage = age;
-  //   }
-  //   if (pet != null) {
-  //     query.selfpet = pet;
-  //   }
-  //   if (smoke != null) {
-  //     query.selfsmoke = smoke;
-  //   }
-  //   if (city != null) {
-  //     query.city = city;
-  //   }
-  //   if (district != null) {
-  //     query.district = district;
-  //   }
+    if (category != null) {
+      query.category = category;
+    }
+    if (subcategory != null) {
+      query.subcategory = subcategory;
+    }
 
-  //   const searchedListings = await roommateCollection.find(query).toArray();
-  //   return NextResponse.json({ searchedListings });
-  // }
+    const searchedListings = await buysellCollection.find(query).toArray();
+    return NextResponse.json({ searchedListings });
+  }
 }

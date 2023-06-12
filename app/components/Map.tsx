@@ -49,7 +49,6 @@ const MapComponent = memo<MapProps>(function MapComponent({
       map.current.addControl(nav, rentmain ? 'bottom-right' : 'top-right');
     }
 
-    // console.log(mapListings);
     if (showRange && map.current) {
       map.current = new mapboxgl.Map({
         container: mapContainer.current,

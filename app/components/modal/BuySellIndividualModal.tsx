@@ -57,7 +57,6 @@ const BuySellIndividualModal: React.FC<BuySellIndividualModalProps> = ({}) => {
         })
         .then((res) => {
           setCurrentListing(res.data.listingInfo[0]);
-          console.log(res.data.listingInfo[0]);
         })
         .catch((error) => console.log(error))
         .finally(() => {

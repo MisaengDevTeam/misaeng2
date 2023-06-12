@@ -196,7 +196,6 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
     axios
       .post(`/api/roommateRegister`, { ...data, uid: uid, email: email })
       .then((response) => {
-        console.log(response);
         toast.success('룸메이트 리스팅이 등록되었습니다!');
         setStep(ROOMMATE_REGISTER_STEP.CATEGORY);
         roommateRegisterModal.onClose();

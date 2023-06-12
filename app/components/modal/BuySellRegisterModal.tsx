@@ -123,7 +123,6 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
         .post(`/api/geocode`, { searchAddress })
         .then((res) => {
           setCoordinate(res.data.newCoordinate);
-          console.log(res.data.newCoordinate);
           setCustomValue('address', res.data.newAddress);
           setCustomValue('coordinate', res.data.newCoordinate);
         })
@@ -179,7 +178,6 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
   };
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
     setIsLoading(true);
 
     const writeTime = new Date().toISOString();
@@ -216,7 +214,7 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
       .post(`/api/buysellRegister`, { ...data, uid: uid, email: email })
       .then((response) => {
         toast.success('룸메이트 리스팅이 등록되었습니다!');
-        console.log(response);
+
         setStep(BUY_SELL_REGISTER_STEP.CATEGORY);
         buySellRegisterModal.onClose();
         reset();
@@ -407,12 +405,7 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
       {step == 5 && (
         <Button
           disabled={isLoading}
-          onClick={
-            // () => {
-            //   console.log('submitted');
-            // }
-            handleSubmit(onSubmit)
-          }
+          onClick={handleSubmit(onSubmit)}
           label={'Submit'}
         />
       )}

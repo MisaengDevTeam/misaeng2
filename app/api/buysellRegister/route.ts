@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   const body = await request.json();
-  console.log(body);
+  // console.log(body);
   let {
     category,
     subcategory,
@@ -40,7 +40,7 @@ export async function POST(request: Request) {
     })
     .then((res) => {
       buysellListing = res;
-      console.log(res);
+      // console.log(res);
     })
     .catch((error) => console.log(error));
 

@@ -173,7 +173,7 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
       .post(`/api/rentRegister`, { ...data, uid: uid })
       .then((response) => {
         toast.success('룸메이트 리스팅이 등록되었습니다!');
-        // console.log(response);
+
         setStep(RENT_REGISTER_STEP.CATEGORY);
         rentRegisterModal.onClose();
         reset();

@@ -63,7 +63,7 @@ export async function POST(request: Request) {
     })
     .then((res) => {
       roommateListing = res;
-      console.log(res);
+      // console.log(res);
     })
     .catch((error) => console.log(error));
 
