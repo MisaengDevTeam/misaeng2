@@ -32,8 +32,6 @@ const SearchCategory: React.FC<SearchCategoryProps> = ({
             {key}
           </div>
         ))}
-
-        {/* {Object.entries(BUY_SELL_CATEGORY).map(({key: string, value: string[]})=> {})} */}
       </div>
       {selectedCategory && (
         <div

@@ -14,10 +14,10 @@ const BuySellPage = ({}) => {
   const buySellRegisterModal = useBuySellRegisterModal();
   return (
     <div className='w-full flex bg-blue-300'>
-      <Container>
-        {/* <div className='flex flex-row justify-center items-center bg-green-300 py-4'>
+      {/* <Container>
+        <div className='flex flex-row justify-center items-center bg-green-300 py-4'>
           SEARCH BAR
-        </div> */}
+        </div>
         <div className='flex flex-col md:flex-row w-full justify-center items-start bg-red-200 py-4 md:py-8'>
           <div
             onClick={() => {
@@ -34,13 +34,13 @@ const BuySellPage = ({}) => {
           />
           <ListingBody />
         </div>
-      </Container>
-      {/* <div
+      </Container> */}
+      <div
         onClick={buySellRegisterModal.onOpen}
         className='bg-[#EC662A] text-[#FFFFFF] p-2 cursor-pointer'
       >
         OPEN MODAL
-      </div> */}
+      </div>
     </div>
   );
 };
