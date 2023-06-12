@@ -29,6 +29,7 @@ model User {
   accounts Account[]
   rentlistings RentListing[]
   roommatelistings RoommateListing[]
+  buyselllistings BuySellListing[]
   reviews Review[]
 }
 
@@ -116,6 +117,25 @@ model RoommateListing {
   district  String
   contact String[]
 
+  
+  createdAt DateTime @default(now())
+  updatedAt String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model BuySellListing {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  category String
+  subcategory String
+  title String
+  price Int
+  status String
+  description String
+  pictures String[]
+  address String
+  contact String[]
   
   createdAt DateTime @default(now())
   updatedAt String?

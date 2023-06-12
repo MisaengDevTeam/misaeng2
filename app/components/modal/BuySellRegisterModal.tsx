@@ -1,6 +1,6 @@
 'use client';
 
-import { MouseEvent, useEffect, useMemo, useState } from 'react';
+import { MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import useBuySellRegisterModal from '../hooks/useBuySellRegisterModal';
 import Modal from './Modal';
 
@@ -14,7 +14,7 @@ import {
 } from 'react-hook-form';
 
 // Types
-import { BUY_SELL_CATEGORY } from '@/types/BuySellTypes';
+import { BUY_SELL_CATEGORY, BUY_SELL_STATUS } from '@/types/BuySellTypes';
 import Button from '../Button';
 import Heading from '../Heading';
 import SelectComp from '../inputs/SelectComp';
@@ -24,6 +24,10 @@ import Textarea from '../inputs/Textarea';
 import MapComponent from '../Map';
 import RentModalPicture from './rent/RentModalPicture';
 import BuySellRegiPicture from './buysellregister/BuySellRegiPicture';
+import { capitalizeFirstLetters } from '@/app/lib/addressFormatter';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 interface BuySellRegisterModalProps {}
 
@@ -40,11 +44,19 @@ enum BUY_SELL_REGISTER_STEP {
 const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
   const [step, setStep] = useState(BUY_SELL_REGISTER_STEP.CATEGORY);
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
+  const [searchAddress, setSearchAddress] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [coordinate, setCoordinate] = useState<[number, number]>([
+    -73.9917399, 40.748456,
+  ]);
 
   // Session
   const { data: session } = useSession();
   const currentUser = session?.user;
+  const uid = currentUser?.id;
+  const email = currentUser?.email;
+
+  const router = useRouter();
 
   // Modal
   const buySellRegisterModal = useBuySellRegisterModal();
@@ -60,11 +72,33 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
   } = useForm<FieldValues>({
     defaultValues: {
       category: null,
+      subcategory: null,
+      title: null,
+      price: null,
+      status: null,
+      description: null,
       pictures: '',
+      address: null,
+      uid: uid,
+      email: email,
+      phone: '',
+      kakaoId: '',
     },
   });
 
+  const setCustomValue = useCallback(
+    (id: string, value: any) => {
+      setValue(id, value, {
+        shouldDirty: true,
+        shouldTouch: true,
+        shouldValidate: true,
+      });
+    },
+    [setValue]
+  );
+
   const pictures = watch('pictures');
+  const address = watch('address');
 
   // Options
   const categoryOptions = useMemo(() => {
@@ -80,6 +114,27 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
       value: category,
     }));
   }, [selectedCategory]);
+
+  const handleAddress = useCallback(async () => {
+    setIsLoading(true);
+    if (searchAddress) {
+      axios
+        .post(`/api/geocode`, { searchAddress })
+        .then((res) => {
+          setCoordinate(res.data.newCoordinate);
+          setCustomValue('address', res.data.newAddress);
+        })
+
+        .catch((error) => {
+          toast.error(`Address error`);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+
+    return null;
+  }, [searchAddress, setCustomValue]);
 
   const onBack = () => {
     const newStep = step == 1 ? 1 : step - 1;
@@ -120,6 +175,59 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
     setStep(newStep);
   };
 
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    console.log(data);
+    setIsLoading(true);
+
+    const writeTime = new Date().toISOString();
+
+    const pictureURL: string[] = await Promise.all(
+      pictures.map(async (pic: string) => {
+        const resPic = await fetch(pic);
+        const blobPic = await resPic.blob();
+
+        const url = await axios.post(
+          `/api/pic/buySellImage/${currentUser?.id}/${writeTime}`
+        );
+
+        const response = await fetch(url.data.signedUrl, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+          body: blobPic,
+        });
+
+        const resultPicture = response.url.split('?')[0];
+
+        return resultPicture;
+      })
+    );
+
+    setCustomValue('pictures', pictureURL);
+
+    // replace data.pictures with pictureURL before calling the post method
+    data.pictures = pictureURL;
+
+    axios
+      .post(`/api/buysellRegister`, { ...data, uid: uid, email: email })
+      .then((response) => {
+        toast.success('룸메이트 리스팅이 등록되었습니다!');
+        console.log(response);
+        setStep(BUY_SELL_REGISTER_STEP.CATEGORY);
+        buySellRegisterModal.onClose();
+        reset();
+      })
+      .catch((error) => {
+        toast.error(`Something went wrong`);
+        console.log(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+        router.refresh();
+      });
+  };
+
   const bodyContent = useMemo(() => {
     const setCustomValue = (id: string, value: any) => {
       setValue(id, value, {
@@ -139,13 +247,18 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
               options={categoryOptions}
               onChange={(value) => {
                 setSelectedCategory(BUY_SELL_CATEGORY[value as CategoryKey]);
+                setCustomValue('category', value);
               }}
             />
-            <SelectComp
-              placeholder='소분류'
-              options={subCategoryOptions}
-              onChange={() => {}}
-            />
+            {selectedCategory && (
+              <SelectComp
+                placeholder='소분류'
+                options={subCategoryOptions}
+                onChange={(value) => {
+                  setCustomValue('subcategory', value);
+                }}
+              />
+            )}
           </div>
         );
       case 2:
@@ -158,6 +271,7 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
               register={register}
               length={32}
               errors={errors}
+              onChange={(e) => setCustomValue('title', e.target.value)}
             />
             <Input
               type='number'
@@ -166,16 +280,17 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
               register={register}
               errors={errors}
               formatPrice
+              onChange={(e) => setCustomValue('price', e.target.value)}
             />
             <SelectComp
               placeholder={'물건 상태'}
-              options={[]}
-              onChange={() => {}}
+              options={BUY_SELL_STATUS}
+              onChange={(value) => setCustomValue('status', value)}
             />
             <Textarea
               id={'description'}
               placeholer='상품에 대한 상세설명을 적어주세요'
-              onChange={() => {}}
+              onChange={(value) => setCustomValue('description', value)}
             />
           </div>
         );
@@ -188,21 +303,43 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
                 <Input
                   id={'address'}
                   label={'도로명 주소'}
+                  length={36}
+                  onEnter={(e) => {
+                    if (e.key === 'Enter') {
+                      handleAddress();
+                    }
+                  }}
+                  onChange={(e) => {
+                    setSearchAddress(
+                      encodeURIComponent(
+                        capitalizeFirstLetters(e.currentTarget.value)
+                      )
+                    );
+                  }}
                   register={register}
                   errors={errors}
                 />
               </div>
               <div className='w-[20%]'>
-                <Button onClick={() => {}} label={'검색'} />
+                <Button
+                  disabled={isLoading}
+                  onClick={() => {
+                    handleAddress();
+                  }}
+                  label={'검색'}
+                />
               </div>
             </div>
-            <MapComponent initCoordinate={[-73.9917399, 40.748456]} showRange />
+            <MapComponent initCoordinate={coordinate} showRange />
           </div>
         );
       case 4:
         return (
           <div className='flex flex-col gap-2 md:gap-4'>
-            <Heading title='판매하시는 상품 사진을 올려주세요 (4/5)' />
+            <Heading
+              title='판매하시는 상품 사진을 올려주세요 (4/5)'
+              subtitle='사진은 미생 회원님의 핸드폰으로 찍어주신 사진으로도 충분합니다. 충분한 햇빛 또는 조명에서 가로 방향으로 촬영한 사진을 업로드해주시기 바랍니다.'
+            />
             <BuySellRegiPicture
               onChange={(value) => setCustomValue('pictures', value)}
             />
@@ -250,10 +387,14 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
     step,
     setValue,
     categoryOptions,
+    selectedCategory,
     subCategoryOptions,
     register,
     errors,
+    isLoading,
+    coordinate,
     currentUser,
+    handleAddress,
   ]);
 
   const footerContent = (
@@ -264,10 +405,10 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
         <Button
           disabled={isLoading}
           onClick={
-            () => {
-              console.log('submitted');
-            }
-            // handleSubmit(onSubmit)
+            // () => {
+            //   console.log('submitted');
+            // }
+            handleSubmit(onSubmit)
           }
           label={'Submit'}
         />

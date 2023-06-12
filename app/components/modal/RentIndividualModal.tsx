@@ -3,7 +3,7 @@
 import { useSession } from 'next-auth/react';
 import Modal from './Modal';
 import useRentIndividualModal from '../hooks/useRentIndividualModal';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Button from '../Button';
 import axios from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -27,6 +27,7 @@ import { FaRegShareSquare } from 'react-icons/fa';
 import { RiAlarmWarningLine } from 'react-icons/ri';
 import RentIndiFooterButton from './rentindividual/RentIndiFooterButton';
 import RentIndiDetail from './rentindividual/RentIndiDetail';
+import toast from 'react-hot-toast';
 
 interface RentRegisterModalProps {}
 
@@ -66,6 +67,16 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
   }, [rentlistingid]);
 
   const rentIndividualModal = useRentIndividualModal();
+
+  const handleCopy = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      toast.success('주소가 복사되었습니다!');
+    } catch (err) {
+      toast.error(`Something went wrong!`);
+      console.error('Failed to copy text: ', err);
+    }
+  }, []);
   if (!currentListing) return null;
 
   const headerTitle = `${currentListing.title}`;
@@ -131,6 +142,7 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
         <RentIndiFooterButton
           color='#9DCAEB'
           label='공유하기'
+          onClick={handleCopy}
           icon={FaRegShareSquare}
         />
         <RentIndiFooterButton

@@ -183,7 +183,7 @@ const RentModalMap: React.FC<RentModalMapProps> = ({
           <div className='w-[80%]'>
             <Input
               id={'map'}
-              label={'주소를 입력해주세요'}
+              label={'도로명 주소'}
               register={register}
               errors={errors}
               length={40}

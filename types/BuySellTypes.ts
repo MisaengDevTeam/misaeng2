@@ -62,7 +62,7 @@ export const BUY_SELL_CATEGORY = {
   자동차: ['차량', '타이어/휠', '네비게이션', '악세서리', '기타'],
   스포츠: [
     '골프/테니스',
-    '농구/축구/야구/풋볼',
+    '농구/축구/야구',
     '자전거/스키/낚시',
     '헬스/수영',
     '기타',
@@ -72,3 +72,10 @@ export const BUY_SELL_CATEGORY = {
   무빙세일: ['전체'],
   기타: ['전체'],
 };
+
+export const BUY_SELL_STATUS = [
+  { label: '미개봉 & 새상품', value: 'new' },
+  { label: '개봉 & 미사용', value: 'excellent' },
+  { label: '아주 좋음', value: 'good' },
+  { label: '사용 가능', value: 'moderate' },
+];
