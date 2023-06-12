@@ -65,7 +65,7 @@ const RentListingCard: React.FC<RentListingCardProps> = ({
             width={0}
             height={0}
             sizes='100%'
-            className='aspect-square w-[100%] h-auto rounded-lg object-cover w-full group-hover:scale-110 transition'
+            className='aspect-square h-auto rounded-lg object-cover w-full group-hover:scale-110 transition'
             alt='thumbnail'
           />
         </div>
