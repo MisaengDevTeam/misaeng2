@@ -31,9 +31,9 @@ const MyPage: React.FC<pageProps> = ({}) => {
 
   const routeComponents = {
     '/mypage/edit': <MyEdit currentUser={currentUser} />,
-    '/mypage/rent-listing': (
-      <MyRentListing currentUser={currentUser} setTypeAndIt={setTypeAndIt} />
-    ),
+    // '/mypage/rent-listing': (
+    //   <MyRentListing currentUser={currentUser} setTypeAndIt={setTypeAndIt} />
+    // ),
     '/mypage/roommate-listing': (
       <MyRoommateListing
         currentUser={currentUser}

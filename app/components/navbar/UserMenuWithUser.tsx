@@ -44,13 +44,13 @@ const UserMenuWithUser: React.FC<UserMenuWithUserProps> = ({
           router.push('/buysell');
         }}
       />
-      <UserMenuItem
+      {/* <UserMenuItem
         label='렌트찾기 등록하기'
         onClick={() => {
           closeUserMenu();
           rentModalOpen();
         }}
-      />
+      /> */}
       <UserMenuItem
         label='룸메찾기 등록하기'
         onClick={() => {

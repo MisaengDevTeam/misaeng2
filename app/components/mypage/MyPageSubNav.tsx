@@ -20,11 +20,11 @@ const MyPageSubNav: React.FC<MyPageSubNavProps> = ({}) => {
         selected={pathname == '/mypage/edit'}
       />
 
-      <MySubNavItem
+      {/* <MySubNavItem
         pathname={'/mypage/rent-listing'}
         label={'렌트목록 관리'}
         selected={pathname == '/mypage/rent-listing'}
-      />
+      /> */}
       <MySubNavItem
         pathname={'/mypage/roommate-listing'}
         label={'룸메목록 관리'}
