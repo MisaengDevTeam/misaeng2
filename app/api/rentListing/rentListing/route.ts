@@ -161,7 +161,6 @@ export async function POST(request: Request) {
         buildingId: new ObjectId(listingInfo[0].buildingId),
       })
       .toArray();
-    // console.log('bid', listingInfo[0].buildingId.toString());
     return NextResponse.json({
       listingInfo,
       buildingInfo,
@@ -281,5 +280,6 @@ export async function POST(request: Request) {
     // console.log(rentOption);
     return NextResponse.json({ searchedListing, searchedMapListing });
   }
+
   return NextResponse.json({});
 }

@@ -1,3 +1,8 @@
+export interface ITypeAndId {
+  type: string | null;
+  id: string | null;
+}
+
 export const LOCATION_LIST = {
   학생: [
     'Columbia University',

@@ -16,6 +16,7 @@ interface ModalProps {
   loadingScreen?: React.ReactElement | string;
   separator?: boolean;
   rentindividual?: boolean;
+  mypage?: boolean;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -29,6 +30,7 @@ const Modal: React.FC<ModalProps> = ({
   separator,
   loadingScreen,
   rentindividual,
+  mypage,
 }) => {
   const [showModal, setShowModal] = useState(isOpen);
 
@@ -84,6 +86,7 @@ const Modal: React.FC<ModalProps> = ({
             {/* BODY */}
             <div
               className={`relative flex-auto h-[70%]
+              
             ${rentindividual ? 'py-2 px-2' : 'p-4 sm:p-6'}
             `}
             >
@@ -95,15 +98,17 @@ const Modal: React.FC<ModalProps> = ({
               </div>
             )}
             {/* FOOTER */}
-            <div
-              className={`flex flex-col gap-4 h-[15%] 
+            {!mypage && (
+              <div
+                className={`flex flex-col gap-4 h-[15%] 
             ${
               rentindividual ? 'mb-8 px-6 sm:mb-4' : 'mb-4 px-4 sm:px-6 sm:mb-6'
             }
             `}
-            >
-              {footer}
-            </div>
+              >
+                {footer}
+              </div>
+            )}
           </div>
         </div>
         {disabled && loadingScreen}

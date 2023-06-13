@@ -29,9 +29,11 @@ import RentIndiFooterButton from './rentindividual/RentIndiFooterButton';
 import RentIndiDetail from './rentindividual/RentIndiDetail';
 import toast from 'react-hot-toast';
 
-interface RentRegisterModalProps {}
+interface RentRegisterModalProps {
+  mypage?: boolean;
+}
 
-const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
+const RentRegisterModal: React.FC<RentRegisterModalProps> = ({ mypage }) => {
   const [currentListing, setCurrentListing] = useState<RentListing | null>(
     null
   );
@@ -130,7 +132,7 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
 
   let footerContent = (
     <div className='h-full my-2'>
-      <div className='flex justify-evenly'>
+      <div className={`flex justify-evenly`}>
         <RentIndiFooterButton
           color='#EC662A'
           label='좋아요'
@@ -166,6 +168,7 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({}) => {
       title={headerTitle}
       body={bodyContent}
       footer={footerContent}
+      mypage={mypage}
       rentindividual
       separator
     />

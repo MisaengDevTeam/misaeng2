@@ -13,7 +13,7 @@ const RoommateIndiAttr: React.FC<RoommateIndiAttrProps> = ({ title, arr }) => {
         {arr.map((item) => (
           <div
             key={item}
-            className='flex justify-center items-center py-1 px-1 border-[1px] border-[#EC662A] rounded-full font-light text-[12px] sm:text-sm md:text-base'
+            className='flex justify-center items-center py-1 px-1 border-[1px] border-[#EC662A] rounded-full font-light text-[12px] sm:text-sm'
           >
             {item}
           </div>

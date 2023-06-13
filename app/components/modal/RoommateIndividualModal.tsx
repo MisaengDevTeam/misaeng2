@@ -11,7 +11,6 @@ import Image from 'next/image';
 import rmAvatarFinder from '@/app/lib/rmAvatarFinder';
 import RoommateContext from './roommateindividual/RoommateContext';
 import RoommateIndiAttr from './roommateindividual/RoommateIndiAttr';
-import RoommateLocation from './roommateindividual/RoommateLocation';
 import RentIndiFooterButton from './rentindividual/RentIndiFooterButton';
 import { BsHeart, BsHeartFill } from 'react-icons/bs';
 import { FaRegShareSquare } from 'react-icons/fa';
@@ -19,11 +18,13 @@ import { RiAlarmWarningLine } from 'react-icons/ri';
 import Button from '../Button';
 import toast from 'react-hot-toast';
 
-interface RoommateIndividualModalProps {}
+interface RoommateIndividualModalProps {
+  mypage?: boolean;
+}
 
-const RoommateIndividualModal: React.FC<
-  RoommateIndividualModalProps
-> = ({}) => {
+const RoommateIndividualModal: React.FC<RoommateIndividualModalProps> = ({
+  mypage,
+}) => {
   const [currentListing, setCurrentListing] = useState<RoommateListing | null>(
     null
   );
@@ -111,8 +112,8 @@ const RoommateIndividualModal: React.FC<
           alt='img'
         />
       </div>
-      <RoommateLocation city={city} district={district} />
       <RoommateContext title='간단한 자기소개' description={description} />
+      <RoommateIndiAttr title='희망 위치' arr={[city, district]} />
       <RoommateIndiAttr title='저는요?' arr={selfArray} />
       <RoommateIndiAttr title='제가 찾는 룸메는요?' arr={rmArray} />
       <RoommateIndiAttr
@@ -157,6 +158,7 @@ const RoommateIndividualModal: React.FC<
       title={category}
       body={bodyContent}
       footer={footerContent}
+      mypage={mypage}
       separator
     />
   );
