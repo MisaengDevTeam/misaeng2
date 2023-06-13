@@ -55,7 +55,13 @@ export const authOptions: AuthOptions = {
           name: currentUser?.name as string,
           email: currentUser?.email as string,
           image: currentUser?.image as string,
+          newImage: currentUser?.newImage as string,
           emailVerified: currentUser?.emailVerified as Date,
+          nickname: currentUser?.nickname as string,
+          phone: currentUser?.phone as string,
+          kakaoId: currentUser?.kakaoId as string,
+          status: currentUser?.status as string,
+          jobLocation: currentUser?.jobLocation as string,
         },
       };
 

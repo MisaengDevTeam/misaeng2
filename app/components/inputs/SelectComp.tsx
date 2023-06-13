@@ -6,6 +6,9 @@ interface SelectCompProps {
   options: any[];
   onChange: (value: string) => void;
   small?: boolean;
+  isSearchable?: boolean;
+  isClearable?: boolean;
+  defaultValue?: any;
 }
 
 const SelectComp: React.FC<SelectCompProps> = ({
@@ -13,15 +16,21 @@ const SelectComp: React.FC<SelectCompProps> = ({
   placeholder,
   options,
   small,
+  isSearchable = false,
+  isClearable = false,
+  defaultValue,
 }) => {
   return (
     <div className='w-full sm:w-auto'>
       <Select
         placeholder={placeholder}
         options={options}
-        isSearchable={false}
-        isClearable={false}
-        onChange={(value) => onChange(value.value)}
+        defaultValue={{ label: defaultValue, value: defaultValue }}
+        // defaultInputValue={defaultValue}
+        isSearchable={isSearchable}
+        isClearable={isClearable}
+        // value={value}
+        onChange={(value) => onChange(value?.value)}
         classNames={{
           control: () =>
             `${small ? 'p-1 text-[14px] sm:text-sm' : 'p-3 text-sm'} border-2`,

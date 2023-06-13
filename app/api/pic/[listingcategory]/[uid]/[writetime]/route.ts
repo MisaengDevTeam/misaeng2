@@ -40,7 +40,7 @@ export async function POST(request: Request, { params }: { params: IParams }) {
 
   try {
     const signedUrl = await getSignedUrl(s3client, command, {
-      expiresIn: 60 * 60,
+      expiresIn: 60 * 5,
     });
     return NextResponse.json({ signedUrl });
   } catch (err) {

@@ -6,8 +6,14 @@ declare module 'next-auth' {
       id: string;
       name: string;
       email: string;
-      image: string;
       emailVerified: Date;
+      image: string;
+      jobLocation?: string;
+      kakaoId?: string;
+      nickname?: string;
+      phone?: string;
+      status?: string;
+      newImage?: string[];
     };
   }
 }

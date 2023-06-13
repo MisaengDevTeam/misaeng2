@@ -14,6 +14,7 @@ interface User {
   email?: string | null | undefined;
   image?: string | null | undefined;
   name?: string | null | undefined;
+  newImage?: string[] | null | undefined;
 }
 
 interface UserMenuProps {
@@ -72,7 +73,13 @@ const UserMenu: React.FC<UserMenuProps> = ({
               <AiOutlineMenu size={24} color='neutral-600' />
             )}
             <div className='hidden md:block'>
-              <Avatar imgsrc={currentUser?.image} />
+              <Avatar
+                imgsrc={
+                  currentUser?.newImage
+                    ? currentUser?.newImage[0]
+                    : currentUser?.image
+                }
+              />
             </div>
           </div>
           {isOpen && (
