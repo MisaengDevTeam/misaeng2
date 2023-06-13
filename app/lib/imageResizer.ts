@@ -41,7 +41,7 @@ export const resizeProfileImage = async (file: File): Promise<File> => {
   });
 };
 
-export const resizeAndCropImage = async (file: File): Promise<File> => {
+export const resizeAdImage = async (file: File): Promise<File> => {
   const TARGET_ASPECT_RATIO = 4 / 3;
   const MAX_WIDTH = 400;
   const MAX_HEIGHT = 300;
