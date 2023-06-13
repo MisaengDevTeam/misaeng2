@@ -231,18 +231,6 @@ const MyPage: React.FC<pageProps> = ({ currentUser }) => {
               </div>
             )}
             <div className='flex flex-col gap-2 px-4'>
-              <div
-                className={`${
-                  currentUser?.emailVerified
-                    ? 'text-[#EC662A]'
-                    : 'text-neutral-600'
-                }`}
-              >
-                {currentUser?.emailVerified
-                  ? '* 이메일 본인인증 완료'
-                  : '* 이메일 본인인증 필요'}
-              </div>
-
               <div className='text-neutral-500 font-light'>
                 ** 회원님의 이미지는 본인을 나타낼 수 있는 가장 큰 요소입니다.
                 타인에게 불쾌감을 줄 수 있는 사진은 저희 미생팀에서 삭제할 수
