@@ -159,7 +159,6 @@ const BuySellIndividualModal: React.FC<BuySellIndividualModalProps> = ({
       title={currentListing.title}
       body={bodyContent}
       footer={footerContent}
-      rentindividual
       mypage={mypage}
     />
   );

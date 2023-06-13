@@ -3,13 +3,22 @@
 interface RoommateIndiAttrProps {
   title: string;
   arr: string[];
+  findLocation?: boolean;
 }
 
-const RoommateIndiAttr: React.FC<RoommateIndiAttrProps> = ({ title, arr }) => {
+const RoommateIndiAttr: React.FC<RoommateIndiAttrProps> = ({
+  title,
+  arr,
+  findLocation,
+}) => {
   return (
     <div className='flex flex-col gap-2'>
       <div className='font-semibold text-lg'>{title}</div>
-      <div className='grid grid-cols-3 gap-x-2 gap-y-1'>
+      <div
+        className={`grid gap-x-2 gap-y-1
+      ${findLocation ? 'grid-cols-2 ' : 'grid-cols-3 '}
+      `}
+      >
         {arr.map((item) => (
           <div
             key={item}

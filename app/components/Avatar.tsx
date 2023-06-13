@@ -14,6 +14,7 @@ const Avatar: React.FC<AvatarProps> = ({ imgsrc, mypage }) => {
       height={mypage ? '160' : '30'}
       width={mypage ? '160' : '30'}
       alt='Avatar'
+      priority={false}
       src={imgsrc || '/assets/images/avatar/default_avatar.png'}
     />
   );

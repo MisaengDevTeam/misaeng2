@@ -37,7 +37,6 @@ const MyRoommateListing: React.FC<MyRoommateListingProps> = ({
         mypage: 'roommate',
       })
       .then((res) => {
-        console.log(res);
         setRoomListings(res.data.roomInfo);
         setRoommateListings(res.data.roommateInfo);
         setTogetherListings(res.data.togetherInfo);

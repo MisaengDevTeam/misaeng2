@@ -113,7 +113,7 @@ const RoommateIndividualModal: React.FC<RoommateIndividualModalProps> = ({
         />
       </div>
       <RoommateContext title='간단한 자기소개' description={description} />
-      <RoommateIndiAttr title='희망 위치' arr={[city, district]} />
+      <RoommateIndiAttr title='희망 위치' arr={[city, district]} findLocation />
       <RoommateIndiAttr title='저는요?' arr={selfArray} />
       <RoommateIndiAttr title='제가 찾는 룸메는요?' arr={rmArray} />
       <RoommateIndiAttr

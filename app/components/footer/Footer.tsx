@@ -17,6 +17,7 @@ const Footer = ({}) => {
         alt='footer_logo'
         width={120}
         height={60}
+        priority={false}
       />
       <FooterCopyright
         address={'20 River Rd, New York, NY, 10044'}

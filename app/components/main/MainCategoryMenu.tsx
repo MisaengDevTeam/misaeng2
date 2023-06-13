@@ -24,6 +24,7 @@ const MainCategoryMenu: React.FC<MainCategoryMenuProps> = ({}) => {
             sizes='200'
             src={`/assets/images/img/main_category_${key}.png`}
             alt='cat'
+            priority={false}
             className='absolute top-0 left-0 rounded-xl brightness-50 md:brightness-100 peer-hover:brightness-50'
           />
         </div>
