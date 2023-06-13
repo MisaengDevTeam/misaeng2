@@ -50,7 +50,7 @@ const MyRoommateSection: React.FC<MyRoommateSectionProps> = ({
 
       const url = QueryString.stringifyUrl(
         {
-          url: '/tempmypage/roommate-listing/',
+          url: '/mypage/roommate-listing/',
           query: updatedQuery,
         },
         { skipNull: true }
@@ -62,7 +62,7 @@ const MyRoommateSection: React.FC<MyRoommateSectionProps> = ({
   );
 
   return (
-    <div>
+    <div className='w-full'>
       <Heading title={title} />
       <div className='flex flex-col sm:flex-row w-full gap-4 group rounded-lg hover:bg-[#EC662A]/10 cursor-pointer '>
         <div className='flex flex-col w-full sm:max-w-[840px] px-4 pb-4 sm:px-0 sm:pb-0 justify-center'>
@@ -72,7 +72,7 @@ const MyRoommateSection: React.FC<MyRoommateSectionProps> = ({
                 roommateIndividualModalOpen();
                 handleClick((listing as any)._id);
               }}
-              className='flex row justify-between text-lg sm:text-[14px] font-light w-full gap-4'
+              className='flex justify-between text-lg sm:text-[14px] font-light w-full gap-4'
             >
               <div className='flex flex-col justify-between w-full'>
                 <BuySellIndiInfo

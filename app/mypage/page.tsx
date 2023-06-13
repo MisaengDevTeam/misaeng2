@@ -1,10 +1,16 @@
 'use client';
 
-import EmptyState from '../components/EmptyState';
+import { useEffect } from 'react';
+import LoadingScreen from '../components/LoadingScreen';
+import { useRouter } from 'next/navigation';
 
 interface pageProps {}
 
-const page: React.FC<pageProps> = ({}) => {
-  return <EmptyState title='마이' />;
+const DefaultPage: React.FC<pageProps> = ({}) => {
+  const router = useRouter();
+  useEffect(() => {
+    router.push('/mypage/edit');
+  }, [router]);
+  return <LoadingScreen />;
 };
-export default page;
+export default DefaultPage;

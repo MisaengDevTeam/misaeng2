@@ -11,33 +11,29 @@ const MyPageSubNav: React.FC<MyPageSubNavProps> = ({}) => {
   return (
     <div
       className={`flex sm:justify-center w-full gap-8 p-5 pb-0 sm:pb-4 border-b border-neutral-200 overflow-x-auto whitespace-nowrap
-    ${
-      pathname == '/tempmypage/buy-sell-listing'
-        ? ' justify-end '
-        : ' justify-start '
-    }
+    
     `}
     >
       <MySubNavItem
-        pathname={'/tempmypage/edit'}
+        pathname={'/mypage/edit'}
         label={'개인정보 관리'}
-        selected={pathname == '/tempmypage/edit'}
+        selected={pathname == '/mypage/edit'}
       />
 
       <MySubNavItem
-        pathname={'/tempmypage/rent-listing'}
+        pathname={'/mypage/rent-listing'}
         label={'렌트목록 관리'}
-        selected={pathname == '/tempmypage/rent-listing'}
+        selected={pathname == '/mypage/rent-listing'}
       />
       <MySubNavItem
-        pathname={'/tempmypage/roommate-listing'}
+        pathname={'/mypage/roommate-listing'}
         label={'룸메목록 관리'}
-        selected={pathname == '/tempmypage/roommate-listing'}
+        selected={pathname == '/mypage/roommate-listing'}
       />
       <MySubNavItem
-        pathname={'/tempmypage/buy-sell-listing'}
+        pathname={'/mypage/buy-sell-listing'}
         label={'사고팔기목록 관리'}
-        selected={pathname == '/tempmypage/buy-sell-listing'}
+        selected={pathname == '/mypage/buy-sell-listing'}
       />
     </div>
   );

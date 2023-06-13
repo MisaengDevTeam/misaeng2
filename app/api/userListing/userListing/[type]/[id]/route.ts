@@ -16,6 +16,7 @@ export async function DELETE(
   const client = await mgClientPromise;
   const rentCollection = client.db('misaeng').collection('RentListing');
   const roommateCollection = client.db('misaeng').collection('RoommateListing');
+  const buysellCollection = client.db('misaeng').collection('BuySellListing');
 
   const { type, id } = params;
 
@@ -31,8 +32,11 @@ export async function DELETE(
     });
   }
 
-  // console.log(type);
-  // console.log(id);
+  if (type == 'buysell') {
+    await buysellCollection.deleteOne({
+      _id: new ObjectId(id),
+    });
+  }
 
   return NextResponse.json({});
 }

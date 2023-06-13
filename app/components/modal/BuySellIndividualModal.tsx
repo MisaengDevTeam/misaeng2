@@ -22,9 +22,13 @@ import MapComponent from '../Map';
 import Heading from '../Heading';
 import { BUY_SELL_STATUS } from '@/types/BuySellTypes';
 
-interface BuySellIndividualModalProps {}
+interface BuySellIndividualModalProps {
+  mypage?: boolean;
+}
 
-const BuySellIndividualModal: React.FC<BuySellIndividualModalProps> = ({}) => {
+const BuySellIndividualModal: React.FC<BuySellIndividualModalProps> = ({
+  mypage,
+}) => {
   const [like, setLike] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [currentListing, setCurrentListing] = useState<BuySellListing | null>(
@@ -156,6 +160,7 @@ const BuySellIndividualModal: React.FC<BuySellIndividualModalProps> = ({}) => {
       body={bodyContent}
       footer={footerContent}
       rentindividual
+      mypage={mypage}
     />
   );
 };

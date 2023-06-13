@@ -42,7 +42,6 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({ typeAndId }) => {
         disabled={isLoading}
         onClick={() => {
           handleDelete(typeAndId);
-          console.log(typeAndId);
         }}
         className={`w-full flex justify-center items-center py-2 rounded-xl hover:opacity-80
         ${

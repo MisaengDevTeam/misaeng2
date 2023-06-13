@@ -1,23 +1,25 @@
 'use client';
 
-import Image from 'next/image';
-import BuySellIndiInfo from '../modal/buysellindividual/BuySellIndiInfo';
-import MyEditDeleteButton from './MyEditDeleteButton';
+import { ITypeAndId } from '@/types/MyPageTypes';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 import QueryString from 'query-string';
-import { ITypeAndId } from '@/types/MyPageTypes';
+import Image from 'next/image';
+import BuySellIndiInfo from '../modal/buysellindividual/BuySellIndiInfo';
+import MyEditDeleteButton from './MyEditDeleteButton';
+import dateFormatter from '@/app/lib/dateFormatter';
+import { BUY_SELL_STATUS } from '@/types/BuySellTypes';
 
-interface MyRentListingCardProps {
+interface MyBuySellListingCardProps {
   listing: any;
-  rentIndividualOpen: () => void;
+  buysellIndividualOpen: () => void;
   confirmOpen: () => void;
   setTypeAndIt: (type: ITypeAndId) => void;
 }
 
-const MyRentListingCard: React.FC<MyRentListingCardProps> = ({
+const MyBuySellListingCard: React.FC<MyBuySellListingCardProps> = ({
   listing,
-  rentIndividualOpen,
+  buysellIndividualOpen,
   confirmOpen,
   setTypeAndIt,
 }) => {
@@ -25,7 +27,7 @@ const MyRentListingCard: React.FC<MyRentListingCardProps> = ({
   const params = useSearchParams();
 
   const handleClick = useCallback(
-    (rentId: string) => {
+    (buysellId: string) => {
       let currentQuery = {};
 
       if (params) {
@@ -34,16 +36,16 @@ const MyRentListingCard: React.FC<MyRentListingCardProps> = ({
 
       const updatedQuery: any = {
         ...currentQuery,
-        rentlisting: rentId,
+        buyselllisting: buysellId,
       };
 
-      if (params?.get('rentlisting') == rentId) {
+      if (params?.get('buyselllisting') == buysellId) {
         delete updatedQuery.category;
       }
 
       const url = QueryString.stringifyUrl(
         {
-          url: '/mypage/rent-listing/',
+          url: '/mypage/buy-sell-listing/',
           query: updatedQuery,
         },
         { skipNull: true }
@@ -57,7 +59,7 @@ const MyRentListingCard: React.FC<MyRentListingCardProps> = ({
     <div className='flex flex-col sm:flex-row w-full gap-4 group rounded-lg hover:bg-[#EC662A]/10 cursor-pointer'>
       <div
         onClick={() => {
-          rentIndividualOpen();
+          buysellIndividualOpen();
           handleClick((listing as any)._id);
         }}
         className='w-full sm:w-[30%] sm:max-w-[160px]'
@@ -69,8 +71,8 @@ const MyRentListingCard: React.FC<MyRentListingCardProps> = ({
             height={0}
             sizes='100%'
             src={
-              listing.imageSrc[0] != ''
-                ? listing.imageSrc[0]
+              listing.pictures[0] != ''
+                ? listing.pictures[0]
                 : '/assets/images/logo/logo_square.png'
             }
             alt='img'
@@ -82,19 +84,25 @@ const MyRentListingCard: React.FC<MyRentListingCardProps> = ({
         <div className='flex flex-col sm:flex-row gap-2 sm:gap-4'>
           <div
             onClick={() => {
-              rentIndividualOpen();
+              buysellIndividualOpen();
               handleClick((listing as any)._id);
             }}
             className='flex flex-col justify-between text-lg sm:text-[14px] font-light w-full'
           >
-            <BuySellIndiInfo label={'침실 수'} description={listing.bedCount} />
             <BuySellIndiInfo
-              label={'화장실 수'}
-              description={listing.bathCount}
+              label={'카테고리'}
+              description={`${listing.category} / ${listing.subcategory}`}
             />
             <BuySellIndiInfo
-              label={'입주 가능 날짜'}
-              description={listing.moveDate}
+              label={'상태'}
+              description={
+                BUY_SELL_STATUS.find((item) => item.value === listing.status)
+                  ?.label || ''
+              }
+            />
+            <BuySellIndiInfo
+              label={'작성일'}
+              description={dateFormatter(new Date(listing.createdAt))}
             />
             <BuySellIndiInfo
               label={'가격'}
@@ -107,7 +115,7 @@ const MyRentListingCard: React.FC<MyRentListingCardProps> = ({
               label={'삭제하기'}
               onClick={() => {
                 confirmOpen();
-                setTypeAndIt({ type: 'rent', id: (listing as any)._id });
+                setTypeAndIt({ type: 'buysell', id: (listing as any)._id });
               }}
               deleteEl
             />
@@ -117,4 +125,4 @@ const MyRentListingCard: React.FC<MyRentListingCardProps> = ({
     </div>
   );
 };
-export default MyRentListingCard;
+export default MyBuySellListingCard;

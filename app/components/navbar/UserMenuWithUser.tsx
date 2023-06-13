@@ -69,7 +69,7 @@ const UserMenuWithUser: React.FC<UserMenuWithUserProps> = ({
         label='마이 페이지'
         onClick={() => {
           closeUserMenu();
-          router.push('/mypage');
+          router.push('/mypage/edit');
         }}
       />
       <UserMenuItem

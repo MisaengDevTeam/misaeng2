@@ -11,6 +11,7 @@ export async function POST(request: Request) {
   const userCollection = client.db('misaeng').collection('User');
   const rentCollection = client.db('misaeng').collection('RentListing');
   const roommateCollection = client.db('misaeng').collection('RoommateListing');
+  const buysellCollection = client.db('misaeng').collection('BuySellListing');
 
   if (mypage == 'edit') {
     const editInfo = { mypage, ...body };
@@ -47,5 +48,16 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json({ roommateInfo, roomInfo, togetherInfo });
+  }
+
+  if (mypage == 'buysell') {
+    const buysellInfo = await buysellCollection
+      .find({
+        userId: new ObjectId(body.uid),
+      })
+      .sort({ writeTime: -1 })
+      .limit(6)
+      .toArray();
+    return NextResponse.json({ buysellInfo });
   }
 }

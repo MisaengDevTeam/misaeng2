@@ -14,6 +14,7 @@ import ConfirmModal from '@/app/components/modal/ConfirmModal';
 import { useState } from 'react';
 import { ITypeAndId } from '@/types/MyPageTypes';
 import RoommateIndividualModal from '@/app/components/modal/RoommateIndividualModal';
+import BuySellIndividualModal from '@/app/components/modal/BuySellIndividualModal';
 
 interface pageProps {}
 
@@ -29,17 +30,17 @@ const MyPage: React.FC<pageProps> = ({}) => {
   if (!currentUser) return null;
 
   const routeComponents = {
-    '/tempmypage/edit': <MyEdit currentUser={currentUser} />,
-    '/tempmypage/rent-listing': (
+    '/mypage/edit': <MyEdit currentUser={currentUser} />,
+    '/mypage/rent-listing': (
       <MyRentListing currentUser={currentUser} setTypeAndIt={setTypeAndIt} />
     ),
-    '/tempmypage/roommate-listing': (
+    '/mypage/roommate-listing': (
       <MyRoommateListing
         currentUser={currentUser}
         setTypeAndIt={setTypeAndIt}
       />
     ),
-    '/tempmypage/buy-sell-listing': (
+    '/mypage/buy-sell-listing': (
       <MyBuySellListing currentUser={currentUser} setTypeAndIt={setTypeAndIt} />
     ),
   };
@@ -49,6 +50,7 @@ const MyPage: React.FC<pageProps> = ({}) => {
       <ConfirmModal typeAndId={typeAndId} />
       <RentIndividualModal mypage />
       <RoommateIndividualModal mypage />
+      <BuySellIndividualModal mypage />
       <Container>
         <MyPageSubNav />
         {routeComponents[pathname as keyof typeof routeComponents] || null}
