@@ -69,7 +69,7 @@ const MyRentListing: React.FC<MyRentListingProps> = ({
         </div>
       </div>
       <div className='flex flex-col w-full max-w-[860px] border-2 border-neutral-100 shadow-lg rounded-xl p-4 sm:p-8 gap-6 sm:gap-8'>
-        <div className='flex flex-col sm:grid sm:grid-cols-1 lg:grid-cols-2 gap-6 w-full'>
+        <div className='flex flex-col sm:grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full'>
           {listings?.map((listing) => (
             <MyRentListingCard
               key={(listing as any)._id}

@@ -54,17 +54,17 @@ const MyRentListingCard: React.FC<MyRentListingCardProps> = ({
     [params, router]
   );
   return (
-    <div className='flex flex-col sm:flex-row w-full gap-4 group rounded-lg hover:bg-[#EC662A]/10 cursor-pointer'>
+    <div className='flex flex-col w-full gap-4 group rounded-lg hover:bg-[#EC662A]/10 cursor-pointer'>
       <div
         onClick={() => {
           rentIndividualOpen();
           handleClick((listing as any)._id);
         }}
-        className='w-full sm:w-[30%] sm:max-w-[160px]'
+        className='w-full'
       >
         <div className='flex justify-center overflow-hidden w-full relative border border-[#EC662A] rounded-lg bg-[#fff]'>
           <Image
-            className='w-[100%] aspect-square rounded-lg object-cover group-hover:scale-110 transition'
+            className='w-[100%] aspect-square sm:aspect-video rounded-lg object-cover group-hover:scale-110 transition'
             width={0}
             height={0}
             sizes='100%'
@@ -77,9 +77,9 @@ const MyRentListingCard: React.FC<MyRentListingCardProps> = ({
           />
         </div>
       </div>
-      <div className='flex flex-col w-full sm:w-[70%] sm:max-w-[840px] px-4 pb-4 sm:px-0 sm:pb-0 justify-center'>
+      <div className='flex flex-col w-full px-4 pb-4 sm:px-0 sm:pb-0 justify-center'>
         <div className='truncate font-semibold text-lg py-1 w-[90%] sm:w-full sm:max-w-[260px] md:max-w-[400px] lg:max-w-[540px] xl:max-w-[640px]'>{`${listing.title}`}</div>
-        <div className='flex flex-col sm:flex-row gap-2 sm:gap-4'>
+        <div className='flex flex-col gap-2'>
           <div
             onClick={() => {
               rentIndividualOpen();
@@ -101,7 +101,7 @@ const MyRentListingCard: React.FC<MyRentListingCardProps> = ({
               description={`$ ${listing.price.toLocaleString()}`}
             />
           </div>
-          <div className='flex flex-row sm:flex-col justify-center items-center w-full sm:w-[120px] gap-2'>
+          <div className='flex flex-row justify-center items-center w-full gap-2'>
             <MyEditDeleteButton label={'수정하기'} onClick={() => {}} editEl />
             <MyEditDeleteButton
               label={'삭제하기'}
