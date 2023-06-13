@@ -5,8 +5,6 @@ import mgClientPromise from '@/app/lib/mongodb';
 export async function POST(request: Request) {
   const body = await request.json();
 
-  console.log(body);
-
   const client = await mgClientPromise;
   const userCollection = client.db('misaeng').collection('User');
 

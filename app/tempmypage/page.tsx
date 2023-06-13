@@ -83,6 +83,7 @@ const MyPage: React.FC<pageProps> = ({}) => {
 
   useEffect(() => {
     setEmail(currentUser?.email);
+    setStatus(currentUser?.status as string);
     setCustomValue('nickname', currentUser?.nickname);
     setCustomValue('name', currentUser?.name);
     setCustomValue('phone', currentUser?.phone);
@@ -307,37 +308,33 @@ const MyPage: React.FC<pageProps> = ({}) => {
               />
               <div className='flex flex-col gap-2'>
                 <div>직업</div>
-                {uStatus && (
-                  <SelectComp
-                    placeholder={'학생 / 직장인 / 비공개'}
-                    defaultValue={uStatus}
-                    options={STATUS_LIST}
-                    onChange={(value) => {
-                      setStatus(value);
-                      setCustomValue('status', value);
-                    }}
-                    small
-                  />
-                )}
+                <SelectComp
+                  placeholder={'학생 / 직장인 / 비공개'}
+                  defaultValue={uStatus}
+                  options={STATUS_LIST}
+                  onChange={(value) => {
+                    setStatus(value);
+                    setCustomValue('status', value);
+                  }}
+                  small
+                />
               </div>
               <div className='flex flex-col gap-2'>
                 <div>학교 및 직장 위치</div>
-                {jobLocation && (
-                  <SelectComp
-                    placeholder={'학교 및 직장 위치'}
-                    defaultValue={jobLocation}
-                    options={
-                      status
-                        ? locationOption!
-                        : [{ label: '직업을 먼저 선택해주세요', value: null }]
-                    }
-                    onChange={(value) => {
-                      setCustomValue('jobLocation', value);
-                    }}
-                    isSearchable
-                    small
-                  />
-                )}
+                <SelectComp
+                  placeholder={'학교 및 직장 위치'}
+                  defaultValue={jobLocation}
+                  options={
+                    status
+                      ? locationOption!
+                      : [{ label: '직업을 먼저 선택해주세요', value: null }]
+                  }
+                  onChange={(value) => {
+                    setCustomValue('jobLocation', value);
+                  }}
+                  isSearchable
+                  small
+                />
               </div>
               <div className='mt-6'>
                 <Button
