@@ -43,8 +43,8 @@ export const resizeProfileImage = async (file: File): Promise<File> => {
 
 export const resizeAdImage = async (file: File): Promise<File> => {
   const TARGET_ASPECT_RATIO = 4 / 3;
-  const MAX_WIDTH = 400;
-  const MAX_HEIGHT = 300;
+  const MAX_WIDTH = 480;
+  const MAX_HEIGHT = 360;
 
   const srcCanvas = document.createElement('canvas');
   const img = new Image();
