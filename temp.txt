@@ -1,0 +1,185 @@
+동해물과 백두산이
+마르고 닳도록
+하느님이 보우하사
+우리나라 만세
+
+무궁화 삼천리
+화려강산
+대한사람 대한으로
+길이 보전하세
+
+남산위에 저소나무
+철갑을 두른듯
+바람서리 불변함은
+우리기상일세
+
+무궁화 삼천리
+화려강산
+대한사람 대한으로
+길이 보전하세
+
+
+
+
+'use client';
+
+import Container from '@/app/components/Container';
+import Heading from '@/app/components/Heading';
+import dynamic from 'next/dynamic';
+import { usePathname } from 'next/navigation';
+import 'react-quill/dist/quill.snow.css';
+import ReactQuill from 'react-quill';
+import { useCallback, useMemo, useRef, useState } from 'react';
+import { resizeAdImage } from '@/app/lib/imageResizer';
+import axios from 'axios';
+import { useSession } from 'next-auth/react';
+
+interface routeProps {}
+
+const BlogRegister: React.FC<routeProps> = ({}) => {
+  const [content, setContent] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const quillRef = useRef<ReactQuill>(null);
+
+  const { data: session } = useSession();
+  const currentUser = session?.user;
+
+  const handleChange = (value: any) => {
+    setContent(value);
+  };
+
+  const pathname = usePathname();
+  const id = pathname?.split('/')[2];
+  const password = pathname?.split('/')[3];
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(content);
+    setIsSubmitted(true);
+  };
+
+  const imageHandler = useCallback(async () => {
+    const input = document.createElement('input');
+
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+
+    input.onchange = async () => {
+      if (input.files) {
+        const file = input.files[0];
+        const resizedFile = await resizeAdImage(file);
+
+        const reader = new FileReader();
+        reader.onloadend = async () => {
+          const preview = reader.result as string;
+
+          // Fetch blob and upload
+          const writeTime = new Date().toISOString();
+          const resPic = await fetch(preview);
+          const blobPic = await resPic.blob();
+
+          const url = await axios.post(
+            `/api/pic/blogImage/${currentUser?.id}/${writeTime}`
+          );
+
+          const response = await fetch(url.data.signedUrl, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+            body: blobPic,
+          });
+
+          const resultPicture = response.url.split('?')[0];
+
+          // Add resized image to the editor
+          if (quillRef.current !== null) {
+            const quill = quillRef.current.getEditor();
+            const range = quill.getSelection(true);
+
+            if (range) {
+              // Use the S3 image URL instead of the Data URL
+              quill.insertEmbed(range.index, 'image', resultPicture);
+              quill.setSelection(range.index + 1, 0);
+              quill.focus();
+            }
+          }
+        };
+        reader.readAsDataURL(resizedFile);
+      }
+    };
+  }, [currentUser?.id]);
+
+  const modules = useMemo(
+    () => ({
+      toolbar: {
+        container: [
+          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ align: [] }],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          ['link', 'image'],
+          ['clean'],
+        ],
+        handlers: {
+          image: imageHandler,
+        },
+      },
+    }),
+    [imageHandler]
+  );
+
+  const formats = [
+    'header',
+    'bold',
+    'italic',
+    'underline',
+    'strike',
+    'align',
+    'list',
+    'bullet',
+    'link',
+    'image',
+  ];
+
+  if (
+    id == process.env.NEXT_PUBLIC_BLOGGER_ID &&
+    password == process.env.NEXT_PUBLIC_BLOGGER_PW
+  ) {
+    return (
+      <div className='w-full'>
+        <Container>
+          <div className='flex flex-col py-6 gap-6'>
+            <Heading title={'블로그 작성'} />
+            <div>
+              <form onSubmit={handleSubmit}>
+                <ReactQuill
+                  ref={quillRef}
+                  value={content}
+                  onChange={handleChange}
+                  placeholder='Write something...'
+                  modules={modules}
+                  formats={formats}
+                />
+                <h1>HELLO WORLD</h1>
+                <button type='submit'>Submit</button>
+              </form>
+            </div>
+          </div>
+          <div id='display'>
+            {isSubmitted && (
+              <ReactQuill
+                readOnly
+                value={content}
+                modules={{ toolbar: false }}
+              />
+            )}
+          </div>
+        </Container>
+      </div>
+    );
+  }
+  return null;
+};
+export default BlogRegister;

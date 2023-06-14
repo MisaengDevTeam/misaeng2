@@ -10,6 +10,7 @@ import SessProvider from './components/SessProvider';
 import Footer from './components/footer/Footer';
 import RentRegisterModal from './components/modal/RentRegisterModal';
 import BuySellRegisterModal from './components/modal/BuySellRegisterModal';
+import BlogIndividualModal from './components/modal/BlogIndividualModal';
 
 const font = Nunito_Sans({ subsets: ['latin'] });
 
@@ -37,6 +38,7 @@ export default async function RootLayout({
             <RentRegisterModal />
             <RoommateRegisterModal />
             <BuySellRegisterModal />
+            <BlogIndividualModal />
             <Navbar />
             <div className='w-full h-[65px] sm:h-[89px] md:h-[81px]'></div>
             {children}

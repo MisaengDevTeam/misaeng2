@@ -33,6 +33,7 @@ model User {
   rentlistings RentListing[]
   roommatelistings RoommateListing[]
   buyselllistings BuySellListing[]
+  bloglistings BlogListing[]
   reviews Review[]
 }
 
@@ -140,6 +141,22 @@ model BuySellListing {
   address String
   contact String[]
   coordinate Float[]
+  
+  createdAt DateTime @default(now())
+  updatedAt String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+
+
+model BlogListing {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  category String
+  title String
+  content String
+  thumbnail String
   
   createdAt DateTime @default(now())
   updatedAt String?
