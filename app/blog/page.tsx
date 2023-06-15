@@ -1,6 +1,13 @@
 import EmptyState from '../components/EmptyState';
+import BlogBody from '../components/blog/BlogBody';
+import BlogSubNav from '../components/blog/BlogSubNav';
 
 const BlogPage = ({}) => {
-  return <EmptyState title='미국 꿀팁' />;
+  return (
+    <div>
+      <BlogSubNav />
+      <BlogBody />
+    </div>
+  );
 };
 export default BlogPage;
