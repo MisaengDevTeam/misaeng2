@@ -6,10 +6,18 @@ import BlogHot from './BlogHot';
 import BlogSubMenu from './BlogSubMenu';
 import BlogPageListingCard from './BlogPageListingCard';
 import { TEST_BLOG_PAGE_LISTING } from '@/types/BlogTypes';
+import { useEffect } from 'react';
+import { IFecthBlogQuery } from '@/app/blog/page';
+import { BlogListing } from '@prisma/client';
+import extractText from '@/app/lib/contentExtractor';
 
-interface BlogBodyProps {}
+interface BlogBodyProps {
+  listings: any;
+  setListings: any;
+  fetchBlogListing: (query: IFecthBlogQuery) => void;
+}
 
-const BlogBody: React.FC<BlogBodyProps> = ({}) => {
+const BlogBody: React.FC<BlogBodyProps> = ({ listings, fetchBlogListing }) => {
   return (
     <div>
       <Container>
@@ -18,7 +26,22 @@ const BlogBody: React.FC<BlogBodyProps> = ({}) => {
             <BlogHot />
             <div className='flex flex-col sm:flex-row gap-4 w-full'>
               <div className='flex flex-col w-full sm:w-3/4 lg:w-4/5'>
-                {TEST_BLOG_PAGE_LISTING.map((listing) => (
+                {listings &&
+                  listings.blogListing.map(
+                    (listing: BlogListing) => (
+                      <BlogPageListingCard
+                        key={(listing as any)._id}
+                        category={listing.category}
+                        imgsrc={listing.thumbnail}
+                        title={listing.title}
+                        description={extractText(listing.content)}
+                        createdAt={listing.createdAt}
+                      />
+                    )
+                    // console.log(extractText(listing.content));
+                    // console.log(listing.content);
+                  )}
+                {/* {TEST_BLOG_PAGE_LISTING.map((listing) => (
                   <BlogPageListingCard
                     key={TEST_BLOG_PAGE_LISTING.indexOf(listing)}
                     category={listing.category}
@@ -26,7 +49,7 @@ const BlogBody: React.FC<BlogBodyProps> = ({}) => {
                     title={listing.title}
                     description={listing.description}
                   />
-                ))}
+                ))} */}
               </div>
               <div className='w-full sm:w-1/4 lg:w-1/5'>
                 <BlogSubMenu />

@@ -1,5 +1,6 @@
 'use client';
 
+import dateFormatter from '@/app/lib/dateFormatter';
 import Image from 'next/image';
 
 interface BlogPageListingCardProps {
@@ -7,6 +8,7 @@ interface BlogPageListingCardProps {
   title: string;
   imgsrc: string;
   description: string;
+  createdAt: Date;
 }
 
 const BlogPageListingCard: React.FC<BlogPageListingCardProps> = ({
@@ -14,7 +16,9 @@ const BlogPageListingCard: React.FC<BlogPageListingCardProps> = ({
   title,
   imgsrc,
   description,
+  createdAt,
 }) => {
+  console.log(createdAt);
   return (
     <div className='flex flex-row w-full mb-6 gap-4 group cursor-pointer'>
       <div className='flex justify-center overflow-hidden w-[35%] max-w-[140px] aspect-square relative border border-[#EC662A] rounded-lg bg-[#fff] group cursor-pointer'>
@@ -41,7 +45,9 @@ const BlogPageListingCard: React.FC<BlogPageListingCardProps> = ({
             />
             <p className='text-[14px] text-neutral-600'>Simon Lee</p>
           </div>
-          <p className='text-[14px] text-neutral-600'>작성일: 06/14/2023</p>
+          <p className='text-[14px] text-neutral-600'>
+            작성일: {dateFormatter(new Date(createdAt))}
+          </p>
         </div>
         <p className='break-words overflow-hidden hidden sm:block sm:h-[64px] text-[14px] font-light'>
           {description}

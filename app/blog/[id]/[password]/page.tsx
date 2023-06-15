@@ -56,12 +56,6 @@ const BlogRegister: React.FC<routeProps> = ({}) => {
     });
   };
 
-  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   console.log(content);
-  //   setIsSubmitted(true);
-  // };
-
   const imageHandler = async () => {
     const input = document.createElement('input');
 
@@ -84,9 +78,7 @@ const BlogRegister: React.FC<routeProps> = ({}) => {
             type: file.type,
           });
 
-          const url = await axios.post(
-            `/api/pic/blogImage/${currentUser?.id}/${writeTime}`
-          );
+          const url = await axios.post(`/api/pic/blogImage/${writeTime}`);
 
           const response = await fetch(url.data.signedUrl, {
             method: 'PUT',
@@ -215,25 +207,13 @@ const BlogRegister: React.FC<routeProps> = ({}) => {
                 블로그 글 확인하기
               </button> */}
               <button
-                onClick={
-                  handleSubmit(onSubmit)
-                  // console.log('Register');
-                }
+                onClick={handleSubmit(onSubmit)}
                 className='py-2 px-4 bg-[#EC662A] text-[#FFF] rounded-xl w-full sm:w-[300px]'
               >
                 블로그 작성하기
               </button>
             </div>
           </div>
-          {/* <div className='w-[320px]'>
-            {isSubmitted && (
-              <ReactQuill
-                readOnly
-                value={content}
-                modules={{ toolbar: false }}
-              />
-            )}
-          </div> */}
         </Container>
       </div>
     );
