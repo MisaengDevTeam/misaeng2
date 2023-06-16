@@ -24,6 +24,7 @@ const BlogBody: React.FC<BlogBodyProps> = ({
   fetchBlogListing,
   isLoading,
 }) => {
+  if (!listings) return <LoadingScreen />;
   return (
     <div>
       <Container>
