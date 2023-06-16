@@ -232,6 +232,7 @@ const MyPage: React.FC<pageProps> = ({ currentUser }) => {
             )}
             <div className='flex flex-col gap-2 px-4'>
               <div className='text-neutral-500 font-light'>
+                {/* ** 请勿上传不适当的图片, 米生团队有权注销账号 */}
                 ** 회원님의 이미지는 본인을 나타낼 수 있는 가장 큰 요소입니다.
                 타인에게 불쾌감을 줄 수 있는 사진은 저희 미생팀에서 삭제할 수
                 있습니다.

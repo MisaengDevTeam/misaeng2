@@ -126,6 +126,29 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({ mypage }) => {
           title='리뷰'
           subtitle='최신 리뷰부터 순차적이며, 최대 10개까지 표시됩니다.'
         />
+        {/* <RentIndiDescription
+          title='房源简介'
+          description={currentListing.description}
+        />
+        <RentIndiAmenity
+          title='大楼设施'
+          items={currentListing.amenity}
+          type={AMENITY}
+        />
+        <RentIndiAmenity
+          title='公寓设施'
+          items={currentListing.feature}
+          type={FEATURE}
+        />
+        <RentIndiDetail
+          title='其他'
+          category={currentListing.category}
+          broker={currentListing.broker}
+          utility={currentListing.utility}
+        />
+        <RentIndiMap title='位置' coordinate={buildingInfo.coordinate} />
+        <RentIndiSubway title='周边交通' subway={buildingToSubwayInfo} />
+        <RentIndiReview title='最新点评' subtitle='' /> */}
       </div>
     </div>
   );
@@ -133,6 +156,26 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({ mypage }) => {
   let footerContent = (
     <div className='h-full my-2'>
       <div className={`flex justify-evenly`}>
+        {/* <RentIndiFooterButton
+          color='#EC662A'
+          label='赞'
+          onClick={() => {
+            setLike(!like);
+          }}
+          icon={like ? BsHeartFill : BsHeart}
+        />
+        <RentIndiFooterButton
+          color='#9DCAEB'
+          label='分享'
+          onClick={handleCopy}
+          icon={FaRegShareSquare}
+        />
+        <RentIndiFooterButton
+          color='#D0342C'
+          label='举报'
+          onClick={() => {}}
+          icon={RiAlarmWarningLine}
+        /> */}
         <RentIndiFooterButton
           color='#EC662A'
           label='좋아요'
@@ -157,6 +200,9 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({ mypage }) => {
       <div className='w-full h-[56px] sm:h-auto mt-2'>
         <Button onClick={() => {}} label={'판매자 연락하기'} />
       </div>
+      {/* <div className='w-full h-[56px] sm:h-auto mt-2'>
+        <Button onClick={() => {}} label={'我要申请 :)'} />
+      </div> */}
     </div>
   );
 

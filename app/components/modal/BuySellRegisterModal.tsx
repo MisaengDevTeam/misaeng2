@@ -266,6 +266,7 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
             <Heading title='상품에 대해서 설명해주세요 (2/5)' />
             <Input
               id={'title'}
+              // label={'商品名称'}
               label={'제목'}
               register={register}
               length={32}
@@ -275,6 +276,7 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
             <Input
               type='number'
               id={'price'}
+              // label={'价格'}
               label={'가격'}
               register={register}
               errors={errors}
@@ -282,12 +284,14 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
               onChange={(e) => setCustomValue('price', e.target.value)}
             />
             <SelectComp
+              // placeholder={'商品状态'}
               placeholder={'물건 상태'}
               options={BUY_SELL_STATUS}
               onChange={(value) => setCustomValue('status', value)}
             />
             <Textarea
               id={'description'}
+              // placeholer='请详细描述商品特征'
               placeholer='상품에 대한 상세설명을 적어주세요'
               onChange={(value) => setCustomValue('description', value)}
             />
@@ -296,11 +300,13 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
       case 3:
         return (
           <div className='flex flex-col gap-2 md:gap-4'>
+            {/* <Heading title='您的位置 (3/5)' /> */}
             <Heading title='회원님의 대략적 위치를 알려주세요 (3/5)' />
             <div className='flex gap-2'>
               <div className='w-[80%]'>
                 <Input
                   id={'address'}
+                  // label={'街道地址'}
                   label={'도로명 주소'}
                   length={36}
                   onEnter={(e) => {
@@ -336,7 +342,9 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
         return (
           <div className='flex flex-col gap-2 md:gap-4'>
             <Heading
+              // title='请上传商品照片 (4/5)'
               title='판매하시는 상품 사진을 올려주세요 (4/5)'
+              // subtitle='为达到最佳效果，请横向，多角度，并在光线充足的环境下拍摄'
               subtitle='사진은 미생 회원님의 핸드폰으로 찍어주신 사진으로도 충분합니다. 충분한 햇빛 또는 조명에서 가로 방향으로 촬영한 사진을 업로드해주시기 바랍니다.'
             />
             <BuySellRegiPicture
@@ -347,6 +355,7 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
       case 5:
         return (
           <div className='flex flex-col gap-2 md:gap-4'>
+            {/* <Heading title='联系方式 (5/5)' /> */}
             <Heading title='연락 방식을 선택해주세요 (5/5)' />
             <div className='flex flex-col gap-4 mt-4'>
               <Input

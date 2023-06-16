@@ -11,7 +11,10 @@ const BlogHot: React.FC<BlogHotProps> = ({ hotListing }) => {
   if (!hotListing) return null;
   return (
     <div className='w-full'>
-      <div className='text-2xl font-semibold mb-2'>이번 달 핫 토픽</div>
+      <div className='text-2xl font-semibold mb-2'>
+        이번 달 핫 토픽
+        {/* 火热主题 */}
+      </div>
       <div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
         {hotListing.map((listing: any) => (
           <BlogHotCard

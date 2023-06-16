@@ -36,20 +36,23 @@ const RmRoomInfo: React.FC<RmRoomInfoProps> = ({
       <Input
         type='number'
         id={'price'}
-        label={'희망하시는 가격을 알려주세요'}
+        label={'预算'}
+        // label={'희망하시는 가격을 알려주세요'}
         register={register}
         errors={errors}
         formatPrice
         required
       />
       <SelectComp
-        placeholder={'방 종류'}
+        placeholder={'房间类型'}
+        // placeholder={'방 종류'}
         options={createOptions(roomtypeArr)}
         onChange={(value) => onChange('roomtype', value)}
         small
       />
       <div className='flex flex-row justify-between w-full items-center border-[1px] border-neutral-300 py-2 px-4 rounded-lg gap-4'>
-        <p className='w-[160px]'>희망 입주 일자</p>
+        <p className='w-[160px]'>入住日期</p>
+        {/* <p className='w-[160px]'>희망 입주 일자</p> */}
         <DatePicker
           className='w-full focus:outline-none focus:bg-neutral-100'
           selected={startDate}
@@ -61,7 +64,8 @@ const RmRoomInfo: React.FC<RmRoomInfoProps> = ({
         />
       </div>
       <SelectComp
-        placeholder={'희망 기간'}
+        placeholder={'租房时长'}
+        // placeholder={'희망 기간'}
         options={createOptions(lengthArr)}
         onChange={(value) => onChange('length', value)}
         small

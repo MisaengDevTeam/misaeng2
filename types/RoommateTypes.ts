@@ -1,3 +1,21 @@
+// export const ROOMMATE_TYPE = [
+//   {
+//     roommateCategory: '拼室友',
+//     roommateCategoryDescription: '米生算法为你匹配最佳室友！',
+//     icon: 'SlPencil',
+//   },
+//   {
+//     roommateCategory: '个人转租',
+//     roommateCategoryDescription: '',
+//     icon: 'SlPeople',
+//   },
+//   {
+//     roommateCategory: '寻找转租',
+//     roommateCategoryDescription: '',
+//     icon: 'BsHouseUp',
+//   },
+// ];
+
 export const ROOMMATE_TYPE = [
   {
     roommateCategory: '룸메 찾아요',

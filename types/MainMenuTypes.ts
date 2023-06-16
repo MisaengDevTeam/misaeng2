@@ -1,3 +1,22 @@
+// export const MAIN_SECTION = {
+//   CATEGORY: {
+//     subTitle: '米生服务',
+//     desc: '与米生同享快乐瞬间',
+//   },
+//   BLOG: {
+//     subTitle: '米生快讯',
+//     desc: '',
+//   },
+//   RENT: {
+//     subTitle: `火爆房源`,
+//     desc: '',
+//   },
+//   ROOMMATE: {
+//     subTitle: ``,
+//     desc: '',
+//   },
+// };
+
 export const MAIN_SECTION = {
   CATEGORY: {
     subTitle: '미생 둘러보기',
@@ -23,3 +42,10 @@ export const CATEGORY_MENU = {
   buysell: '사고팔기',
   blog: '미국생활꿀팁',
 };
+
+// export const CATEGORY_MENU = {
+//   rent: '找房子',
+//   roommate: '找室友',
+//   buysell: '买卖平台',
+//   blog: '生活小助手',
+// };

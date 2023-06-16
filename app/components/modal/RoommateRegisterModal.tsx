@@ -212,6 +212,7 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
 
   let bodyContent = (
     <div className='flex flex-col gap-2 md:gap-4'>
+      {/* <Heading title='我想选择的服务 (1/7)' /> */}
       <Heading title='카테고리를 선택해주세요 (1/7)' />
       {ROOMMATE_TYPE.map((item) => {
         return (
@@ -231,6 +232,7 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
   if (step == 2) {
     bodyContent = (
       <div className='flex flex-col gap-2'>
+        {/* <Heading title='租房偏好 (2/7)' /> */}
         <Heading title='현재 거주하시는 방 또는 희망하시는 방에 대해 알려주세요 (2/7)' />
         <RmRoomInfo
           register={register}
@@ -244,6 +246,7 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
   if (step == 3) {
     bodyContent = (
       <div className='flex flex-col gap-2'>
+        {/* <Heading title='个人信息 (3/7)' /> */}
         <Heading title='미생 회원님에 대해 알려주세요 (3/7)' />
 
         {Object.entries(ROOMMATE_SELF_PRE).map(([key, value]) => (
@@ -269,6 +272,7 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
   if (step == 4) {
     bodyContent = (
       <div className='flex flex-col gap-2'>
+        {/* <Heading title='室友偏好 (4/7)' /> */}
         <Heading title='찾으시는 룸메이트에 대해 알려주세요 (4/7)' />
         {Object.entries(ROOMMATE_ROOMMATE_PRE).map(([key, value]) => (
           <div key={key}>
@@ -292,6 +296,10 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
   if (step == 5) {
     bodyContent = (
       <div className='flex flex-col gap-2'>
+        {/* <Heading
+          title='个人简介 (5/7)'
+          subtitle='米生已为您生成个人简介，可点击修改'
+        /> */}
         <Heading
           title='간략한 자기소개입니다. (5/7)'
           subtitle='기본으로 제공되는 자기소개 이외에 수정하고 싶으신 부분이 있으시면 수정하여 주시기 바랍니다.'
@@ -319,6 +327,10 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
   if (step == 6) {
     bodyContent = (
       <div className='flex flex-col gap-2'>
+        {/* <Heading
+          title='请选择以下地点偏好 (6/7)'
+          subtitle='如果您选择了个人转租选项， 请填写现在公寓的大致地点'
+        /> */}
         <Heading
           title='현재 거주하시는 위치 또는 방을 찾으시는 위치를 선택해주세요 (6/7)'
           subtitle='저희 미생은 회원님의 개인정보보호 및 안전을 위하여 정확한 주소를 묻지 않습니다.'
@@ -344,6 +356,10 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
   if (step == 7) {
     bodyContent = (
       <div className='flex flex-col gap-2'>
+        {/* <Heading
+          title='联系方式 (7/7)'
+          subtitle={`请至少输入一种联系方式。我们不会发送任何广告信息。`}
+        /> */}
         <Heading
           title='선호하시는 연락방식을 입력하여 주세요 (7/7)'
           subtitle={`최소한 한 가지 이상의 연락 방식은 입력해 주시기 바랍니다. 원치 않는 연락 방식은 해당 항목은 비워두시기 바랍니다. 다양한 연락방식은 회원님의 리스팅에 대한 접근성을 높여 더 많은 연락을 받으실 수 있습니다.`}

@@ -16,7 +16,7 @@ export default function Home() {
   }, []);
   return (
     <div className='flex flex-col gap-10'>
-      <MainBannerImage />
+      {/* <MainBannerImage /> */}
       {Object.entries(MAIN_SECTION).map(([key, value]) => {
         return (
           <MainSectionContainer

@@ -1,3 +1,14 @@
+// export const BLOG_CATEGORY = {
+//   mat: '吃吃喝喝',
+//   per: '打卡圣地',
+//   sale: '省钱攻略',
+//   travel: '旅游攻略',
+//   visa: '签证',
+//   tax: '避税指南',
+//   sports: '运动',
+//   life: '生活周边',
+// };
+
 export const BLOG_CATEGORY = {
   sale: '세일정보',
   visa: '비자',

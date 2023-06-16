@@ -13,6 +13,34 @@ const ServiceMenu: React.FC<ServiceMenuProps> = ({ isOpen, setIsOpen }) => {
   return (
     <div className='xl:absolute xl:left-[50%] xl:transform xl:-translate-x-[50%] hidden md:flex flex-row gap-1 lg:gap-3 '>
       <ServiceMenuItem
+        label='找房子'
+        onClick={() => {
+          setIsOpen(false);
+          router.push('/rent');
+        }}
+      />
+      <ServiceMenuItem
+        label='找室友'
+        onClick={() => {
+          setIsOpen(false);
+          router.push('/roommate');
+        }}
+      />
+      <ServiceMenuItem
+        label='买卖平台'
+        onClick={() => {
+          setIsOpen(false);
+          router.push('/buysell');
+        }}
+      />
+      <ServiceMenuItem
+        label='生活小助手'
+        onClick={() => {
+          setIsOpen(false);
+          router.push('/blog');
+        }}
+      />
+      {/* <ServiceMenuItem
         label='렌트찾기'
         onClick={() => {
           setIsOpen(false);
@@ -39,7 +67,7 @@ const ServiceMenu: React.FC<ServiceMenuProps> = ({ isOpen, setIsOpen }) => {
           setIsOpen(false);
           router.push('/blog');
         }}
-      />
+      /> */}
     </div>
   );
 };
