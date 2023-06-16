@@ -44,6 +44,14 @@ const UserMenuWithUser: React.FC<UserMenuWithUserProps> = ({
           router.push('/buysell');
         }}
       />
+      <UserMenuItem
+        mobileVisible
+        label='미국꿀팁'
+        onClick={() => {
+          closeUserMenu();
+          router.push('/blog');
+        }}
+      />
       {/* <UserMenuItem
         label='렌트찾기 등록하기'
         onClick={() => {

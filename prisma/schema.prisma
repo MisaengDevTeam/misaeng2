@@ -157,6 +157,9 @@ model BlogListing {
   title String
   content String
   thumbnail String
+  hot String
+  author String
+  authorPic String
   
   createdAt DateTime @default(now())
   updatedAt String?

@@ -18,8 +18,8 @@ const BlogHotCard: React.FC<BlogHotCardProps> = ({ title, imgsrc }) => {
         src={imgsrc}
         alt='img'
       />
-      <div className='flex justify-center items-center absolute w-full h-[40px] bottom-0 bg-neutral-900/50 text-[#fff] font-semibold text-sm md:text-base truncate'>
-        {title}
+      <div className='flex justify-center items-center absolute w-full h-[40px] bottom-0 bg-neutral-900/50 text-[#fff] font-semibold text-sm md:text-base text-center'>
+        <p className='w-[80%] truncate'>{title}</p>
       </div>
     </div>
   );

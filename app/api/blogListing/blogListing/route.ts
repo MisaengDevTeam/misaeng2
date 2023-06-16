@@ -25,5 +25,12 @@ export async function POST(request: Request) {
     .limit(number)
     .sort({ createdAt: -1 })
     .toArray();
-  return NextResponse.json({ blogListing });
+
+  const hotListing = await blogCollection
+    .find({ hot: 'Yes' })
+    .limit(4)
+    .sort({ createdAt: -1 })
+    .toArray();
+
+  return NextResponse.json({ blogListing, hotListing });
 }

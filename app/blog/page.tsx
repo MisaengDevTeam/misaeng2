@@ -13,13 +13,18 @@ export interface IFecthBlogQuery {
 }
 
 const BlogPage = ({}) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [listings, setListings] = useState();
 
   const fetchBlogListing = async (query: IFecthBlogQuery) => {
+    setIsLoading(true);
     axios
       .post(`/api/blogListing/blogListing`, query)
       .then((res) => setListings(res.data))
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error))
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -30,6 +35,7 @@ const BlogPage = ({}) => {
     <div>
       <BlogSubNav />
       <BlogBody
+        isLoading={isLoading}
         listings={listings}
         setListings={setListings}
         fetchBlogListing={fetchBlogListing}

@@ -9,6 +9,8 @@ interface BlogPageListingCardProps {
   imgsrc: string;
   description: string;
   createdAt: Date;
+  author: string;
+  authorImg: string;
 }
 
 const BlogPageListingCard: React.FC<BlogPageListingCardProps> = ({
@@ -17,6 +19,8 @@ const BlogPageListingCard: React.FC<BlogPageListingCardProps> = ({
   imgsrc,
   description,
   createdAt,
+  author,
+  authorImg,
 }) => {
   console.log(createdAt);
   return (
@@ -40,10 +44,10 @@ const BlogPageListingCard: React.FC<BlogPageListingCardProps> = ({
               className='border border-[#EC662A] rounded-full'
               width={20}
               height={20}
-              src={'/assets/images/logo/logo_square.png'}
+              src={authorImg}
               alt={'g'}
             />
-            <p className='text-[14px] text-neutral-600'>Simon Lee</p>
+            <p className='text-[14px] text-neutral-600'>{author}</p>
           </div>
           <p className='text-[14px] text-neutral-600'>
             작성일: {dateFormatter(new Date(createdAt))}

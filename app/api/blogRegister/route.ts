@@ -6,7 +6,17 @@ export async function POST(request: Request) {
 
   console.log(body);
 
-  const { category, title, content, thumbnail, updateAt, uid: userId } = body;
+  const {
+    category,
+    title,
+    content,
+    thumbnail,
+    updateAt,
+    uid: userId,
+    author,
+    authorPic,
+    hot,
+  } = body;
 
   let blogListing;
 
@@ -18,6 +28,9 @@ export async function POST(request: Request) {
         title,
         content,
         thumbnail,
+        hot,
+        author,
+        authorPic,
       },
     })
     .then((res) => {

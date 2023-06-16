@@ -26,6 +26,8 @@ const BlogRegister: React.FC<routeProps> = ({}) => {
   const { data: session } = useSession();
   const currentUser = session?.user;
 
+  console.log(currentUser);
+
   const handleChange = (value: any) => {
     setContent(value);
   };
@@ -45,6 +47,7 @@ const BlogRegister: React.FC<routeProps> = ({}) => {
     defaultValues: {
       category: null,
       title: null,
+      hot: null,
     },
   });
 
@@ -78,7 +81,9 @@ const BlogRegister: React.FC<routeProps> = ({}) => {
             type: file.type,
           });
 
-          const url = await axios.post(`/api/pic/blogImage/${writeTime}`);
+          const url = await axios.post(
+            `/api/pic/blogImage/${currentUser?.id}/${writeTime}`
+          );
 
           const response = await fetch(url.data.signedUrl, {
             method: 'PUT',
@@ -141,6 +146,8 @@ const BlogRegister: React.FC<routeProps> = ({}) => {
         uid: currentUser?.id,
         content,
         thumbnail: imgSrc[0],
+        author: currentUser?.nickname || currentUser?.name,
+        authorPic: currentUser?.newImage?.[0] || currentUser?.image,
       })
       .then((response) => {
         toast.success('룸메이트 리스팅이 등록되었습니다!');
@@ -160,7 +167,8 @@ const BlogRegister: React.FC<routeProps> = ({}) => {
 
   if (
     id == process.env.NEXT_PUBLIC_BLOGGER_ID &&
-    password == process.env.NEXT_PUBLIC_BLOGGER_PW
+    password == process.env.NEXT_PUBLIC_BLOGGER_PW &&
+    currentUser
   ) {
     return (
       <div className='w-full'>
@@ -170,10 +178,21 @@ const BlogRegister: React.FC<routeProps> = ({}) => {
             <div className='flex flex-col sm:flex-row gap-4'>
               <SelectComp
                 small
-                placeholder={'Category'}
+                placeholder={'카테고리'}
                 options={CATEGORY_OPTION}
                 onChange={(value) => {
                   setCustomValue('category', value);
+                }}
+              />
+              <SelectComp
+                small
+                placeholder={'이번달 핫토픽?'}
+                options={[
+                  { label: 'Yes', value: 'Yes' },
+                  { label: 'No', value: 'No' },
+                ]}
+                onChange={(value) => {
+                  setCustomValue('hot', value);
                 }}
               />
               <div className='w-full sm:w-[70%]'>
