@@ -71,12 +71,12 @@ const BlogIndividualModal: React.FC<BlogIndividualModalProps> = ({}) => {
 
         <p>{dateFormatter(new Date(currentListing.createdAt))}</p>
       </div>
-      <ReactQuill
+      {/* <ReactQuill
         className='w-full h-full'
         value={currentListing.content}
         readOnly
         modules={{ toolbar: false }}
-      />
+      /> */}
     </div>
   );
 
