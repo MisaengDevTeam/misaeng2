@@ -7,9 +7,9 @@ import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BlogListing } from '@prisma/client';
-import ReactQuill from 'react-quill';
 import dateFormatter from '@/app/lib/dateFormatter';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 
 interface BlogIndividualModalProps {}
 
@@ -27,6 +27,8 @@ const BlogIndividualModal: React.FC<BlogIndividualModalProps> = ({}) => {
 
   const [like, setLike] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
   useEffect(() => {
     setIsLoading(true);
@@ -71,12 +73,12 @@ const BlogIndividualModal: React.FC<BlogIndividualModalProps> = ({}) => {
 
         <p>{dateFormatter(new Date(currentListing.createdAt))}</p>
       </div>
-      {/* <ReactQuill
+      <ReactQuill
         className='w-full h-full'
         value={currentListing.content}
         readOnly
         modules={{ toolbar: false }}
-      /> */}
+      />
     </div>
   );
 
