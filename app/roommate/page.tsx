@@ -42,18 +42,22 @@ const RoommatePage = ({}) => {
   }, []);
 
   const params = useSearchParams();
-  const rentlistingid = params?.get('roommatelisting');
+  const roommatelistingid = params?.get('roommatelisting');
 
   useEffect(() => {
     if (
       !hasModalOpened.current &&
-      rentlistingid &&
+      roommatelistingid &&
       roommateIndividualModal.onOpen
     ) {
       roommateIndividualModal.onOpen();
       hasModalOpened.current = true;
     }
-  }, [roommateIndividualModal, roommateIndividualModal.onOpen, rentlistingid]);
+  }, [
+    roommateIndividualModal,
+    roommateIndividualModal.onOpen,
+    roommatelistingid,
+  ]);
 
   const setDefaultListing = useCallback(() => {
     setListings(initListings);

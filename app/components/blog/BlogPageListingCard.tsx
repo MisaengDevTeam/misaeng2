@@ -2,6 +2,10 @@
 
 import dateFormatter from '@/app/lib/dateFormatter';
 import Image from 'next/image';
+import useBlogIndividualModal from '../hooks/useBlogIndividualModal';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useCallback } from 'react';
+import QueryString from 'query-string';
 
 interface BlogPageListingCardProps {
   category: string;
@@ -11,20 +15,61 @@ interface BlogPageListingCardProps {
   createdAt: Date;
   author: string;
   authorImg: string;
+  id: string;
+  BlogIndividualOpen: () => void;
 }
 
 const BlogPageListingCard: React.FC<BlogPageListingCardProps> = ({
   category,
   title,
+  BlogIndividualOpen,
+  id,
   imgsrc,
   description,
   createdAt,
   author,
   authorImg,
 }) => {
-  console.log(createdAt);
+  const router = useRouter();
+  const params = useSearchParams();
+
+  const handleClick = useCallback(
+    (blogId: string) => {
+      let currentQuery = {};
+
+      if (params) {
+        currentQuery = QueryString.parse(params.toString());
+      }
+
+      const updatedQuery: any = {
+        ...currentQuery,
+        bloglisting: blogId,
+      };
+
+      if (params?.get('bloglisting') == blogId) {
+        delete updatedQuery.category;
+      }
+
+      const url = QueryString.stringifyUrl(
+        {
+          url: '/blog/',
+          query: updatedQuery,
+        },
+        { skipNull: true }
+      );
+
+      router.push(url);
+    },
+    [params, router]
+  );
   return (
-    <div className='flex flex-row w-full mb-6 gap-4 group cursor-pointer'>
+    <div
+      onClick={() => {
+        BlogIndividualOpen();
+        handleClick(id);
+      }}
+      className='flex flex-row w-full mb-6 gap-4 group cursor-pointer'
+    >
       <div className='flex justify-center overflow-hidden w-[35%] max-w-[140px] aspect-square relative border border-[#EC662A] rounded-lg bg-[#fff] group cursor-pointer'>
         <Image
           className='relative w-full aspect-square rounded-lg object-cover group-hover:scale-110 transition'

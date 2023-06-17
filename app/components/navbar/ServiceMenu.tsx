@@ -12,7 +12,7 @@ const ServiceMenu: React.FC<ServiceMenuProps> = ({ isOpen, setIsOpen }) => {
   const router = useRouter();
   return (
     <div className='xl:absolute xl:left-[50%] xl:transform xl:-translate-x-[50%] hidden md:flex flex-row gap-1 lg:gap-3 '>
-      <ServiceMenuItem
+      {/* <ServiceMenuItem
         label='找房子'
         onClick={() => {
           setIsOpen(false);
@@ -39,8 +39,8 @@ const ServiceMenu: React.FC<ServiceMenuProps> = ({ isOpen, setIsOpen }) => {
           setIsOpen(false);
           router.push('/blog');
         }}
-      />
-      {/* <ServiceMenuItem
+      /> */}
+      <ServiceMenuItem
         label='렌트찾기'
         onClick={() => {
           setIsOpen(false);
@@ -67,7 +67,7 @@ const ServiceMenu: React.FC<ServiceMenuProps> = ({ isOpen, setIsOpen }) => {
           setIsOpen(false);
           router.push('/blog');
         }}
-      /> */}
+      />
     </div>
   );
 };

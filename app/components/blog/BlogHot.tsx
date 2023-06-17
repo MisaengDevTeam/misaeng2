@@ -5,9 +5,13 @@ import BlogHotCard from './BlogHotCard';
 
 interface BlogHotProps {
   hotListing: any;
+  BlogIndividualOpen: () => void;
 }
 
-const BlogHot: React.FC<BlogHotProps> = ({ hotListing }) => {
+const BlogHot: React.FC<BlogHotProps> = ({
+  hotListing,
+  BlogIndividualOpen,
+}) => {
   if (!hotListing) return null;
   return (
     <div className='w-full'>
@@ -19,8 +23,10 @@ const BlogHot: React.FC<BlogHotProps> = ({ hotListing }) => {
         {hotListing.map((listing: any) => (
           <BlogHotCard
             key={(listing as any)._id}
+            id={(listing as any)._id}
             title={listing.title}
             imgsrc={listing.thumbnail}
+            BlogIndividualOpen={BlogIndividualOpen}
           />
         ))}
       </div>

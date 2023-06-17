@@ -11,12 +11,13 @@ export default function Home() {
   const ContentGenerator = useCallback((section: string): React.ReactNode => {
     if (section == 'CATEGORY') return <MainCategoryMenu />;
     if (section == 'BLOG') return <MainBlogMenu />;
-    if (section == 'RENT') return <MainRentMenu />;
-    if (section == 'ROOMMATE') return <MainRoommateMenu />;
+    // if (section == 'RENT') return <MainRentMenu />;
+    // if (section == 'ROOMMATE') return <MainRoommateMenu />;
   }, []);
+
   return (
     <div className='flex flex-col gap-10'>
-      {/* <MainBannerImage /> */}
+      <MainBannerImage />
       {Object.entries(MAIN_SECTION).map(([key, value]) => {
         return (
           <MainSectionContainer

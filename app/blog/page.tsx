@@ -1,10 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import EmptyState from '../components/EmptyState';
 import BlogBody from '../components/blog/BlogBody';
 import BlogSubNav from '../components/blog/BlogSubNav';
 import axios from 'axios';
+import BlogIndividualModal from '../components/modal/BlogIndividualModal';
+import useBlogIndividualModal from '../components/hooks/useBlogIndividualModal';
+import { useSearchParams } from 'next/navigation';
+import LoadingScreen from '../components/LoadingScreen';
 
 export interface IFecthBlogQuery {
   start: number;
@@ -13,8 +17,26 @@ export interface IFecthBlogQuery {
 }
 
 const BlogPage = ({}) => {
+  const hasModalOpened = useRef(false);
+
   const [isLoading, setIsLoading] = useState(false);
   const [listings, setListings] = useState();
+
+  const blogIndividualModal = useBlogIndividualModal();
+
+  const params = useSearchParams();
+  const bloglistingid = params?.get('bloglisting');
+
+  useEffect(() => {
+    if (
+      !hasModalOpened.current &&
+      bloglistingid &&
+      blogIndividualModal.onOpen
+    ) {
+      blogIndividualModal.onOpen();
+      hasModalOpened.current = true;
+    }
+  }, [blogIndividualModal, blogIndividualModal.onOpen, bloglistingid]);
 
   const fetchBlogListing = async (query: IFecthBlogQuery) => {
     setIsLoading(true);
@@ -33,8 +55,10 @@ const BlogPage = ({}) => {
 
   return (
     <div>
+      <BlogIndividualModal />
       <BlogSubNav />
       <BlogBody
+        BlogIndividualOpen={blogIndividualModal.onOpen}
         isLoading={isLoading}
         listings={listings}
         setListings={setListings}
