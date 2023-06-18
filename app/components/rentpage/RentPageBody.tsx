@@ -36,11 +36,11 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
   const [isSearchOn, setIsSearchOn] = useState<boolean>(false);
 
   return (
-    <div className='relative flex flex-row h-[93vh] sm:h-auto'>
+    <div className='relative flex flex-row h-[93vh] sm:h-[90vh]'>
       <div
         className={`relative ${
           isListingOn ? 'hidden' : 'flex'
-        } w-full sm:w-[50%] lg:w-[55%] h-[70vh]`}
+        } w-full sm:w-[50%] lg:w-[55%] h-[70vh] sm:h-[90vh]`}
       >
         <Map
           initCoordinate={[-74.0085514, 40.7127503]}
@@ -69,8 +69,9 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
         </div>
       </div>
       <div
-        className={`sm:relative sm:flex w-full sm:w-[50%] lg:w-[45%] sm:h-[70vh] flex flex-col bg-white
-      ${isListingOn ? 'relative h-full' : 'absolute h-[63%] bottom-0'}
+        className={`sm:relative sm:flex w-full sm:w-[50%] lg:w-[45%] sm:h-[90vh] flex flex-col bg-white
+        ${isListingOn ? 'relative h-full' : 'absolute h-[63%] bottom-0'}
+        
       `}
       >
         <div

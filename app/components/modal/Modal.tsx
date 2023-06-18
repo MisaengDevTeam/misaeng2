@@ -103,7 +103,7 @@ const Modal: React.FC<ModalProps> = ({
                 className={`flex flex-col gap-4 h-[15%] 
             ${
               rentindividual
-                ? 'mb-4 px-1 sm:mb-2 sm:px-2'
+                ? 'mb-6 px-1 sm:mb-2 sm:px-2'
                 : 'mb-4 px-4 sm:px-6 sm:mb-6'
             }
             `}
