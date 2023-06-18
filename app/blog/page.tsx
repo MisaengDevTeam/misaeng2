@@ -19,6 +19,7 @@ const BlogPage = ({}) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [listings, setListings] = useState();
+  const [hideHotListing, setHideHotListing] = useState(false);
 
   const blogIndividualModal = useBlogIndividualModal();
 
@@ -54,9 +55,14 @@ const BlogPage = ({}) => {
   return (
     <div>
       <BlogIndividualModal />
-      <BlogSubNav />
+      <BlogSubNav
+        fetchBlogListing={fetchBlogListing}
+        setHideHotListing={setHideHotListing}
+      />
       <BlogBody
         BlogIndividualOpen={blogIndividualModal.onOpen}
+        hideHotListing={hideHotListing}
+        setHideHotListing={setHideHotListing}
         isLoading={isLoading}
         listings={listings}
         setListings={setListings}

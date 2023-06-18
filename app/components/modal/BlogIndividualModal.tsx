@@ -34,13 +34,11 @@ const BlogIndividualModal: React.FC<BlogIndividualModalProps> = ({}) => {
   const { data: session } = useSession();
   const currentUser = session?.user;
 
-  const [like, setLike] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
 
   useEffect(() => {
-    console.log('blogid', blogid);
     setIsLoading(true);
     if (blogid) {
       axios
@@ -134,14 +132,6 @@ const BlogIndividualModal: React.FC<BlogIndividualModalProps> = ({}) => {
     <div className='flex flex-col gap-1 p-2 w-full'>
       <div className='flex justify-evenly'>
         <RentIndiFooterButton
-          color='#EC662A'
-          label='좋아요'
-          onClick={() => {
-            setLike(!like);
-          }}
-          icon={like ? BsHeartFill : BsHeart}
-        />
-        <RentIndiFooterButton
           color='#9DCAEB'
           label='공유하기'
           onClick={handleCopy}
@@ -159,7 +149,7 @@ const BlogIndividualModal: React.FC<BlogIndividualModalProps> = ({}) => {
           onClick={() => {
             handleClick((nextListing as any)._id);
           }}
-          className='flex flex-row gap-2 sm:gap-4 w-full h-[56px] overflow-hidden items-center'
+          className='flex flex-row gap-2 sm:gap-4 w-full h-[56px] overflow-hidden items-center cursor-pointer hover:bg-[#EC662A]/10 rounded-lg'
         >
           <Image
             className='border border-[#EC662A] aspect-sqaure rounded-lg w-1/5 sm:w-auto h-full'
@@ -182,9 +172,10 @@ const BlogIndividualModal: React.FC<BlogIndividualModalProps> = ({}) => {
     <Modal
       isOpen={blogIndividualModal.isOpen}
       onClose={blogIndividualModal.onClose}
-      title={' .'}
+      title={' '}
       body={bodyContent}
       footer={footerContent}
+      rentindividual
     />
   );
 };

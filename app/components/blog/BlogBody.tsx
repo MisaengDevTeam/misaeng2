@@ -18,6 +18,8 @@ interface BlogBodyProps {
   isLoading: boolean;
   fetchBlogListing: (query: IFecthBlogQuery) => void;
   BlogIndividualOpen: () => void;
+  hideHotListing: boolean;
+  setHideHotListing: (hide: boolean) => void;
 }
 
 const BlogBody: React.FC<BlogBodyProps> = ({
@@ -25,6 +27,8 @@ const BlogBody: React.FC<BlogBodyProps> = ({
   fetchBlogListing,
   isLoading,
   BlogIndividualOpen,
+  hideHotListing,
+  setHideHotListing,
 }) => {
   if (!listings) return <LoadingScreen />;
   return (
@@ -32,10 +36,21 @@ const BlogBody: React.FC<BlogBodyProps> = ({
       <Container>
         <div className='flex w-full justify-center items-center '>
           <div className='flex flex-col justify-center items-center py-4 w-full max-w-[1280px] gap-8'>
-            <BlogHot
-              hotListing={listings.hotListing}
-              BlogIndividualOpen={BlogIndividualOpen}
-            />
+            {!hideHotListing ? (
+              <BlogHot
+                hotListing={listings.hotListing}
+                BlogIndividualOpen={BlogIndividualOpen}
+              />
+            ) : (
+              <div
+                onClick={() => {
+                  setHideHotListing(false);
+                }}
+                className='bg-neutral-100 w-full text-center cursor-pointer font-semibold rounded-full'
+              >
+                이번달 핫 토픽 열기
+              </div>
+            )}
             <div className='flex flex-col sm:flex-row gap-4 w-full'>
               <div className='flex flex-col w-full sm:w-3/4 lg:w-4/5'>
                 {isLoading && (

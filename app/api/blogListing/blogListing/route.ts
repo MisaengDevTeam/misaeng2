@@ -11,14 +11,18 @@ export async function POST(request: Request) {
   const { blogOption, blogId } = body;
 
   if (blogOption) {
-    const { category, start, number } = blogOption;
+    const { category, start, number, title } = blogOption;
 
     let query: {
       category?: string;
+      title?: RegExp;
     } = {};
 
     if (category != null) {
       query.category = category;
+    }
+    if (title != null) {
+      query.title = new RegExp(title); // 'i' for case insensitive matching
     }
 
     const blogListing = await blogCollection
@@ -37,10 +41,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ blogListing, hotListing });
   }
 
-  // const { category, word, author, start, number, blogId } = body;
-
-  // console.log(blogId);
-
   if (blogId) {
     console.log(blogId);
 
@@ -48,7 +48,6 @@ export async function POST(request: Request) {
       .find({ _id: new ObjectId(blogId) })
       .toArray();
 
-    // if (blogIndiListing.length > 0) {
     const category = blogIndiListing[0].category;
     const createdAt = blogIndiListing[0].createdAt;
 
@@ -60,9 +59,6 @@ export async function POST(request: Request) {
       .limit(1)
       .toArray();
 
-    //   console.log({ blogIndiListing, nextIndiListing });
     return NextResponse.json({ blogIndiListing, nextIndiListing });
-    // return NextResponse.json({ blogIndiListing, nextIndiListing });
-    // }
   }
 }
