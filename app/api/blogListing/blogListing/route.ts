@@ -8,33 +8,61 @@ export async function POST(request: Request) {
   const client = await mgClientPromise;
   const blogCollection = client.db('misaeng').collection('BlogListing');
 
-  const { category, word, author, start, number, blogId } = body;
+  const { blogOption, blogId } = body;
 
-  let query: {
-    category?: string;
-    _id?: ObjectId;
-  } = {};
+  if (blogOption) {
+    const { category, start, number } = blogOption;
 
-  if (category != null) {
-    query.category = category;
+    let query: {
+      category?: string;
+    } = {};
+
+    if (category != null) {
+      query.category = category;
+    }
+
+    const blogListing = await blogCollection
+      .find(query)
+      .skip(start)
+      .limit(number)
+      .sort({ createdAt: -1 })
+      .toArray();
+
+    const hotListing = await blogCollection
+      .find({ hot: 'Yes' })
+      .limit(4)
+      .sort({ createdAt: -1 })
+      .toArray();
+
+    return NextResponse.json({ blogListing, hotListing });
   }
 
-  if (blogId != null) {
-    query._id = new ObjectId(blogId);
+  // const { category, word, author, start, number, blogId } = body;
+
+  // console.log(blogId);
+
+  if (blogId) {
+    console.log(blogId);
+
+    const blogIndiListing = await blogCollection
+      .find({ _id: new ObjectId(blogId) })
+      .toArray();
+
+    // if (blogIndiListing.length > 0) {
+    const category = blogIndiListing[0].category;
+    const createdAt = blogIndiListing[0].createdAt;
+
+    const nextIndiListing = await blogCollection
+      .find({
+        category,
+        createdAt: { $lt: createdAt },
+      })
+      .limit(1)
+      .toArray();
+
+    //   console.log({ blogIndiListing, nextIndiListing });
+    return NextResponse.json({ blogIndiListing, nextIndiListing });
+    // return NextResponse.json({ blogIndiListing, nextIndiListing });
+    // }
   }
-
-  const blogListing = await blogCollection
-    .find(query)
-    .skip(start)
-    .limit(number)
-    .sort({ createdAt: -1 })
-    .toArray();
-
-  const hotListing = await blogCollection
-    .find({ hot: 'Yes' })
-    .limit(4)
-    .sort({ createdAt: -1 })
-    .toArray();
-
-  return NextResponse.json({ blogListing, hotListing });
 }

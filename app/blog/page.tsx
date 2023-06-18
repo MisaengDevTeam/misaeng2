@@ -26,19 +26,17 @@ const BlogPage = ({}) => {
   const bloglistingid = params?.get('bloglisting');
 
   useEffect(() => {
-    if (typeof document !== 'undefined') {
-      if (
-        !hasModalOpened.current &&
-        bloglistingid &&
-        blogIndividualModal.onOpen
-      ) {
-        blogIndividualModal.onOpen();
-        hasModalOpened.current = true;
-      }
+    if (
+      !hasModalOpened.current &&
+      bloglistingid &&
+      blogIndividualModal.onOpen
+    ) {
+      blogIndividualModal.onOpen();
+      hasModalOpened.current = true;
     }
   }, [blogIndividualModal, blogIndividualModal.onOpen, bloglistingid]);
 
-  const fetchBlogListing = async (query: IFecthBlogQuery) => {
+  const fetchBlogListing = async (query: any) => {
     setIsLoading(true);
     axios
       .post(`/api/blogListing/blogListing`, query)
@@ -50,7 +48,7 @@ const BlogPage = ({}) => {
   };
 
   useEffect(() => {
-    fetchBlogListing({ start: 0, number: 5, category: null });
+    fetchBlogListing({ blogOption: { start: 0, number: 5, category: null } });
   }, []);
 
   return (
