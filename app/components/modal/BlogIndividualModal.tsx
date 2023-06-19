@@ -176,6 +176,7 @@ const BlogIndividualModal: React.FC<BlogIndividualModalProps> = ({}) => {
       body={bodyContent}
       footer={footerContent}
       rentindividual
+      blogindividual
     />
   );
 };

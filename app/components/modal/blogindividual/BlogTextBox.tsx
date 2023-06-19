@@ -10,7 +10,7 @@ const BlogTextBox: React.FC<BlogTextBoxProps> = ({ content }) => {
   const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
   return (
     <ReactQuill
-      className='w-full h-full'
+      className='w-full h-full ql-no-border'
       value={content}
       readOnly
       modules={{ toolbar: false }}

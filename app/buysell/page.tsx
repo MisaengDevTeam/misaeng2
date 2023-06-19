@@ -10,9 +10,11 @@ import LoadingScreen from '../components/LoadingScreen';
 import useBuySellIndividualModal from '../components/hooks/useBuySellIndividualModal';
 import BuySellIndividualModal from '../components/modal/BuySellIndividualModal';
 import { useSearchParams } from 'next/navigation';
+import { IoSearchSharp } from 'react-icons/io5';
 
 const BuySellPage = ({}) => {
   const hasModalOpened = useRef(false);
+  const searchRef = useRef<HTMLInputElement>(null);
 
   const [isCategoryBoxOpen, setIsCategoryBoxOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -51,6 +53,21 @@ const BuySellPage = ({}) => {
     }
   }, [buySellIndividualModal, buySellIndividualModal.onOpen, buysellid]);
 
+  const handleSearch = async () => {
+    setIsLoading(true);
+    await axios
+      .post(`/api/buysellListing/buysellListing`, {
+        buysellOption: { keyword: searchRef.current?.value },
+      })
+      .then((res) => {
+        setListings(res.data.searchedListings);
+      })
+      .catch((error) => console.log(error))
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
   if (isLoading) {
     return <LoadingScreen />;
   }
@@ -59,10 +76,27 @@ const BuySellPage = ({}) => {
     <div className='w-full flex'>
       <BuySellIndividualModal />
       <Container>
-        {/* <div className='flex flex-row justify-center items-center bg-green-300 py-4'>
-          SEARCH BAR
-        </div> */}
-        <div className='flex flex-col md:flex-row w-full justify-center items-start py-4 md:py-8'>
+        <div className='flex flex-row justify-center items-center pt-4'>
+          <div className='flex flex-row w-full sm:w-[50%] max-w-[500px] h-[40px] border border-[#EC662A] py-1 px-2 rounded-full'>
+            <input
+              ref={searchRef}
+              className='w-full rounded-full px-4 bg-transparent focus:outline-none'
+              placeholder='찾으시는 상품을 검색해주세요'
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleSearch();
+                }
+              }}
+            />
+            <div
+              onClick={handleSearch}
+              className='flex justify-center items-center bg-[#EC662A] rounded-full w-[52px] cursor-pointer hover:opacity-80'
+            >
+              <IoSearchSharp color='#FFF' size={20} />
+            </div>
+          </div>
+        </div>
+        <div className='flex flex-col md:flex-row w-full justify-center items-start py-4 mb-8'>
           <div
             onClick={() => {
               setIsCategoryBoxOpen(!isCategoryBoxOpen);

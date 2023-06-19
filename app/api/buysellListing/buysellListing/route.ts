@@ -65,11 +65,12 @@ export async function POST(request: Request) {
     return NextResponse.json({ listingInfo });
   }
   if (buysellOption) {
-    const { category, subcategory } = buysellOption;
+    const { category, subcategory, keyword } = buysellOption;
 
     let query: {
       category?: string;
       subcategory?: string;
+      title?: RegExp;
     } = {};
 
     if (category != null) {
@@ -77,6 +78,9 @@ export async function POST(request: Request) {
     }
     if (subcategory != null) {
       query.subcategory = subcategory;
+    }
+    if (keyword != null) {
+      query.title = new RegExp(keyword);
     }
 
     const searchedListings = await buysellCollection.find(query).toArray();

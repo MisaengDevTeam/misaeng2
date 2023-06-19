@@ -16,6 +16,7 @@ interface ModalProps {
   loadingScreen?: React.ReactElement | string;
   separator?: boolean;
   rentindividual?: boolean;
+  blogindividual?: boolean;
   mypage?: boolean;
 }
 
@@ -30,6 +31,7 @@ const Modal: React.FC<ModalProps> = ({
   separator,
   loadingScreen,
   rentindividual,
+  blogindividual,
   mypage,
 }) => {
   const [showModal, setShowModal] = useState(isOpen);
@@ -46,9 +48,14 @@ const Modal: React.FC<ModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className='fixed flex justify-center items-center overflow-x-hidden overflow-y-auto inset-0 z-50 outline-none focus:outline-none bg-neutral-800/70'>
+    <div className='fixed flex justify-center items-center overflow-x-hidden overflow-y-auto inset-0 z-50 outline-none focus:outline-none bg-neutral-900/70'>
       <div
-        className={`relative w-[90vw] md:w-3/6 lg:w-2/6 xl:2-2/5 my-6 mx-auto h:auto`}
+        className={`relative mx-auto h:auto w-[90vw]
+        ${
+          blogindividual
+            ? 'md:w-4/6 lg:w-3/6 xl:w-3/6 my-6'
+            : 'md:w-3/6 lg:w-2/6 xl:2-2/5 my-6'
+        }`}
       >
         {/* MODAL CONTENT */}
         <div
@@ -86,8 +93,8 @@ const Modal: React.FC<ModalProps> = ({
             {/* BODY */}
             <div
               className={`relative flex-auto h-[70%]
-              
-            ${rentindividual ? 'py-2 px-2' : 'p-4 sm:p-6'}
+              ${blogindividual ? 'px-8' : 'px-0'}
+              ${rentindividual ? 'py-2 px-2' : 'p-4 sm:p-6'}
             `}
             >
               {body}
@@ -106,6 +113,7 @@ const Modal: React.FC<ModalProps> = ({
                 ? 'mb-6 px-1 sm:mb-2 sm:px-2'
                 : 'mb-4 px-4 sm:px-6 sm:mb-6'
             }
+            ${blogindividual ? 'px-8' : 'px-0'}
             `}
               >
                 {footer}

@@ -44,3 +44,13 @@ html, body, :root {
     margin: 0;
   }
 }
+
+.ql-editor img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ql-editor {
+  border: none
+}

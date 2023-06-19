@@ -23,7 +23,24 @@ const ReviewCreatePage = ({}) => {
 
   return (
     <div className='flex flex-col justify-center items-center w-full h-[50vh]'>
-      hihihi
+      <div className='flex flex-row w-full justify-evenly'>
+        <div>
+          <div>건물</div>
+          <div></div>
+        </div>
+        <div>
+          <div>안전</div>
+          <div></div>
+        </div>
+        <div>
+          <div>교통</div>
+          <div></div>
+        </div>
+        <div>
+          <div>편의</div>
+          <div></div>
+        </div>
+      </div>
     </div>
   );
 };

@@ -58,7 +58,7 @@ const ListingBody: React.FC<ListingBodyProps> = ({
               buySellIndividualOpen();
               handleClick((listing as any)._id);
             }}
-            key={listing.id}
+            key={(listing as any)._id}
             className='relative cursor-pointer group'
           >
             <div className='flex justify-center overflow-hidden w-full relative border border-[#EC662A] rounded-lg '>
