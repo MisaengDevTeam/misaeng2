@@ -93,7 +93,7 @@ const Modal: React.FC<ModalProps> = ({
             {/* BODY */}
             <div
               className={`relative flex-auto h-[70%]
-              ${blogindividual ? 'px-8' : 'px-0'}
+              ${blogindividual ? 'sm:px-8' : 'sm:px-6'}
               ${rentindividual ? 'py-2 px-2' : 'p-4 sm:p-6'}
             `}
             >
@@ -113,7 +113,7 @@ const Modal: React.FC<ModalProps> = ({
                 ? 'mb-6 px-1 sm:mb-2 sm:px-2'
                 : 'mb-4 px-4 sm:px-6 sm:mb-6'
             }
-            ${blogindividual ? 'px-8' : 'px-0'}
+            ${blogindividual ? 'sm:px-8' : 'sm:px-0'}
             `}
               >
                 {footer}

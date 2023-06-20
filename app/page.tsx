@@ -10,7 +10,7 @@ import MainRoommateMenu from './components/main/MainRoommateMenu';
 export default function Home() {
   const ContentGenerator = useCallback((section: string): React.ReactNode => {
     if (section == 'CATEGORY') return <MainCategoryMenu />;
-    if (section == 'BLOG') return <MainBlogMenu />;
+    // if (section == 'BLOG') return <MainBlogMenu />;
     // if (section == 'RENT') return <MainRentMenu />;
     // if (section == 'ROOMMATE') return <MainRoommateMenu />;
   }, []);

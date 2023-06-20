@@ -33,12 +33,13 @@ export const authOptions: AuthOptions = {
       clientSecret: process.env.NAVER_CLIENT_SECRET as string,
     }),
   ],
-  debug: process.env.NODE_ENV == 'development',
+  // debug: process.env.NODE_ENV == 'development',
   // debug: true,
   pages: { signIn: '/' },
   session: {
     strategy: 'jwt',
   },
+
   callbacks: {
     async session({ session, token, user }) {
       const currentUser = await prisma.user.findUnique({

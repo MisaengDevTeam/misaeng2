@@ -145,8 +145,6 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
 
   const onNext = () => {
     if (step == 1 && validateInput([category, subcategory])) {
-      // console.log(category);
-      // console.log(subcategory);
       toast.error('카테고리를 선택해주세요');
       return null;
     }

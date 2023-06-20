@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 const MainBannerImage = ({}) => {
   return (
-    <div className='hidden md:block w-full h-[380px] relative overflow-hidden'>
+    <div className='hidden md:block w-full h-[360px] relative overflow-hidden'>
       <Image
         src={`https://misaeng.s3.amazonaws.com/asset/img/main-1.png`}
         fill

@@ -52,10 +52,19 @@ export async function POST(request: Request) {
     const createdAt = blogIndiListing[0].createdAt;
 
     const nextIndiListing = await blogCollection
-      .find({
-        category,
-        createdAt: { $lt: createdAt },
-      })
+      .find(
+        {
+          category,
+          createdAt: { $lt: createdAt },
+        },
+        {
+          projection: {
+            _id: 1,
+            title: 1,
+            thumbnail: 1,
+          },
+        }
+      )
       .limit(1)
       .toArray();
 

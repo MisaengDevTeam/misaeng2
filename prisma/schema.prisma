@@ -196,16 +196,14 @@ model Review {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   userId String @db.ObjectId
   buildingId String @db.ObjectId
-  generalReview String
-  neighborhoodReview String
-  buildingReview String
-  transportationReview String
-  managementReview String
-  generalRate Int
-  neighborhoodRate Int
   buildingRate Int
+  buildingReview String
+  safeRate Int
+  safeReview String
   transportationRate Int
-  managementRate Int
+  transportationReview String
+  convenienceRate Int
+  convenienceReview String
 
   building Building @relation(fields: [buildingId], references: [id], onDelete: Cascade)
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
