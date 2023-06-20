@@ -12,7 +12,7 @@ const MainSectionContainer: React.FC<MainSectionContainerProps> = ({
   children,
 }) => {
   return (
-    <div className='w-full flex flex-col justify-center items-center pt-0 pb-12 gap-6'>
+    <div className='w-full flex flex-col justify-center items-center my-12 sm:mt-6 gap-6'>
       <div className='w-[85px] h-auto flex flex-col'>
         <div className='flex flex-row justify-center'>
           <div className='w-[9px] h-[9px] bg-[#EC662A] rounded-full'></div>

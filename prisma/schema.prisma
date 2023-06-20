@@ -196,6 +196,7 @@ model Review {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   userId String @db.ObjectId
   buildingId String @db.ObjectId
+  averageRate Float
   buildingRate Int
   buildingReview String
   safeRate Int
@@ -204,6 +205,7 @@ model Review {
   transportationReview String
   convenienceRate Int
   convenienceReview String
+  createdAt DateTime @default(now())
 
   building Building @relation(fields: [buildingId], references: [id], onDelete: Cascade)
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
