@@ -200,7 +200,7 @@ const BlogRegister: React.FC<routeProps> = ({}) => {
                   small
                   id={'title'}
                   label={'제목을 입력해주세요'}
-                  length={30}
+                  length={60}
                   onChange={(e) => setCustomValue('title', e.target.value)}
                   register={register}
                   errors={errors}
