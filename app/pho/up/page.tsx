@@ -376,17 +376,17 @@ const PhoUpPage = ({}) => {
     );
   }
   if (
-    currentUserId != process.env.NEXT_PUBLIC_PICTURE_UPLOAD_SIMON &&
-    currentUserId != process.env.NEXT_PUBLIC_PICTURE_UPLOAD_RAINIE
+    currentUserId == process.env.NEXT_PUBLIC_PICTURE_UPLOAD_SIMON ||
+    currentUserId == process.env.NEXT_PUBLIC_PICTURE_UPLOAD_RAINIE
   ) {
-    return (
-      <div className='w-full h-[80vh] flex flex-col justify-center items-center gap-8'>
-        <div className='text-4xl font-bold'>404 Error</div>
-        <div className='text-lg'>No page available</div>
-      </div>
-    );
+    return bodyContent;
   }
 
-  return bodyContent;
+  return (
+    <div className='w-full h-[80vh] flex flex-col justify-center items-center gap-8'>
+      <div className='text-4xl font-bold'>404 Error</div>
+      <div className='text-lg'>No page available</div>
+    </div>
+  );
 };
 export default PhoUpPage;
