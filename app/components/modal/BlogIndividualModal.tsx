@@ -106,8 +106,8 @@ const BlogIndividualModal: React.FC<BlogIndividualModalProps> = ({}) => {
           <div className='flex gap-1'>
             <Image
               className='border border-[#EC662A] rounded-full'
-              width={20}
-              height={20}
+              width={24}
+              height={24}
               src={currentListing.authorPic}
               alt={'g'}
             />
