@@ -167,6 +167,8 @@ model BlogListing {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+
+
 model Building {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   company String
