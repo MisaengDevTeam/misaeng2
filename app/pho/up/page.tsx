@@ -10,6 +10,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { IoSearch } from 'react-icons/io5';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+import validateInput from '@/app/lib/validateInput';
 
 declare const window: any;
 
@@ -42,8 +43,6 @@ const PhoUpPage = ({}) => {
   const { data: session } = useSession();
   const currentUser = session?.user;
   const currentUserId = currentUser?.id.toString();
-
-  const router = useRouter();
 
   const {
     register,
@@ -211,9 +210,14 @@ const PhoUpPage = ({}) => {
   }, [step]);
 
   const onNext = useCallback(() => {
+    if (step == 1 && validateInput([picAddress, unit])) {
+      toast.error('카테고리를 선택해주세요');
+      return null;
+    }
+
     const newStep = step == 2 ? 2 : step + 1;
     setStep(newStep);
-  }, [step]);
+  }, [picAddress, step, unit]);
 
   const onSubmit: SubmitHandler<FieldValues> = useCallback(
     async (data) => {
@@ -291,7 +295,9 @@ const PhoUpPage = ({}) => {
               <label htmlFor='pic_up_unit'>Unit #</label>
               <input
                 id='pic_up_unit'
-                onChange={(e) => setCustomValue('unit', e.currentTarget.value)}
+                onChange={(e) =>
+                  setCustomValue('unit', e.currentTarget.value.toUpperCase())
+                }
                 className='w-[220px] border border-neutral-300 focus:outline-[#EC662A] py-2 pl-4 rounded-full text-sm'
                 placeholder='Unit #'
               />
@@ -362,15 +368,10 @@ const PhoUpPage = ({}) => {
   ]);
 
   if (!currentUser) {
-    setTimeout(() => {
-      router.push('/');
-    }, 3000);
     return (
       <div className='w-full h-[80vh] flex flex-col justify-center items-center gap-8'>
         <div className='text-4xl font-bold'>404 Error</div>
-        <div className='text-lg'>
-          You will be redirected to the homepage in 3 Seconds.
-        </div>
+        <div className='text-lg'>No page available</div>
       </div>
     );
   }
@@ -378,15 +379,10 @@ const PhoUpPage = ({}) => {
     currentUserId != process.env.NEXT_PUBLIC_PICTURE_UPLOAD_SIMON &&
     currentUserId != process.env.NEXT_PUBLIC_PICTURE_UPLOAD_RAINIE
   ) {
-    setTimeout(() => {
-      router.push('/');
-    }, 3000);
     return (
       <div className='w-full h-[80vh] flex flex-col justify-center items-center gap-8'>
         <div className='text-4xl font-bold'>404 Error</div>
-        <div className='text-lg'>
-          You will be redirected to the homepage in 3 Seconds.
-        </div>
+        <div className='text-lg'>No page available</div>
       </div>
     );
   }

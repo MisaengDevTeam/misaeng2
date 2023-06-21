@@ -22,7 +22,7 @@ const PhoPicUpload: React.FC<PhoPicUploadProps> = ({
 
   const handleFileChange = useCallback(
     async (event: ChangeEvent<HTMLInputElement>) => {
-      if (event.target.files && event.target.files.length < 10) {
+      if (event.target.files && event.target.files.length < 13) {
         const fileList = Array.from(event.target.files);
         setPictures(fileList);
 
@@ -80,7 +80,7 @@ const PhoPicUpload: React.FC<PhoPicUploadProps> = ({
           : `最多可上传12张照片`} */}
         {pictures.length > 0
           ? `${pictures.length} pictures selected, change the order`
-          : `Max 10 photos`}
+          : `Max 12 photos`}
         <input
           ref={fileRef}
           id='file-input'
@@ -93,7 +93,7 @@ const PhoPicUpload: React.FC<PhoPicUploadProps> = ({
       </div>
 
       <DndProvider backend={HTML5Backend}>
-        <div className='grid grid-cols-5 gap-2'>
+        <div className='grid grid-cols-3 gap-2'>
           {previews.map((preview, index) => (
             <ImagePreview
               key={index}
