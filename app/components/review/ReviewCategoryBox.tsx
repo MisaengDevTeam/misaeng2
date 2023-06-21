@@ -32,7 +32,7 @@ const ReviewCategoryBox: React.FC<ReviewCategoryBoxProps> = ({
       </div>
       <textarea
         placeholder='회원님께서 현재 거주하시거나 과거에 거주하셨던 장소에 대해 리뷰를 남겨주세요'
-        maxLength={360}
+        maxLength={240}
         onChange={(e) => {
           onChangeText(e.currentTarget.value);
         }}

@@ -93,6 +93,7 @@ export async function POST(request: Request) {
   const buildingToSubwayCollection = client
     .db('misaeng')
     .collection('BuildingToSubway');
+  const reviewCollection = client.db('misaeng').collection('Review');
 
   if (buildingId) {
     const recentListings = await rentCollection
@@ -161,10 +162,17 @@ export async function POST(request: Request) {
         buildingId: new ObjectId(listingInfo[0].buildingId),
       })
       .toArray();
+    const reviewInfo = await reviewCollection
+      .find({
+        buildingId: new ObjectId(listingInfo[0].buildingId),
+      })
+      .limit(10)
+      .toArray();
     return NextResponse.json({
       listingInfo,
       buildingInfo,
       buildingToSubwayInfo,
+      reviewInfo,
     });
   }
 

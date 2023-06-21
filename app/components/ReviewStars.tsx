@@ -3,9 +3,10 @@ import { BsStarFill, BsStarHalf, BsStar } from 'react-icons/bs';
 
 interface StarsProps {
   value: number;
+  rentModal?: boolean;
 }
 
-const Stars: React.FC<StarsProps> = ({ value }) => {
+const Stars: React.FC<StarsProps> = ({ value, rentModal }) => {
   const roundedValue = Math.round(value * 2) / 2;
   const stars = [];
 
@@ -23,7 +24,15 @@ const Stars: React.FC<StarsProps> = ({ value }) => {
     );
   }
 
-  return <div className='flex flex-row'>{stars}</div>;
+  return (
+    <div
+      className={`flex flex-row 
+  ${rentModal ? 'w-[80%]' : 'w-full'}
+  `}
+    >
+      {stars}
+    </div>
+  );
 };
 
 export default Stars;
