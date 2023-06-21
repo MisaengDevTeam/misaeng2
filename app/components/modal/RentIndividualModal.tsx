@@ -87,7 +87,7 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({ mypage }) => {
 
   const headerTitle = `${currentListing.title}`;
 
-  let bodyContent;
+  let bodyContent: JSX.Element | null;
 
   if (step == 1) {
     bodyContent = (
