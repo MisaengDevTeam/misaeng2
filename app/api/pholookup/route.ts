@@ -11,10 +11,16 @@ export async function POST(request: Request) {
   if (bid && unit) {
     const buildingPicInfo = await autorentCollection.find({ bid }).toArray();
 
-    // console.log(Object.keys(buildingPicInfo[0].unit));
+    console.log(buildingPicInfo);
 
-    if (Object.keys(buildingPicInfo[0].unit).includes(unit)) {
-      return NextResponse.json({ buildingPic: buildingPicInfo[0].unit[unit] });
+    if (buildingPicInfo.length != 0) {
+      if (Object.keys(buildingPicInfo[0].unit).includes(unit)) {
+        return NextResponse.json({
+          buildingPic: buildingPicInfo[0].unit[unit],
+        });
+      } else {
+        return NextResponse.json({ buildingPic: [] });
+      }
     } else {
       return NextResponse.json({ buildingPic: [] });
     }

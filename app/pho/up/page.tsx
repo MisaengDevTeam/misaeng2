@@ -224,11 +224,12 @@ const PhoUpPage = ({}) => {
   }, [picAddress, step, unit]);
 
   const onCheck = useCallback(async (bid: string, unit: string) => {
+    console.log(bid);
+    console.log(unit);
     setIsLoading(true);
     axios
       .post(`/api/pholookup`, { bid, unit })
       .then((res) => {
-        // console.log(res.data.buildingPic);
         setSavedPictures(res.data.buildingPic);
       })
       .catch((error) => console.log(error))
@@ -434,8 +435,6 @@ const PhoUpPage = ({}) => {
       </div>
     );
   }
-
-  if (isLoading) return <LoadingScreen />;
 
   if (!currentUser) {
     return (
