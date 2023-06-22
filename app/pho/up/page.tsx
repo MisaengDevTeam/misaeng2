@@ -12,6 +12,7 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import validateInput from '@/app/lib/validateInput';
 import Image from 'next/image';
+import LoadingScreen from '@/app/components/LoadingScreen';
 
 declare const window: any;
 
@@ -273,6 +274,7 @@ const PhoUpPage = ({}) => {
           console.log(error);
         })
         .finally(() => {
+          setIsLoading(false);
           location.reload();
         });
     },
@@ -351,11 +353,6 @@ const PhoUpPage = ({}) => {
             } else {
               toast.error(`Address or Unit is empty`);
             }
-
-            // console.log();
-
-            // console.log(bid);
-            // console.log(unit);
           }}
           className={`flex justify-center rounded-full w-[180px] border mt-2 py-2 text-lg text-white hover:shadow-lg
           ${savedPictures ? 'hidden' : 'block'}
@@ -437,6 +434,8 @@ const PhoUpPage = ({}) => {
       </div>
     );
   }
+
+  if (isLoading) return <LoadingScreen />;
 
   if (!currentUser) {
     return (
