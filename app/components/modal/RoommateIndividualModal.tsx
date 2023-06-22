@@ -101,8 +101,8 @@ const RoommateIndividualModal: React.FC<RoommateIndividualModalProps> = ({
   const detailArray = [`$ ${price.toLocaleString()}`, movedate, length];
 
   const bodyContent = (
-    <div className='flex flex-col gap-4 h-[60vh] overflow-y-scroll p-2'>
-      <div className='flex justify-center w-full relative'>
+    <div className='flex flex-col gap-4 h-[60vh] overflow-y-scroll p-2 items-center'>
+      <div className='flex justify-center w-full max-w-[480px] relative'>
         <Image
           className='w-[80%] h-auto rounded-lg border border-[#EC662A]'
           width={0}
@@ -112,14 +112,20 @@ const RoommateIndividualModal: React.FC<RoommateIndividualModalProps> = ({
           alt='img'
         />
       </div>
-      <RoommateContext title='간단한 자기소개' description={description} />
-      <RoommateIndiAttr title='희망 위치' arr={[city, district]} findLocation />
-      <RoommateIndiAttr title='저는요?' arr={selfArray} />
-      <RoommateIndiAttr title='제가 찾는 룸메는요?' arr={rmArray} />
-      <RoommateIndiAttr
-        title='예산 / 입주희망일 / 입주기간'
-        arr={detailArray}
-      />
+      <div className='w-full flex flex-col gap-4 md:gap-8'>
+        <RoommateContext title='간단한 자기소개' description={description} />
+        <RoommateIndiAttr
+          title='희망 위치'
+          arr={[city, district]}
+          findLocation
+        />
+        <RoommateIndiAttr title='저는요?' arr={selfArray} />
+        <RoommateIndiAttr title='제가 찾는 룸메는요?' arr={rmArray} />
+        <RoommateIndiAttr
+          title='예산 / 입주희망일 / 입주기간'
+          arr={detailArray}
+        />
+      </div>
     </div>
   );
 

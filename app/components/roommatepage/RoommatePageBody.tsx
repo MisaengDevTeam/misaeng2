@@ -17,22 +17,24 @@ const RoommatePageBody: React.FC<RoommatePageBodyProps> = ({
   return (
     <div className='py-4 h-auto max-h-[80vh] overflow-y-scroll overflow-x-hidden'>
       <Container>
-        <div className='grid grid-cols-2 sm:grid-cols-4 md::grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-4'>
-          {listings?.map((listing) => {
-            return (
-              <RoommateListingCard
-                rentIndividualOpen={RoommateIndividualOpen}
-                key={(listing as any)._id}
-                id={(listing as any)._id}
-                category={listing.category}
-                gender={listing.selfgender}
-                status={listing.selfstatus}
-                mbti={listing.selfmbti}
-                age={listing.selfage}
-                city={listing.city}
-              />
-            );
-          })}
+        <div className='w-full flex justify-center'>
+          <div className='max-w-[1720px] grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4'>
+            {listings?.map((listing) => {
+              return (
+                <RoommateListingCard
+                  rentIndividualOpen={RoommateIndividualOpen}
+                  key={(listing as any)._id}
+                  id={(listing as any)._id}
+                  category={listing.category}
+                  gender={listing.selfgender}
+                  status={listing.selfstatus}
+                  mbti={listing.selfmbti}
+                  age={listing.selfage}
+                  city={listing.city}
+                />
+              );
+            })}
+          </div>
         </div>
       </Container>
     </div>

@@ -18,7 +18,7 @@ const RoommateInfoContainer: React.FC<RoommateInfoContainerProps> = ({
   city,
 }) => {
   const commonStyles =
-    'rounded-full text-center text-[#fff] text-[12px] font-light';
+    'rounded-full text-center text-[#fff] text-[12px] sm:text-sm md:text-base font-light';
 
   return (
     <div className='flex flex-col gap-1'>

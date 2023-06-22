@@ -99,7 +99,7 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
             전체 리스팅 다시보기
           </div>
         </div>
-        <div className='grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 p-4 sm:pt-0 overflow-x-hidden overflow-y-scroll gap-2'>
+        <div className='grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 min-[1960px]:grid-cols-4 min-[2400px]:grid-cols-5 p-4 sm:pt-0 overflow-x-hidden overflow-y-scroll gap-2'>
           {listings.map((list) => (
             <RentListingCard
               key={(list as any)._id}
