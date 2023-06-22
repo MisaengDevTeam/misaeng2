@@ -422,12 +422,19 @@ const PhoUpPage = ({}) => {
             onChange={(value) => {
               setCustomValue('imageSrc', value);
             }}
+            isLoading={isLoading}
             pictures={pictures}
             setPictures={setPictures}
           />
           <button
             onClick={handleSubmit(onSubmit)}
-            className='bg-[#EC662A] w-[50%] text-center py-2 my-4 rounded-xl text-white cursor-pointer shadow-md border-[2px] border-[#EC662A] transition'
+            className={`w-[50%] text-center py-2 my-4 rounded-xl text-white shadow-md border-[2px] transition
+            ${
+              isLoading
+                ? 'cursor-not-allowed border-neutral-300 bg-neutral-300'
+                : 'cursor-pointer border-[#EC662A] bg-[#EC662A]'
+            }
+            `}
           >
             SAVE & SUBMIT
           </button>

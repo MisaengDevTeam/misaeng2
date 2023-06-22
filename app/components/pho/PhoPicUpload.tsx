@@ -6,12 +6,14 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 
 interface PhoPicUploadProps {
+  isLoading: boolean;
   pictures: any;
   setPictures: ([]) => void;
   onChange: (value: File[] | string[]) => void;
 }
 
 const PhoPicUpload: React.FC<PhoPicUploadProps> = ({
+  isLoading,
   pictures,
   setPictures,
   onChange,
@@ -69,8 +71,12 @@ const PhoPicUpload: React.FC<PhoPicUploadProps> = ({
     <div className='flex flex-col items-center'>
       <div className='flex flex-col items-center'>
         <label
-          className={`w-full bg-[#EC662A] w-[50%] text-center py-2 my-4 rounded-xl text-white cursor-pointer shadow-md border-[2px] border-[#EC662A] transition 
-          ${`hover:bg-white hover:text-[#EC662A]`}`}
+          className={`w-full w-[50%] text-center py-2 my-4 rounded-xl text-white border-[2px] transition hover:shadow-lg
+          ${
+            isLoading
+              ? 'cursor-not-allowed border-neutral-300 bg-neutral-300'
+              : 'cursor-pointer border-[#EC662A] bg-[#EC662A]'
+          }`}
           htmlFor='file-input'
         >
           Upload
