@@ -42,8 +42,6 @@ export async function POST(request: Request) {
   }
 
   if (blogId) {
-    console.log(blogId);
-
     const blogIndiListing = await blogCollection
       .find({ _id: new ObjectId(blogId) })
       .toArray();
@@ -65,6 +63,7 @@ export async function POST(request: Request) {
           },
         }
       )
+      .sort({ createdAt: -1 })
       .limit(1)
       .toArray();
 

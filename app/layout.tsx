@@ -40,7 +40,7 @@ export default async function RootLayout({
             <BuySellRegisterModal />
             <BlogIndividualModal />
             <Navbar />
-            <div className='w-full h-[65px] sm:h-[89px] md:h-[81px]'></div>
+            <div className='w-full h-[65px] sm:h-[89px] md:h-[77px]'></div>
             {children}
             <Footer />
           </SessProvider>

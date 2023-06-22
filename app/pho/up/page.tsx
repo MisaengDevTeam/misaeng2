@@ -11,6 +11,7 @@ import { IoSearch } from 'react-icons/io5';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import validateInput from '@/app/lib/validateInput';
+import Image from 'next/image';
 
 declare const window: any;
 
@@ -29,6 +30,7 @@ interface pageProps {}
 
 const PhoUpPage = ({}) => {
   const addressRef = useRef<HTMLInputElement>(null);
+  const unitRef = useRef<HTMLInputElement>(null);
 
   const [step, setStep] = useState<number>(PHO_UP_STEP.LOCATION);
   const [googleMaps, setGoogleMaps] = useState<any>(null);
@@ -36,6 +38,7 @@ const PhoUpPage = ({}) => {
   const [picAddress, setPicAddress] = useState<string | null>(null);
   const [bid, setBid] = useState<string | null>(null);
   const [pictures, setPictures] = useState<File[] | string[]>([]);
+  const [savedPictures, setSavedPictures] = useState<string[] | null>(null);
   const [coordinate, setCoordinate] = useState<[number, number]>([
     -73.9917399, 40.748456,
   ]);
@@ -219,6 +222,21 @@ const PhoUpPage = ({}) => {
     setStep(newStep);
   }, [picAddress, step, unit]);
 
+  const onCheck = useCallback(async (bid: string, unit: string) => {
+    setIsLoading(true);
+    axios
+      .post(`/api/pholookup`, { bid, unit })
+      .then((res) => {
+        // console.log(res.data.buildingPic);
+        setSavedPictures(res.data.buildingPic);
+      })
+      .catch((error) => console.log(error))
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
+  console.log(savedPictures);
+
   const onSubmit: SubmitHandler<FieldValues> = useCallback(
     async (data) => {
       setIsLoading(true);
@@ -261,111 +279,164 @@ const PhoUpPage = ({}) => {
     [bid, imageSrc, reset, unit]
   );
 
-  const bodyContent = useMemo(() => {
-    switch (step) {
-      case 1:
-        return (
-          <div className='flex flex-col justify-start items-center w-full h-[92vh] gap-4 p-8'>
-            <div className='flex flex-row gap-2'>
-              <input
-                ref={addressRef}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    handleAddress();
-                  }
-                }}
-                className='w-[250px] h-[40px] border border-neutral-300 rounded-full pl-4 text-sm focus:outline-[#EC662A]'
-                placeholder='Street Address'
-              />
-              <button
-                disabled={isLoading}
-                onClick={handleAddress}
-                className={`flex justify-center items-center w-[40px] h-[40px] rounded-full
-          ${
-            isLoading
-              ? 'cursor-not-allowed bg-neutral-300'
-              : 'cursor-pointer bg-[#EC662A]'
-          }
-          `}
-              >
-                <IoSearch color='#FFF' />
-              </button>
-            </div>
-            <div className='flex gap-4 items-center'>
-              <label htmlFor='pic_up_unit'>Unit #</label>
-              <input
-                id='pic_up_unit'
-                onChange={(e) =>
-                  setCustomValue('unit', e.currentTarget.value.toUpperCase())
-                }
-                className='w-[220px] border border-neutral-300 focus:outline-[#EC662A] py-2 pl-4 rounded-full text-sm'
-                placeholder='Unit #'
-              />
-            </div>
+  let bodyContent;
 
-            <div className='w-[300px] h-auto border-dashed border-2 border-[#EC662A] rounded-3xl overflow-hidden'>
-              <MapComponent initCoordinate={coordinate} showRange />
-            </div>
-            {picAddress && (
-              <div className='flex flex-col items-center'>
-                <div>You are about to pose: </div>
-                <div>{`${picAddress}`}</div>
-              </div>
-            )}
-            <button
-              disabled={isLoading}
-              onClick={() => {
-                // if (!bid) {
-                //   toast.error('주소를 검색해주세요');
-                // } else {
-                onNext();
-                // }
-              }}
-              className={`flex justify-center rounded-full w-[180px] border mt-2 py-2 text-lg text-white hover:shadow-lg
+  if (step == 1) {
+    bodyContent = (
+      <div className='flex flex-col justify-start items-center w-full h-[92vh] gap-4 p-8'>
+        <div
+          className={`flex flex-row gap-2
+        ${savedPictures ? 'hidden' : 'block'}
+        `}
+        >
+          <input
+            ref={addressRef}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleAddress();
+              }
+            }}
+            className='w-[250px] h-[40px] border border-neutral-300 rounded-full pl-4 text-sm focus:outline-[#EC662A]'
+            placeholder='Street Address'
+          />
+          <button
+            disabled={isLoading}
+            onClick={handleAddress}
+            className={`flex justify-center items-center w-[40px] h-[40px] rounded-full
+      ${
+        isLoading
+          ? 'cursor-not-allowed bg-neutral-300'
+          : 'cursor-pointer bg-[#EC662A]'
+      }
+      `}
+          >
+            <IoSearch color='#FFF' />
+          </button>
+        </div>
+        <div
+          className={`flex gap-4 items-center
+        ${savedPictures ? 'hidden' : 'block'}
+        `}
+        >
+          <label htmlFor='pic_up_unit'>Unit #</label>
+          <input
+            ref={unitRef}
+            id='pic_up_unit'
+            onChange={(e) =>
+              setCustomValue('unit', e.currentTarget.value.toLowerCase())
+            }
+            className='w-[220px] border border-neutral-300 focus:outline-[#EC662A] py-2 pl-4 rounded-full text-sm'
+            placeholder='Unit #'
+          />
+        </div>
+
+        <div
+          className={`w-[300px] h-auto border-dashed border-2 border-[#EC662A] rounded-3xl overflow-hidden
+        ${savedPictures ? 'hidden' : 'block'}
+        `}
+        >
+          <MapComponent initCoordinate={coordinate} showRange />
+        </div>
+        {picAddress && (
+          <div className='flex flex-col items-center'>
+            <div>You are about to pose: </div>
+            <div>{`${picAddress}`}</div>
+          </div>
+        )}
+        <button
+          disabled={isLoading}
+          onClick={async () => {
+            if (bid && unit) {
+              onCheck(bid, unit);
+            } else {
+              toast.error(`Address or Unit is empty`);
+            }
+
+            // console.log();
+
+            // console.log(bid);
+            // console.log(unit);
+          }}
+          className={`flex justify-center rounded-full w-[180px] border mt-2 py-2 text-lg text-white hover:shadow-lg
+          ${savedPictures ? 'hidden' : 'block'}
+    ${
+      isLoading
+        ? 'cursor-not-allowed border-neutral-300 bg-neutral-300'
+        : 'cursor-pointer border-[#EC662A] bg-[#EC662A]'
+    }
+    `}
+        >
+          CHECK
+        </button>
+        <div
+          className={`gap-1
         ${
-          isLoading
-            ? 'cursor-not-allowed border-neutral-300 bg-neutral-300'
-            : 'cursor-pointer border-[#EC662A] bg-[#EC662A]'
+          savedPictures?.length != 0
+            ? 'grid grid-cols-4'
+            : 'flex w-full justify-center'
         }
         `}
-            >
-              NEXT
-            </button>
-          </div>
-        );
-      case 2:
-        return (
-          <div className='flex flex-col justify-start items-center w-full h-[92vh] gap-4 p-8'>
-            <div className='flex flex-col items-center w-[90vw] max-w-[360px]'>
-              <PhoPicUpload
-                onChange={(value) => {
-                  setCustomValue('imageSrc', value);
-                }}
-                pictures={pictures}
-                setPictures={setPictures}
+        >
+          {savedPictures?.length != 0 ? (
+            savedPictures?.map((item: string) => (
+              <Image
+                key={savedPictures.indexOf(item)}
+                width={60}
+                height={45}
+                src={item}
+                alt={'pic'}
               />
-              <button
-                onClick={handleSubmit(onSubmit)}
-                className='bg-[#EC662A] w-[50%] text-center py-2 my-4 rounded-xl text-white cursor-pointer shadow-md border-[2px] border-[#EC662A] transition'
-              >
-                SAVE & SUBMIT
-              </button>
+            ))
+          ) : (
+            <div className='flex flex-col items-center'>
+              <div>NO PICTURES YET</div>
+              <div>YOU ARE GOOD TO GO</div>
             </div>
-          </div>
-        );
+          )}
+        </div>
+        <button
+          disabled={isLoading}
+          onClick={() => {
+            // if (!bid) {
+            //   toast.error('주소를 검색해주세요');
+            // } else {
+            onNext();
+            // }
+          }}
+          className={`flex justify-center rounded-full w-[180px] border mt-2 py-2 text-lg text-white hover:shadow-lg
+    ${
+      isLoading
+        ? 'cursor-not-allowed border-neutral-300 bg-neutral-300'
+        : 'cursor-pointer border-[#EC662A] bg-[#EC662A]'
     }
-  }, [
-    coordinate,
-    handleAddress,
-    handleSubmit,
-    isLoading,
-    onNext,
-    onSubmit,
-    picAddress,
-    pictures,
-    setCustomValue,
-    step,
-  ]);
+    `}
+        >
+          NEXT
+        </button>
+      </div>
+    );
+  }
+  if (step == 2) {
+    bodyContent = (
+      <div className='flex flex-col justify-start items-center w-full h-[92vh] gap-4 p-8'>
+        <div className='flex flex-col items-center w-[90vw] max-w-[360px]'>
+          <PhoPicUpload
+            onChange={(value) => {
+              setCustomValue('imageSrc', value);
+            }}
+            pictures={pictures}
+            setPictures={setPictures}
+          />
+          <button
+            onClick={handleSubmit(onSubmit)}
+            className='bg-[#EC662A] w-[50%] text-center py-2 my-4 rounded-xl text-white cursor-pointer shadow-md border-[2px] border-[#EC662A] transition'
+          >
+            SAVE & SUBMIT
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (!currentUser) {
     return (
