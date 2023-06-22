@@ -42,8 +42,8 @@ export const resizeProfileImage = async (file: File): Promise<File> => {
 };
 
 export const resizeAdImage = async (file: File): Promise<File> => {
-  const TARGET_WIDTH = 600;
-  const TARGET_HEIGHT = 450;
+  const TARGET_WIDTH = 720;
+  const TARGET_HEIGHT = 540;
 
   const img = new Image();
   img.src = URL.createObjectURL(file);
