@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import useBuySellRegisterModal from '../hooks/useBuySellRegisterModal';
 import Modal from './Modal';
 
@@ -22,13 +22,16 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import validateInput from '@/app/lib/validateInput';
+import Image from 'next/image';
 
 interface BuySellRegisterModalProps {}
 
 type CategoryKey = keyof typeof BUY_SELL_CATEGORY;
 
 enum BUY_SELL_REGISTER_STEP {
-  CATEGORY = 1,
+  NOTIFICATION = 1,
+  CHECK,
+  CATEGORY,
   PRODUCTINFO,
   LOCATION,
   ROOMMATEPRE,
@@ -36,10 +39,11 @@ enum BUY_SELL_REGISTER_STEP {
 }
 
 const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
-  const [step, setStep] = useState(BUY_SELL_REGISTER_STEP.CATEGORY);
+  const [step, setStep] = useState(BUY_SELL_REGISTER_STEP.NOTIFICATION);
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
   const [searchAddress, setSearchAddress] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [userPrevListings, setUserPrevListings] = useState<any[] | null>(null);
   const [coordinate, setCoordinate] = useState<[number, number]>([
     -73.9917399, 40.748456,
   ]);
@@ -54,6 +58,17 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
 
   // Modal
   const buySellRegisterModal = useBuySellRegisterModal();
+
+  useEffect(() => {
+    if (uid) {
+      const fetchUserListings = async (uid: string) => {
+        axios
+          .post(`/api/userInfo/userInfo`, { mypage: 'buysell', uid })
+          .then((res) => setUserPrevListings(res.data.buysellInfo));
+      };
+      fetchUserListings(uid);
+    }
+  }, [uid]);
 
   // Register form
   const {
@@ -101,6 +116,12 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
   const description = watch('description');
   const address = watch('address');
 
+  const fetchPersonalListings = useCallback(async (uid: string) => {
+    axios
+      .post(`/api/userInfo/userInfo`, { mypage: 'buysell', uid })
+      .then((res) => console.log(res.data.buysellInfo));
+  }, []);
+
   // Options
   const categoryOptions = useMemo(() => {
     return Object.keys(BUY_SELL_CATEGORY).map((key) => ({
@@ -144,22 +165,22 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
   };
 
   const onNext = () => {
-    if (step == 1 && validateInput([category, subcategory])) {
+    if (step == 3 && validateInput([category, subcategory])) {
       toast.error('카테고리를 선택해주세요');
       return null;
     }
 
-    if (step == 2 && validateInput([title, price, status, description])) {
+    if (step == 4 && validateInput([title, price, status, description])) {
       toast.error('모든 항목을 선택/작성 해주세요');
       return null;
     }
 
-    if (step == 3 && validateInput([address, coordinate])) {
+    if (step == 5 && validateInput([address, coordinate])) {
       toast.error('도로명 주소를 입력하시고 검색을 눌러주세요');
       return null;
     }
 
-    if (step == 4 && validateInput([pictures])) {
+    if (step == 6 && validateInput([pictures])) {
       toast.error('사진을 등록해주세요');
       return null;
     }
@@ -169,7 +190,7 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
     //   return null;
     // }
 
-    const newStep = step == 5 ? 5 : step + 1;
+    const newStep = step == 7 ? 7 : step + 1;
 
     setStep(newStep);
   };
@@ -204,7 +225,6 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
 
     setCustomValue('pictures', pictureURL);
 
-    // replace data.pictures with pictureURL before calling the post method
     data.pictures = pictureURL;
 
     axios
@@ -237,8 +257,104 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
     switch (step) {
       case 1:
         return (
+          <div className='flex flex-col gap-4 h-[60vh] overflow-y-scroll'>
+            <div className='w-full text-center md:text-xl font-bold'>
+              사고팔기 주의사항
+            </div>
+            <div className='text-sm md:text-base'>
+              1. 상품을 거래하는 장소는 가급적 낮에 공공장소에서 만나서
+              거래하시기 바랍니다.
+            </div>
+            <div className='text-sm md:text-base'>
+              2. 택배거래의 경우, 판매자라면 상품에 대해 더욱 자세한 설명과
+              사진을 제공하고, 구매자라면 상품 구매에 대해 더욱 각별히 신경써서
+              구매하시는 것이 좋습니다.
+            </div>
+            <div className='text-sm md:text-base'>
+              3. 미생은 회원님의 상품거래에 대해서 책임을 지지 않습니다.
+              사고팔기에서 거래되는 모든 거래는 일체 유저에게 책임이 있습니다.
+            </div>
+            <div className='md:text-lg underline font-semibold'>
+              판매 시 주의사항
+            </div>
+            <div className='text-sm md:text-base'>
+              1. 상품 사진은 최대한 상품만 나오도록 찍어서 올려주시기 바랍니다.
+              불필요한 개인정보가 노출될 수 있는 가능성을 최소화하여 주시기
+              바랍니다.
+            </div>
+            <div className='text-sm md:text-base'>
+              2. 개인 전화번호로 연락을 원하시는 경우는 전화번호를 종이에 펜으로
+              작성하시고 사진으로 올리는 것이 좋으며, 최소한 번호를 텍스트로만
+              올리는 경우는 피해서 작성해주시기 바랍니다.
+            </div>
+            <div className='text-sm md:text-base'>
+              3. 상품 거래를 위해 만나시는 경우, 구매자와 최종 가격에 대해서
+              합의가 된 상태에서 거래하시기 바랍니다.
+            </div>
+            <div className='md:text-lg underline font-semibold'>
+              구매 시 주의사항
+            </div>
+            <div className='text-sm md:text-base'>
+              1. 판매자의 상품 사진에 대해서 반드시 자세히 살펴보시고 구매를
+              결정하시기 바라며, 상품 정보가 불분명할 경우 가급적 구매를
+              재고려하시기 바랍니다.
+            </div>
+            <div className='text-sm md:text-base'>
+              2. 미생 웹사이트 외부에 존재하는 판매자의 상품 정보는 심각한
+              바이러스 또는 피싱 사기로 유도할 가능성이 있습니다. 외부 링크를
+              발견하시면 신고하기 버튼으로 저희 미생 팀에게 알려주시기 바랍니다.
+            </div>
+            <div className='text-sm md:text-base'>
+              3. 실제 상품이 상품 정보와 다를 경우, 구매에 대해서 반드시
+              재고려하시기 바랍니다.
+            </div>
+          </div>
+        );
+      case 2:
+        // console.log(userPrevListings)
+        if (!userPrevListings) return <></>;
+
+        return (
+          <div className='flex flex-col items-center gap-1'>
+            <div>
+              회원님이 등록하신 리스팅은 현재 {userPrevListings.length}개
+              입니다.
+            </div>
+            <div>사고팔기는 최대 10개까지 등록이 가능합니다.</div>
+            <div
+              onClick={() => {
+                buySellRegisterModal.onClose();
+                reset();
+                router.push('/mypage/buy-sell-listing');
+              }}
+              className='w-full border border-[#EC662A] bg-[#EC662A] py-1 mb-2 text-center text-white rounded-xl'
+            >
+              클릭하여 상품 삭제 또는 수정하기
+            </div>
+            <div className='grid grid-cols-2 gap-2 w-full'>
+              {userPrevListings.map((item) => (
+                <div
+                  key={(item as any)._id}
+                  className='w-full border border-[#EC662A] flex flex-col items-center rounded-xl p-1'
+                >
+                  <div className='truncate w-full text-center'>{`${item.title}`}</div>
+                  <div>
+                    <Image
+                      width={80}
+                      height={60}
+                      src={item.pictures[0]}
+                      alt={'thumbnail'}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      case 3:
+        return (
           <div className='flex flex-col gap-2 md:gap-4'>
-            <Heading title='카테고리를 선택해주세요 (1/6)' />
+            <Heading title='카테고리를 선택해주세요 (1/5)' />
             <SelectComp
               placeholder='대분류'
               options={categoryOptions}
@@ -258,7 +374,7 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
             )}
           </div>
         );
-      case 2:
+      case 4:
         return (
           <div className='flex flex-col gap-2 md:gap-4'>
             <Heading title='상품에 대해서 설명해주세요 (2/5)' />
@@ -295,7 +411,7 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
             />
           </div>
         );
-      case 3:
+      case 5:
         return (
           <div className='flex flex-col gap-2 md:gap-4'>
             {/* <Heading title='您的位置 (3/5)' /> */}
@@ -336,7 +452,7 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
             <MapComponent initCoordinate={coordinate} showRange />
           </div>
         );
-      case 4:
+      case 6:
         return (
           <div className='flex flex-col gap-2 md:gap-4'>
             <Heading
@@ -350,7 +466,7 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
             />
           </div>
         );
-      case 5:
+      case 7:
         return (
           <div className='flex flex-col gap-2 md:gap-4'>
             {/* <Heading title='联系方式 (5/5)' /> */}
@@ -392,6 +508,7 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
   }, [
     step,
     setValue,
+    userPrevListings,
     categoryOptions,
     selectedCategory,
     subCategoryOptions,
@@ -400,14 +517,17 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
     isLoading,
     coordinate,
     currentUser,
+    buySellRegisterModal,
+    reset,
+    router,
     handleAddress,
   ]);
 
   const footerContent = (
     <div className='flex flex-row justify-between gap-8'>
       {step > 1 && <Button onClick={onBack} label={'Back'} />}
-      {step < 5 && <Button onClick={onNext} label={'Next'} />}
-      {step == 5 && (
+      {step < 7 && <Button onClick={onNext} label={'Next'} />}
+      {step == 7 && userPrevListings?.length != 10 && (
         <Button
           disabled={isLoading}
           onClick={handleSubmit(onSubmit)}
@@ -421,7 +541,7 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
     <Modal
       isOpen={buySellRegisterModal.isOpen}
       onClose={buySellRegisterModal.onClose}
-      title={'중고거래 등록하기'}
+      title={'사고팔기 등록하기'}
       body={bodyContent}
       footer={footerContent}
     />

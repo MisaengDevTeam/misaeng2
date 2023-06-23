@@ -56,7 +56,7 @@ export async function POST(request: Request) {
         userId: new ObjectId(body.uid),
       })
       .sort({ writeTime: -1 })
-      .limit(6)
+      // .limit(6)
       .toArray();
     return NextResponse.json({ buysellInfo });
   }
