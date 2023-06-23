@@ -16,6 +16,7 @@ interface RoommateListingCardProps {
   mbti: string;
   age: string;
   city: string;
+  district: string;
   id: string;
   rentIndividualOpen: () => void;
 }
@@ -27,6 +28,7 @@ const RoommateListingCard: React.FC<RoommateListingCardProps> = ({
   mbti,
   age,
   city,
+  district,
   id,
   rentIndividualOpen,
 }) => {
@@ -71,12 +73,17 @@ const RoommateListingCard: React.FC<RoommateListingCardProps> = ({
       }}
       className='flex flex-col justify-center p-3 gap-2 w-full bg-white rounded-lg hover:shadow-lg transition cursor-pointer border'
     >
-      <div
-        className={`w-full text-center text-[#fff] py-1/2 font-light text-[12px] sm:text-sm md:text-base rounded-full ${categoryColorizer(
-          category
-        )} `}
-      >
-        {category}
+      <div className='flex flex-col gap-1'>
+        <div
+          className={`w-full text-center py-1/2 font-light text-[12px] sm:text-sm md:text-base rounded-full border border-neutral-300 bg-neutral-100`}
+        >
+          {city}
+        </div>
+        <div
+          className={`w-full text-center py-1/2 font-light text-[12px] sm:text-sm md:text-base rounded-full border border-neutral-300 bg-neutral-100`}
+        >
+          {district}
+        </div>
       </div>
       <div className='flex justify-center w-full relative'>
         <Image
@@ -93,7 +100,6 @@ const RoommateListingCard: React.FC<RoommateListingCardProps> = ({
         status={status}
         mbti={mbti}
         age={age}
-        city={city}
       />
     </div>
   );

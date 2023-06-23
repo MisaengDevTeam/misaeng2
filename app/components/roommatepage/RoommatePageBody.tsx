@@ -31,6 +31,7 @@ const RoommatePageBody: React.FC<RoommatePageBodyProps> = ({
                   mbti={listing.selfmbti}
                   age={listing.selfage}
                   city={listing.city}
+                  district={listing.district}
                 />
               );
             })}

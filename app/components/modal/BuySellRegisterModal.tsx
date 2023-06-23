@@ -59,17 +59,6 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
   // Modal
   const buySellRegisterModal = useBuySellRegisterModal();
 
-  useEffect(() => {
-    if (uid) {
-      const fetchUserListings = async (uid: string) => {
-        axios
-          .post(`/api/userInfo/userInfo`, { mypage: 'buysell', uid })
-          .then((res) => setUserPrevListings(res.data.buysellInfo));
-      };
-      fetchUserListings(uid);
-    }
-  }, [uid]);
-
   // Register form
   const {
     register,
@@ -116,11 +105,16 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
   const description = watch('description');
   const address = watch('address');
 
-  const fetchPersonalListings = useCallback(async (uid: string) => {
-    axios
-      .post(`/api/userInfo/userInfo`, { mypage: 'buysell', uid })
-      .then((res) => console.log(res.data.buysellInfo));
-  }, []);
+  const fetchUserListings = useCallback(() => {
+    if (uid) {
+      const fetchUserListings = async (uid: string) => {
+        axios
+          .post(`/api/userInfo/userInfo`, { mypage: 'buysell', uid })
+          .then((res) => setUserPrevListings(res.data.buysellInfo));
+      };
+      fetchUserListings(uid);
+    }
+  }, [uid]);
 
   // Options
   const categoryOptions = useMemo(() => {
@@ -165,6 +159,10 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
   };
 
   const onNext = () => {
+    if (step == 1) {
+      fetchUserListings();
+    }
+
     if (step == 3 && validateInput([category, subcategory])) {
       toast.error('카테고리를 선택해주세요');
       return null;

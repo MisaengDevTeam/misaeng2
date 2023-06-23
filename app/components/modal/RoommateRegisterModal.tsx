@@ -30,16 +30,19 @@ import dateFormatter from '@/app/lib/dateFormatter';
 import Textarea from '../inputs/Textarea';
 import introductionGenerator from '@/app/lib/introductionGenerator';
 import LoadingScreen from '../LoadingScreen';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import LoadingSpinner from '../LoadingSpinner';
 
 interface RoommateRegisterModalProps {}
 
 enum ROOMMATE_REGISTER_STEP {
-  CATEGORY = 1,
+  NOTIFICATION = 1,
+  CHECK,
   ROOMINFO,
   SELFPRE,
   ROOMMATEPRE,
   DESCRIPTION,
-  LOCATION,
   CONTACT,
 }
 
@@ -51,14 +54,16 @@ const ICONS: { [key: string]: IconType } = {
 
 const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
   const { data: session } = useSession();
+  const router = useRouter();
   const currentUser = session?.user;
   const uid = currentUser?.id;
   const email = currentUser?.email;
 
   const roommateRegisterModal = useRoommateRegisterModal();
 
-  const [step, setStep] = useState(ROOMMATE_REGISTER_STEP.CATEGORY);
+  const [step, setStep] = useState(ROOMMATE_REGISTER_STEP.NOTIFICATION);
   const [isLoading, setIsLoading] = useState(false);
+  const [userPrevListing, setUserPrevListing] = useState<any>(null);
 
   const today = dateFormatter(new Date());
 
@@ -115,6 +120,7 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
   const rmsmoke = watch('상대흡연여부');
   const city = watch('city');
   const district = watch('district');
+  const roomtype = watch('roomtype');
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -124,28 +130,46 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
     });
   };
 
+  const fetchUserListings = useCallback(() => {
+    setIsLoading(true);
+    if (uid) {
+      const fetchUserListings = async (uid: string) => {
+        axios
+          .post(`/api/userInfo/userInfo`, { mypage: 'roommate', uid })
+          .then((res) => setUserPrevListing(res.data.roommateInfo))
+          .catch((error) => console.log(error))
+          .finally(() => {
+            setIsLoading(false);
+          });
+      };
+      fetchUserListings(uid);
+    }
+  }, [uid]);
+
   const onBack = () => {
     const newStep = step == 1 ? 1 : step - 1;
     setStep(newStep);
   };
 
   const onNext = () => {
-    if (step == 1 && validateInput([category])) {
-      toast.error('카테고리를 선택해주세요');
-      return null;
+    if (step == 1) {
+      fetchUserListings();
     }
 
-    if (step == 2 && validateInput([price, length, movedate])) {
+    if (
+      step == 3 &&
+      validateInput([price, roomtype, movedate, city, district])
+    ) {
       toast.error('모든 항목을 선택/작성 해주세요');
       return null;
     }
 
-    if (step == 3 && validateInput([gender, age, status, pet, smoke, mbti])) {
+    if (step == 4 && validateInput([gender, age, status, pet, smoke, mbti])) {
       toast.error('반드시 한 가지씩 선택 해주세요');
       return null;
     }
 
-    if (step == 4) {
+    if (step == 5) {
       if (validateInput([rmgender, rmage, rmstatus, rmpet, rmsmoke])) {
         toast.error('반드시 한 가지씩 선택 해주세요');
 
@@ -166,19 +190,6 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
       }
     }
 
-    // if (
-    //   step == 5 &&
-    //   validateInput([description])
-    // ) {
-    //   toast.error('반드시 한 가지씩 선택 해주세요');
-    //   return null;
-    // }
-
-    if (step == 6 && validateInput([city, district])) {
-      toast.error('지역을 선택해주세요');
-      return null;
-    }
-
     const newStep = step == 7 ? 7 : step + 1;
 
     setStep(newStep);
@@ -197,7 +208,7 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
       .post(`/api/roommateRegister`, { ...data, uid: uid, email: email })
       .then((response) => {
         toast.success('룸메이트 리스팅이 등록되었습니다!');
-        setStep(ROOMMATE_REGISTER_STEP.CATEGORY);
+        setStep(ROOMMATE_REGISTER_STEP.NOTIFICATION);
         roommateRegisterModal.onClose();
         reset();
       })
@@ -210,31 +221,142 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
       });
   };
 
-  let bodyContent = (
-    <div className='flex flex-col gap-2 md:gap-4'>
-      {/* <Heading title='我想选择的服务 (1/7)' /> */}
-      <Heading title='카테고리를 선택해주세요 (1/7)' />
-      {ROOMMATE_TYPE.map((item) => {
-        return (
-          <CategoryInput
-            key={item.roommateCategory[0]}
-            category={item.roommateCategory}
-            description={item.roommateCategoryDescription}
-            icon={ICONS[item.icon as keyof typeof ICONS]}
-            selected={category == item.roommateCategory}
-            onClick={(category) => setCustomValue('category', category)}
-          />
-        );
-      })}
-    </div>
-  );
+  let bodyContent: any;
+
+  if (step == 1) {
+    bodyContent = (
+      <div className='flex flex-col gap-4 h-auto overflow-y-scroll'>
+        <div className='w-full text-center md:text-xl font-bold'>
+          룸메찾기 주의사항
+        </div>
+        <div className='text-sm md:text-base'>
+          1. 룸메이트(하우스메이트)를 구하실 때 이용하는 섹션입니다. 혹은
+          룸메이트(하우스메이트)를 이 섹션을 통해 먼저 구한 후 함께 렌트할 집을
+          찾아나서기도 합니다.
+        </div>
+        <div className='text-sm md:text-base'>
+          2. 본인의 budget, 직장인인지 학생인지 여부, 찾으시는 집 위치,
+          입주날짜, 제3자 보증회사 이용 여부(뉴욕에서 렌트시 필수적으로 사용해야
+          할 수도 있습니다.) 등 자세히 적어주시면 좋아요.
+        </div>
+        <div className='text-sm md:text-base'>
+          3. 추가로 생활 패턴 (친구들 초대 자주하는지, 집 안에서 신발 신는지 등)
+          같이 살면서 맞춰나갔으면 하는 부분까지 입주 전에 맞춰나가면
+          금상첨화겠죠!
+        </div>
+        <div className='text-sm md:text-base'>
+          4. 미생은 회원님의 룸메찾기에 대해서 법적인 책임을 지지 않습니다.
+          룸메찾기에서 발생하는 모든 사항에 대해 해당 게시글을 작성/이용한
+          유저에게 책임이 있습니다.
+        </div>
+      </div>
+    );
+  }
 
   if (step == 2) {
+    if (!userPrevListing) {
+      bodyContent = (
+        <div className='flex flex-col items-center gap-1 w-full'>
+          {isLoading ? (
+            <LoadingSpinner />
+          ) : (
+            <>
+              <div>룸메이트 등록이 처음이시군요?</div>
+              <div>룸메이트 등록 평균 소요시간은 약 3분입니다</div>
+            </>
+          )}
+        </div>
+      );
+    } else {
+      const commonCSS =
+        'flex justify-center w-full py-1 rounded-lg border border-[#EC662A] text-sm';
+
+      bodyContent = (
+        <div className='flex flex-col items-center gap-1'>
+          <div>회원님이 등록하신 룸메찾기 리스팅은 현재 아래와 같습니다.</div>
+          <div>룸메찾기는 최대 1개만 등록이 가능합니다.</div>
+          <div>
+            다시 등록은 원하실 경우, 아래 버튼을 통해 삭제 후 재등록을 해주시기
+            바랍니다.
+          </div>
+          <div
+            onClick={() => {
+              roommateRegisterModal.onClose();
+              reset();
+              router.push('/mypage/roommate-listing');
+            }}
+            className='w-full border border-[#EC662A] bg-[#EC662A] py-1 mb-2 text-center text-white rounded-xl cursor-pointer hover:opacity-80'
+          >
+            클릭하여 삭제 또는 수정하기
+          </div>
+          <div className='flex flex-col w-full gap-4'>
+            <div className='w-full border border-neutral-200 shadow-md flex flex-col items-center rounded-xl py-4 px-1 gap-2'>
+              <div className='text-lg font-semibold'>방 정보</div>
+              <div className='grid grid-cols-4 w-full px-1 gap-2'>
+                <div className={`${commonCSS}`}>{userPrevListing.city}</div>
+                <div className={`${commonCSS}`}>{userPrevListing.district}</div>
+                <div className={`${commonCSS}`}>
+                  $ {userPrevListing.price.toLocaleString()}
+                </div>
+                <div className={`${commonCSS}`}>{userPrevListing.movedate}</div>
+                {/* <div className={`${commonCSS}`}>{userPrevListing.}</div>
+                <div className={`${commonCSS}`}>{userPrevListing.}</div>
+                <div className={`${commonCSS}`}>{userPrevListing.}</div>
+                <div className={`${commonCSS}`}>{userPrevListing.}</div> */}
+              </div>
+              <div className='text-lg font-semibold mt-2'>본인 정보</div>
+              <div className='grid grid-cols-4 w-full px-1 gap-2'>
+                <div className={`${commonCSS}`}>
+                  {userPrevListing.selfgender}
+                </div>
+                <div className={`${commonCSS}`}>{userPrevListing.selfage}</div>
+                <div className={`${commonCSS}`}>
+                  {userPrevListing.selfstatus}
+                </div>
+                <div className={`${commonCSS}`}>{userPrevListing.selfmbti}</div>
+              </div>
+              <div className='text-lg font-semibold mt-2'>희망 룸메 정보</div>
+              <div className='grid grid-cols-4 w-full px-1 gap-2'>
+                <div className={`${commonCSS}`}>{userPrevListing.rmgender}</div>
+                <div className={`${commonCSS}`}>{userPrevListing.rmage}</div>
+                <div className={`${commonCSS}`}>{userPrevListing.rmstatus}</div>
+                <div className={`${commonCSS}`}>{userPrevListing.rmsmoke}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+  }
+
+  // if (step == 3) {
+  //   bodyContent = (
+  //     <div className='flex flex-col gap-2 md:gap-4'>
+  //       {/* <Heading title='我想选择的服务 (1/7)' /> */}
+  //       <Heading title='카테고리를 선택해주세요 (1/7)' />
+  //       {ROOMMATE_TYPE.map((item) => {
+  //         return (
+  //           <CategoryInput
+  //             key={item.roommateCategory[0]}
+  //             category={item.roommateCategory}
+  //             description={item.roommateCategoryDescription}
+  //             icon={ICONS[item.icon as keyof typeof ICONS]}
+  //             selected={category == item.roommateCategory}
+  //             onClick={(category) => setCustomValue('category', category)}
+  //           />
+  //         );
+  //       })}
+  //     </div>
+  //   );
+  // }
+
+  if (step == 3) {
     bodyContent = (
       <div className='flex flex-col gap-2'>
         {/* <Heading title='租房偏好 (2/7)' /> */}
-        <Heading title='현재 거주하시는 방 또는 희망하시는 방에 대해 알려주세요 (2/7)' />
+        <Heading title='현재 거주하시는 방 또는 희망하시는 방에 대해 알려주세요 (1/6)' />
         <RmRoomInfo
+          city={city}
           register={register}
           errors={errors}
           onChange={(subcat, value) => setCustomValue(subcat, value)}
@@ -243,11 +365,11 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
     );
   }
 
-  if (step == 3) {
+  if (step == 4) {
     bodyContent = (
       <div className='flex flex-col gap-2'>
         {/* <Heading title='个人信息 (3/7)' /> */}
-        <Heading title='미생 회원님에 대해 알려주세요 (3/7)' />
+        <Heading title='미생 회원님에 대해 알려주세요 (2/6)' />
 
         {Object.entries(ROOMMATE_SELF_PRE).map(([key, value]) => (
           <div key={key}>
@@ -269,11 +391,11 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
     );
   }
 
-  if (step == 4) {
+  if (step == 5) {
     bodyContent = (
       <div className='flex flex-col gap-2'>
         {/* <Heading title='室友偏好 (4/7)' /> */}
-        <Heading title='찾으시는 룸메이트에 대해 알려주세요 (4/7)' />
+        <Heading title='찾으시는 룸메이트에 대해 알려주세요 (3/6)' />
         {Object.entries(ROOMMATE_ROOMMATE_PRE).map(([key, value]) => (
           <div key={key}>
             <RmSelfPre
@@ -293,7 +415,7 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
     );
   }
 
-  if (step == 5) {
+  if (step == 6) {
     bodyContent = (
       <div className='flex flex-col gap-2'>
         {/* <Heading
@@ -301,7 +423,7 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
           subtitle='米生已为您生成个人简介，可点击修改'
         /> */}
         <Heading
-          title='간략한 자기소개입니다. (5/7)'
+          title='간략한 자기소개입니다. (4/6)'
           subtitle='기본으로 제공되는 자기소개 이외에 수정하고 싶으신 부분이 있으시면 수정하여 주시기 바랍니다.'
         />
         <div className='h-[420px] sm:h-[240px]'>
@@ -318,41 +440,6 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
     );
   }
 
-  const cityOptions = Object.keys(ROOMMATE_MAP).map((key) => ({
-    value: key,
-    label: key,
-  }));
-  const districtOptions = ROOMMATE_MAP[city as keyof typeof ROOMMATE_MAP];
-
-  if (step == 6) {
-    bodyContent = (
-      <div className='flex flex-col gap-2'>
-        {/* <Heading
-          title='请选择以下地点偏好 (6/7)'
-          subtitle='如果您选择了个人转租选项， 请填写现在公寓的大致地点'
-        /> */}
-        <Heading
-          title='현재 거주하시는 위치 또는 방을 찾으시는 위치를 선택해주세요 (6/7)'
-          subtitle='저희 미생은 회원님의 개인정보보호 및 안전을 위하여 정확한 주소를 묻지 않습니다.'
-        />
-        <SelectComp
-          placeholder='City'
-          options={cityOptions}
-          onChange={(value) => {
-            setCustomValue('city', value);
-          }}
-        />
-        {city && (
-          <SelectComp
-            placeholder='District'
-            options={districtOptions}
-            onChange={(value) => setCustomValue('district', value)}
-          />
-        )}
-      </div>
-    );
-  }
-
   if (step == 7) {
     bodyContent = (
       <div className='flex flex-col gap-2'>
@@ -361,7 +448,7 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
           subtitle={`请至少输入一种联系方式。我们不会发送任何广告信息。`}
         /> */}
         <Heading
-          title='선호하시는 연락방식을 입력하여 주세요 (7/7)'
+          title='선호하시는 연락방식을 입력하여 주세요 (6/6)'
           subtitle={`최소한 한 가지 이상의 연락 방식은 입력해 주시기 바랍니다. 원치 않는 연락 방식은 해당 항목은 비워두시기 바랍니다. 다양한 연락방식은 회원님의 리스팅에 대한 접근성을 높여 더 많은 연락을 받으실 수 있습니다.`}
         />
         <div className='flex flex-col gap-4 mt-4'>
@@ -397,7 +484,7 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
     <div className='flex flex-row justify-between gap-8'>
       {step > 1 && <Button onClick={onBack} label={'Back'} />}
       {step < 7 && <Button onClick={onNext} label={'Next'} />}
-      {step == 7 && (
+      {step == 7 && userPrevListing.length == 0 && (
         <Button
           disabled={isLoading}
           onClick={handleSubmit(onSubmit)}

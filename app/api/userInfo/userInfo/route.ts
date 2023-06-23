@@ -36,18 +36,17 @@ export async function POST(request: Request) {
   if (mypage == 'roommate') {
     const roommateInfo = await roommateCollection.findOne({
       userId: new ObjectId(body.uid),
-      category: '룸메 찾아요',
     });
-    const roomInfo = await roommateCollection.findOne({
-      userId: new ObjectId(body.uid),
-      category: '방 찾아요',
-    });
-    const togetherInfo = await roommateCollection.findOne({
-      userId: new ObjectId(body.uid),
-      category: '같이 방 찾아요',
-    });
+    // const roomInfo = await roommateCollection.findOne({
+    //   userId: new ObjectId(body.uid),
+    //   category: '방 찾아요',
+    // });
+    // const togetherInfo = await roommateCollection.findOne({
+    //   userId: new ObjectId(body.uid),
+    //   category: '같이 방 찾아요',
+    // });
 
-    return NextResponse.json({ roommateInfo, roomInfo, togetherInfo });
+    return NextResponse.json({ roommateInfo });
   }
 
   if (mypage == 'buysell') {

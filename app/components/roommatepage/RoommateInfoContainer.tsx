@@ -7,7 +7,6 @@ interface RoommateInfoContainerProps {
   status: string;
   mbti: string;
   age: string;
-  city: string;
 }
 
 const RoommateInfoContainer: React.FC<RoommateInfoContainerProps> = ({
@@ -15,7 +14,6 @@ const RoommateInfoContainer: React.FC<RoommateInfoContainerProps> = ({
   status,
   mbti,
   age,
-  city,
 }) => {
   const commonStyles =
     'rounded-full text-center text-[#fff] text-[12px] sm:text-sm md:text-base font-light';
@@ -32,7 +30,6 @@ const RoommateInfoContainer: React.FC<RoommateInfoContainerProps> = ({
         <div className={`${commonStyles} bg-[#9071D0]`}>{mbti}</div>
         <div className={`${commonStyles} bg-[#79573E]`}>{age}</div>
       </div>
-      <div className={`${commonStyles} bg-[#EC662A]`}>{city}</div>
     </div>
   );
 };
