@@ -276,7 +276,7 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
           <div>회원님이 등록하신 룸메찾기 리스팅은 현재 아래와 같습니다.</div>
           <div>룸메찾기는 최대 1개만 등록이 가능합니다.</div>
           <div>
-            다시 등록은 원하실 경우, 아래 버튼을 통해 삭제 후 재등록을 해주시기
+            다시 등록을 원하실 경우, 아래 버튼을 통해 삭제 후 재등록을 해주시기
             바랍니다.
           </div>
           <div
