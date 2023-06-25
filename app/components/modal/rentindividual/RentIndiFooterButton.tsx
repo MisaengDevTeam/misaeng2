@@ -20,7 +20,7 @@ const RentIndiFooterButton: React.FC<RentIndiFooterButtonProps> = ({
   return (
     <div
       onClick={onClick}
-      className={`flex items-center gap-1 cursor-pointer py-1 px-2 transition rounded-lg hover:font-bold
+      className={`flex items-center gap-1 cursor-pointer px-2 transition rounded-lg hover:font-bold
       
       `}
     >

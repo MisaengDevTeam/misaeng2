@@ -93,7 +93,7 @@ const LoginModal: React.FC<LoginModalProps> = ({}) => {
         outline
         disabled={isLoading}
       />
-      <Button
+      {/* <Button
         onClick={() => {
           setIsLoading(true);
           signIn('kakao', { callbackUrl: '/' });
@@ -102,7 +102,7 @@ const LoginModal: React.FC<LoginModalProps> = ({}) => {
         label={'Continue with KakaoTalk'}
         outline
         disabled={isLoading}
-      />
+      /> */}
       {/* <Button
         onClick={() => signIn('naver', { callbackUrl: '/' })}
         icon={SiNaver}

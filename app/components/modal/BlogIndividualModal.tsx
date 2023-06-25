@@ -99,7 +99,7 @@ const BlogIndividualModal: React.FC<BlogIndividualModalProps> = ({}) => {
   if (!currentListing) return null;
 
   const bodyContent = (
-    <div className='flex flex-col h-[60vh] overflow-y-scroll p-2'>
+    <div className='flex flex-col h-[55vh] overflow-y-scroll p-2'>
       <div className='flex justify-center flex-col w-full relative gap-4 '>
         <p className='font-semibold text-lg'>{currentListing.title}</p>
         <div className='flex flex-row justify-between'>

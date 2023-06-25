@@ -223,10 +223,9 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({ mypage }) => {
           icon={RiAlarmWarningLine}
         />
       </div>
-      <div className='w-full h-[56px] sm:h-auto mt-2'>
+      <div className='w-full h-[56px] sm:h-auto mt-1'>
         {step == 1 ? (
           <Button
-            small
             onClick={() => {
               setStep(2);
             }}
