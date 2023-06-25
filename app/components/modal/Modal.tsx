@@ -121,7 +121,7 @@ const Modal: React.FC<ModalProps> = ({
             )}
           </div>
         </div>
-        {disabled && loadingScreen}
+        {disabled && <div className='h-50'>loadingScreen</div>}
       </div>
     </div>
   );

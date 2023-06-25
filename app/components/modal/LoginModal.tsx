@@ -49,39 +49,35 @@ const LoginModal: React.FC<LoginModalProps> = ({}) => {
     setIsLoading(false);
   };
 
-  const bodyContent = (
-    <div
-      // onSubmit={handleSubmit(onEmailLoginSubmit)}
-      className='flex flex-col gap-4 mb-4'
-    >
-      <Input
-        id={'email'}
-        label={'Email'}
-        register={register}
-        errors={errors}
-        onChange={(value) => {
-          setValue('email', value.currentTarget.value);
-        }}
-        required
-        disabled={isLoading}
-      />
-      <Button
-        onClick={() => {
-          signIn('email', { email, callbackUrl: 'http://localhost:3000' });
-          // setIsLoading(true);
-          // setTimeout(() => {
-          //   setIsLoading(false);
-          // }, 2000);
-        }}
-        type='submit'
-        outline
-        label={isLoading ? <LoadingSpinner /> : 'Login with your email'}
-        disabled={isLoading}
-      />
-    </div>
-  );
+  // const bodyContent = (
+  // <div
+  //   // onSubmit={handleSubmit(onEmailLoginSubmit)}
+  //   className='flex flex-col gap-4 mb-4'
+  // >
+  //   <Input
+  //     id={'email'}
+  //     label={'Email'}
+  //     register={register}
+  //     errors={errors}
+  //     onChange={(value) => {
+  //       setValue('email', value.currentTarget.value);
+  //     }}
+  //     required
+  //     disabled={isLoading}
+  //   />
+  //   <Button
+  //     onClick={() => {
+  //       signIn('email', { email, callbackUrl: 'http://localhost:3000' });
+  //     }}
+  //     type='submit'
+  //     outline
+  //     label={isLoading ? <LoadingSpinner /> : 'Login with your email'}
+  //     disabled={isLoading}
+  //   />
+  // </div>
+  // );
 
-  const footerContent = (
+  const bodyContent = (
     <div className='flex flex-col gap-4'>
       <Button
         onClick={() => {
@@ -120,14 +116,13 @@ const LoginModal: React.FC<LoginModalProps> = ({}) => {
       onClose={loginModal.onClose}
       title={'간편 로그인하기'}
       body={bodyContent}
-      footer={footerContent}
+      footer={''}
       loadingScreen={
         <LoadingScreen
           messagetitle='로그인 중 입니다.'
           messagesubtitle='잠시만 기다려주시기 바랍니다.'
         />
       }
-      separator
     />
   );
 };

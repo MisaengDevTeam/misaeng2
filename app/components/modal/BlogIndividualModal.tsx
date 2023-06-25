@@ -99,7 +99,7 @@ const BlogIndividualModal: React.FC<BlogIndividualModalProps> = ({}) => {
   if (!currentListing) return null;
 
   const bodyContent = (
-    <div className='flex flex-col h-[55vh] overflow-y-scroll p-2'>
+    <div className='flex flex-col h-[60vh] overflow-y-scroll p-2'>
       <div className='flex justify-center flex-col w-full relative gap-4 '>
         <p className='font-semibold text-lg'>{currentListing.title}</p>
         <div className='flex flex-row justify-between'>
@@ -152,13 +152,13 @@ const BlogIndividualModal: React.FC<BlogIndividualModalProps> = ({}) => {
           className='flex flex-row gap-2 sm:gap-4 w-full h-[56px] overflow-hidden items-center cursor-pointer hover:bg-[#EC662A]/10 rounded-lg'
         >
           <Image
-            className='border border-[#EC662A] aspect-sqaure rounded-lg w-1/5 sm:w-auto h-full'
+            className='border border-[#EC662A] aspect-sqaure rounded-lg w-1/6 sm:w-auto'
             width={20}
             height={20}
             src={nextListing.thumbnail}
             alt={'g'}
           />
-          <div className='flex items-center justify-start w-4/5 h-full '>
+          <div className='flex items-center justify-start w-5/6 h-full'>
             <p className='text-[14px] sm:text-lg text-neutral-600 overflow-hidden whitespace-wrap'>
               {`이전 글 :${nextListing.title}`}
             </p>
