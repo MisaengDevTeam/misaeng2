@@ -27,7 +27,9 @@ const SearchSelect: React.FC<RentSearchSelectProps> = ({
       isSearchable={false}
       isClearable={false}
       className={`
-      ${lastItemToHide ? 'hidden lg:block' : 'block'}  text-[12px] sm:text-sm`}
+      ${
+        lastItemToHide ? 'hidden lg:block' : 'block'
+      }  text-[12px] sm:text-sm w-full`}
       classNames={{
         control: () => `border-2 text-[12px] sm:text-sm truncate`,
         input: () => `overflow-hidden text-[12px] `,

@@ -226,6 +226,7 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({ mypage }) => {
       <div className='w-full h-[56px] sm:h-auto mt-2'>
         {step == 1 ? (
           <Button
+            small
             onClick={() => {
               setStep(2);
             }}

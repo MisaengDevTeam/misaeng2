@@ -77,7 +77,7 @@ ${isSearchOn ? 'opacity-100 h-auto w-full' : 'opacity-0 h-[0px] w-[0px]'}
               setCustomValue('rentMinPrice', value.target.value);
             }}
             min={500}
-            max={15000}
+            max={30000}
             step={100}
             placeholder='최저가'
             className='relative w-[100%] h-[100%] border-[1px] border-neutral-300 rounded-md py-1 px-4 text-sm text-end'
