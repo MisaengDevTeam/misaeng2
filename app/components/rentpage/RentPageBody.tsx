@@ -133,9 +133,7 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
             }
             dataLength={listings.length}
             endMessage={
-              <p style={{ textAlign: 'center' }}>
-                <b>Yay! You have seen it all</b>
-              </p>
+              <div className='flex justify-center items-center w-full h-full bg-neutral-300 rounded-lg'></div>
             }
           >
             {listings.map((list) => (

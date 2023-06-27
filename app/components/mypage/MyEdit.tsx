@@ -183,152 +183,154 @@ const MyPage: React.FC<pageProps> = ({ currentUser }) => {
       });
   };
 
-  if (isLoading) {
-    return <LoadingScreen />;
-  }
-
   return (
     <div className='w-full h-auto'>
       <Container>
-        <div className='flex flex-col sm:flex-row justify-center w-full gap-4 py-4 sm:py-8'>
-          <div className='flex flex-col justify-center items-center w-full sm:w-[340px] border-2 border-neutral-100 shadow-lg rounded-xl p-4 gap-6'>
-            <div className='flex flex-col justify-center items-center w-full mt-4'>
-              {previews.length != 0 ? (
-                <DndProvider backend={HTML5Backend}>
-                  <Avatar imgsrc={previews[0]} mypage />
-                </DndProvider>
-              ) : (
-                <Avatar
-                  imgsrc={
-                    currentUser?.newImage
-                      ? currentUser?.newImage[0]
-                      : currentUser?.image
-                  }
-                  mypage
-                />
-              )}
-            </div>
-            {previews.length == 0 ? (
-              <>
-                <label
-                  htmlFor='profilePic'
-                  className='bg-orange-500 w-[50%] sm:w-[75%] text-center py-2 rounded-lg text-lg sm:text-base text-[#fff] font-semibold cursor-pointer hover:opacity-80'
-                >
-                  사진 변경
-                </label>
-                <input
-                  ref={fileRef}
-                  id='profilePic'
-                  type='file'
-                  accept='image/*'
-                  hidden
-                  onChange={handleFileChange}
-                />
-              </>
-            ) : (
-              <div className='font-semibold p-2 border-2 border-red-500 rounded-xl'>
-                {`사진 변경을 위해 우측 또는 하단의 '회원 정보 수정' 버튼을 반드시 눌러주세요`}
-              </div>
-            )}
-            <div className='flex flex-col gap-2 px-4'>
-              <div className='text-neutral-500 font-light'>
-                {/* ** 请勿上传不适当的图片, 米生团队有权注销账号 */}
-                ** 회원님의 이미지는 본인을 나타낼 수 있는 가장 큰 요소입니다.
-                타인에게 불쾌감을 줄 수 있는 사진은 저희 미생팀에서 삭제할 수
-                있습니다.
-              </div>
-            </div>
+        {isLoading ? (
+          <div className='h-[80vh]'>
+            <LoadingScreen />
           </div>
-          <div className='flex flex-col sm:flex-row w-full max-w-[860px] border-2 border-neutral-100 shadow-lg rounded-xl p-4 sm:p-8 gap-6 sm:gap-8'>
-            <div className='flex flex-col gap-6 w-full'>
-              <MyPageInput
-                label='이름'
-                value={name ? name : ''}
-                placeholder='이름'
-                length={20}
-                onChange={(value) => {
-                  setCustomValue('name', value);
-                }}
-              />
-              <MyPageInput
-                label='이메일'
-                value={currentUser?.email || ''}
-                onChange={() => {}}
-                disabled={currentUser?.email ? true : false}
-              />
-              <MyPageInput
-                label='연락처'
-                type='number'
-                placeholder='전화번호'
-                value={phone ? phone : ''}
-                length={10}
-                onChange={(value) => {
-                  setCustomValue('phone', value);
-                }}
-              />
-              <div>
-                <MyPageInput
-                  label='닉네임'
-                  length={20}
-                  value={nickname ? nickname : ''}
-                  onChange={(value) => {
-                    setCustomValue('nickname', value);
-                  }}
-                />
-                <div className='text-neutral-500 font-light text-sm'>
-                  ** 닉네임 설정시 작성자에 이름대신 닉네임이 표시됩니다.
+        ) : (
+          <div className='flex flex-col sm:flex-row justify-center w-full gap-4 py-4 sm:py-8'>
+            <div className='flex flex-col justify-center items-center w-full sm:w-[340px] border-2 border-neutral-100 shadow-lg rounded-xl p-4 gap-6'>
+              <div className='flex flex-col justify-center items-center w-full mt-4'>
+                {previews.length != 0 ? (
+                  <DndProvider backend={HTML5Backend}>
+                    <Avatar imgsrc={previews[0]} mypage />
+                  </DndProvider>
+                ) : (
+                  <Avatar
+                    imgsrc={
+                      currentUser?.newImage
+                        ? currentUser?.newImage[0]
+                        : currentUser?.image
+                    }
+                    mypage
+                  />
+                )}
+              </div>
+              {previews.length == 0 ? (
+                <>
+                  <label
+                    htmlFor='profilePic'
+                    className='bg-orange-500 w-[50%] sm:w-[75%] text-center py-2 rounded-lg text-lg sm:text-base text-[#fff] font-semibold cursor-pointer hover:opacity-80'
+                  >
+                    사진 변경
+                  </label>
+                  <input
+                    ref={fileRef}
+                    id='profilePic'
+                    type='file'
+                    accept='image/*'
+                    hidden
+                    onChange={handleFileChange}
+                  />
+                </>
+              ) : (
+                <div className='font-semibold p-2 border-2 border-red-500 rounded-xl'>
+                  {`사진 변경을 위해 우측 또는 하단의 '회원 정보 수정' 버튼을 반드시 눌러주세요`}
+                </div>
+              )}
+              <div className='flex flex-col gap-2 px-4'>
+                <div className='text-neutral-500 font-light'>
+                  {/* ** 请勿上传不适当的图片, 米生团队有权注销账号 */}
+                  ** 회원님의 이미지는 본인을 나타낼 수 있는 가장 큰 요소입니다.
+                  타인에게 불쾌감을 줄 수 있는 사진은 저희 미생팀에서 삭제할 수
+                  있습니다.
                 </div>
               </div>
             </div>
-            <div className='flex flex-col w-full gap-6'>
-              <MyPageInput
-                label='카톡 아이디'
-                value={kakaoId ? kakaoId : ''}
-                length={32}
-                onChange={(value) => {
-                  setCustomValue('kakaoId', value);
-                }}
-              />
-              <div className='flex flex-col gap-2'>
-                <div>직업</div>
-                <SelectComp
-                  placeholder={'학생 / 직장인 / 비공개'}
-                  defaultValue={uStatus}
-                  options={STATUS_LIST}
+            <div className='flex flex-col sm:flex-row w-full max-w-[860px] border-2 border-neutral-100 shadow-lg rounded-xl p-4 sm:p-8 gap-6 sm:gap-8'>
+              <div className='flex flex-col gap-6 w-full'>
+                <MyPageInput
+                  label='이름'
+                  value={name ? name : ''}
+                  placeholder='이름'
+                  length={20}
                   onChange={(value) => {
-                    setStatus(value);
-                    setCustomValue('status', value);
+                    setCustomValue('name', value);
                   }}
-                  small
                 />
-              </div>
-              <div className='flex flex-col gap-2'>
-                <div>학교 및 직장 위치</div>
-                <SelectComp
-                  placeholder={'학교 및 직장 위치'}
-                  defaultValue={jobLocation}
-                  options={
-                    status
-                      ? locationOption!
-                      : [{ label: '직업을 먼저 선택해주세요', value: null }]
-                  }
+                <MyPageInput
+                  label='이메일'
+                  value={currentUser?.email || ''}
+                  onChange={() => {}}
+                  disabled={currentUser?.email ? true : false}
+                />
+                <MyPageInput
+                  label='연락처'
+                  type='number'
+                  placeholder='전화번호'
+                  value={phone ? phone : ''}
+                  length={10}
                   onChange={(value) => {
-                    setCustomValue('jobLocation', value);
+                    setCustomValue('phone', value);
                   }}
-                  isSearchable
-                  small
                 />
+                <div>
+                  <MyPageInput
+                    label='닉네임'
+                    length={20}
+                    value={nickname ? nickname : ''}
+                    onChange={(value) => {
+                      setCustomValue('nickname', value);
+                    }}
+                  />
+                  <div className='text-neutral-500 font-light text-sm'>
+                    ** 닉네임 설정시 작성자에 이름대신 닉네임이 표시됩니다.
+                  </div>
+                </div>
               </div>
-              <div className='mt-6'>
-                <Button
-                  disabled={isLoading}
-                  onClick={handleSubmit(onSubmit)}
-                  label='회원 정보 수정'
+              <div className='flex flex-col w-full gap-6'>
+                <MyPageInput
+                  label='카톡 아이디'
+                  value={kakaoId ? kakaoId : ''}
+                  length={32}
+                  onChange={(value) => {
+                    setCustomValue('kakaoId', value);
+                  }}
                 />
+                <div className='flex flex-col gap-2'>
+                  <div>직업</div>
+                  <SelectComp
+                    placeholder={'학생 / 직장인 / 비공개'}
+                    defaultValue={uStatus}
+                    options={STATUS_LIST}
+                    onChange={(value) => {
+                      setStatus(value);
+                      setCustomValue('status', value);
+                    }}
+                    small
+                  />
+                </div>
+                <div className='flex flex-col gap-2'>
+                  <div>학교 및 직장 위치</div>
+                  <SelectComp
+                    placeholder={'학교 및 직장 위치'}
+                    defaultValue={jobLocation}
+                    options={
+                      status
+                        ? locationOption!
+                        : [{ label: '직업을 먼저 선택해주세요', value: null }]
+                    }
+                    onChange={(value) => {
+                      setCustomValue('jobLocation', value);
+                    }}
+                    isSearchable
+                    small
+                  />
+                </div>
+                <div className='mt-6'>
+                  <Button
+                    disabled={isLoading}
+                    onClick={handleSubmit(onSubmit)}
+                    label='회원 정보 수정'
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </Container>
     </div>
   );

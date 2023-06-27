@@ -27,7 +27,7 @@ const RmRoomInfo: React.FC<RmRoomInfoProps> = ({
 }) => {
   const [startDate, setStartDate] = useState(new Date());
 
-  const { roomtypeArr } = ROOMMATE_ROOM_INFO;
+  const { roomtypeArr, lengthArr } = ROOMMATE_ROOM_INFO;
   const createOptions = useCallback(
     (arr: any[]) => arr.map((item) => ({ value: item, label: item })),
     []
@@ -72,6 +72,13 @@ const RmRoomInfo: React.FC<RmRoomInfoProps> = ({
           }}
         />
       </div>
+      <SelectComp
+        small
+        // placeholder={'房间类型'}
+        placeholder={'거주 기간'}
+        options={createOptions(lengthArr)}
+        onChange={(value) => onChange('length', value)}
+      />
 
       {/* <Heading
           title='请选择以下地点偏好 (6/7)'

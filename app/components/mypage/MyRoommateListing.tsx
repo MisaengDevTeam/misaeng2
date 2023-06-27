@@ -47,11 +47,11 @@ const MyRoommateListing: React.FC<MyRoommateListingProps> = ({
       });
   }, [currentUser.id]);
 
-  if (isLoading) {
-    return <LoadingScreen />;
-  }
-
-  return (
+  return isLoading ? (
+    <div className='h-[80vh]'>
+      <LoadingScreen />
+    </div>
+  ) : (
     <div className='flex flex-col sm:flex-row justify-center w-full gap-4 py-4 sm:py-8'>
       <div className='flex flex-col justify-center items-center w-full sm:w-[340px] border-2 border-neutral-100 shadow-lg rounded-xl p-4 gap-6 sm:max-h-[440px]'>
         <div className='flex flex-col justify-center items-center w-full mt-4'>

@@ -282,10 +282,11 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
           <div
             onClick={() => {
               roommateRegisterModal.onClose();
+              setStep(1);
               reset();
               router.push('/mypage/roommate-listing');
             }}
-            className='w-full border border-[#EC662A] bg-[#EC662A] py-1 mb-2 text-center text-white rounded-xl cursor-pointer hover:opacity-80'
+            className='w-full border border-[#EC662A] bg-[#EC662A] py-1 mb-2 text-center text-white rounded-xl cursor-pointer hover:shadow-lg'
           >
             클릭하여 삭제 또는 수정하기
           </div>

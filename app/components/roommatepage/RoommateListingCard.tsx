@@ -6,7 +6,7 @@ import Image from 'next/image';
 import RoommateInfoContainer from './RoommateInfoContainer';
 import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import QueryString from 'query-string';
 
 interface RoommateListingCardProps {
@@ -17,6 +17,8 @@ interface RoommateListingCardProps {
   age: string;
   city: string;
   district: string;
+  price: number;
+  length: string;
   id: string;
   rentIndividualOpen: () => void;
 }
@@ -28,6 +30,8 @@ const RoommateListingCard: React.FC<RoommateListingCardProps> = ({
   mbti,
   age,
   city,
+  price,
+  length,
   district,
   id,
   rentIndividualOpen,
@@ -65,6 +69,8 @@ const RoommateListingCard: React.FC<RoommateListingCardProps> = ({
     [params, router]
   );
 
+  const commonCSS = `w-full text-center py-1/2 font-light text-[12px] sm:text-sm md:text-base rounded-full border border-neutral-300 bg-neutral-100`;
+
   return (
     <div
       onClick={() => {
@@ -74,16 +80,11 @@ const RoommateListingCard: React.FC<RoommateListingCardProps> = ({
       className='flex flex-col justify-center p-3 gap-2 w-full bg-white rounded-lg hover:shadow-lg transition cursor-pointer border'
     >
       <div className='flex flex-col gap-1'>
-        <div
-          className={`w-full text-center py-1/2 font-light text-[12px] sm:text-sm md:text-base rounded-full border border-neutral-300 bg-neutral-100`}
-        >
-          {city}
+        <div className={`grid grid-cols-2 gap-1`}>
+          <div className={commonCSS}>$ {price.toLocaleString()}</div>
+          <div className={commonCSS}>{length}</div>
         </div>
-        <div
-          className={`w-full text-center py-1/2 font-light text-[12px] sm:text-sm md:text-base rounded-full border border-neutral-300 bg-neutral-100`}
-        >
-          {district}
-        </div>
+        <div className={commonCSS}>{district}</div>
       </div>
       <div className='flex justify-center w-full relative'>
         <Image

@@ -68,7 +68,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
 ${isSearchOn ? 'opacity-100 h-auto w-full' : 'opacity-0 h-[0px] w-[0px]'}
 `}
     >
-      <div className='grid grid-cols-3 lg:grid-cols-4 justify-center pl-[56px] md:pl-[72px] py-4 pr-4 gap-2 md:gap-x-4 md:gap-y-2 xl:gap-x-8 2xl:flex 2xl:flex-row 2xl:gap-2 3xl:gap-3'>
+      <div className='grid grid-cols-3 lg:grid-cols-4 2xl:grid-cols-8 2xl:gap-1 justify-center pl-[56px] md:pl-[72px] py-4 pr-4 gap-2 md:gap-x-4 md:gap-y-2 xl:gap-x-8'>
         <div className='relative w-auto h-auto'>
           <input
             type='number'

@@ -146,7 +146,7 @@ export const ROOMMATE_MAP = {
 
 export const ROOMMATE_ROOM_INFO = {
   roomtypeArr: ['화장실 있는 방', '화장실 없는 방'],
-  // lengthArr: ['단기 (주 단위)', '중기 (월 단위)', '장기 (연 단위)'],
+  lengthArr: ['단기 (주 단위)', '중기 (월 단위)', '장기 (연 단위)'],
   amenityArr: [
     '24h도어맨',
     '헬스장',

@@ -319,16 +319,17 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
               입니다.
             </div>
             <div>사고팔기는 최대 10개까지 등록이 가능합니다.</div>
-            <div
+            <button
               onClick={() => {
-                buySellRegisterModal.onClose();
                 reset();
+                buySellRegisterModal.onClose();
+                setStep(1);
                 router.push('/mypage/buy-sell-listing');
               }}
-              className='w-full border border-[#EC662A] bg-[#EC662A] py-1 mb-2 text-center text-white rounded-xl'
+              className='w-full border border-[#EC662A] bg-[#EC662A] py-1 mb-2 text-center text-white rounded-xl cursor:pointer hover:shadow-lg'
             >
               클릭하여 상품 삭제 또는 수정하기
-            </div>
+            </button>
             <div className='grid grid-cols-2 gap-2 w-full'>
               {userPrevListings.map((item) => (
                 <div

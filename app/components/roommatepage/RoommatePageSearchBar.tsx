@@ -103,13 +103,13 @@ const RoommatePageSearchBar: React.FC<RoommatePageSearchBarProps> = ({
         {isSearchbarOn && (
           <div className='w-full pb-4 z-20 bg-[#fff] flex flex-col justify-center border-2 border-[#EC662A] rounded-xl'>
             <div className='grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 justify-center h-auto gap-2 p-4'>
-              <SearchSelect
+              {/* <SearchSelect
                 placeholder={'카테고리'}
                 options={SEARCH_TYPES.CATEGORY}
                 onChange={(value) => {
                   setCustomValue('category', value);
                 }}
-              />
+              /> */}
               <SearchSelect
                 placeholder={'성별'}
                 options={SEARCH_TYPES.GENDER}
