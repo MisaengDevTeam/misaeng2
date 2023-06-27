@@ -99,7 +99,7 @@ const BlogIndividualModal: React.FC<BlogIndividualModalProps> = ({}) => {
   if (!currentListing) return null;
 
   const bodyContent = (
-    <div className='flex flex-col h-[60vh] overflow-y-scroll p-2'>
+    <div className='flex flex-col h-[60vh] sm:h-[70vh] overflow-y-scroll p-2'>
       <div className='flex justify-center flex-col w-full relative gap-4 '>
         <p className='font-semibold text-lg'>{currentListing.title}</p>
         <div className='flex flex-row justify-between'>
@@ -129,7 +129,7 @@ const BlogIndividualModal: React.FC<BlogIndividualModalProps> = ({}) => {
   );
 
   const footerContent = (
-    <div className='flex flex-col gap-1 p-2 w-full'>
+    <div className='flex flex-col p-2 w-full sm:gap-1'>
       <div className='flex justify-evenly'>
         <RentIndiFooterButton
           color='#9DCAEB'
@@ -144,7 +144,7 @@ const BlogIndividualModal: React.FC<BlogIndividualModalProps> = ({}) => {
           icon={RiAlarmWarningLine}
         />
       </div>
-      {nextListing && (
+      {nextListing ? (
         <div
           onClick={() => {
             handleClick((nextListing as any)._id);
@@ -152,9 +152,9 @@ const BlogIndividualModal: React.FC<BlogIndividualModalProps> = ({}) => {
           className='flex flex-row gap-2 sm:gap-4 w-full h-[56px] overflow-hidden items-center cursor-pointer hover:bg-[#EC662A]/10 rounded-lg'
         >
           <Image
-            className='border border-[#EC662A] aspect-sqaure rounded-lg w-1/6 sm:w-auto'
-            width={20}
-            height={20}
+            className='border border-[#EC662A] aspect-video sm:aspect-square rounded-lg w-1/6 max-w-[64px] h-[6vh] sm:h-full'
+            width={40}
+            height={40}
             src={nextListing.thumbnail}
             alt={'g'}
           />
@@ -163,6 +163,10 @@ const BlogIndividualModal: React.FC<BlogIndividualModalProps> = ({}) => {
               {`이전 글 :${nextListing.title}`}
             </p>
           </div>
+        </div>
+      ) : (
+        <div className='w-full h-[8vh] sm:h-full flex justify-center items-center font-semibold'>
+          동일 카테고리 이전 블로그가 없습니다
         </div>
       )}
     </div>

@@ -11,42 +11,70 @@ import { useSearchParams } from 'next/navigation';
 const RentPage = () => {
   const hasModalOpened = useRef(false);
 
-  const [safeListings, setSafeListings] = useState([]);
-  const [initListings, setInitListings] = useState([]);
+  const [safeListings, setSafeListings] = useState<any[]>([]);
   const [initMapListings, setInitMapListings] = useState([]);
   const [individualListing, setIndividualListing] = useState({});
+  const [totalLength, setTotalLength] = useState(0);
   const [mapListings, setMapListings] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [start, setStart] = useState<string>('0');
+
+  const fetchData = async (start: string) => {
+    setIsLoading(true);
+    try {
+      const response = await axios.post(`/api/rentListing/rentListing`, {
+        start,
+      });
+      if (Array.isArray(response.data.recentListings)) {
+        setSafeListings((prev) => [...prev, ...response.data.recentListings]);
+      } else {
+        console.error(
+          'recentListings is not an array:',
+          response.data.recentListings
+        );
+      }
+      // setInitListings(response.data.recentListings);
+    } catch (error) {
+      console.error('Error fetching data', error);
+    } finally {
+      setIsLoading(false);
+    }
+    setStart((parseInt(start) + 20).toString());
+    console.log(start);
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
+    const fetchMapData = async () => {
       try {
         const response = await axios.get(`/api/rentListing/rentListing`);
-
-        setSafeListings(response.data.recentListings);
-        setInitListings(response.data.recentListings);
         setMapListings(response.data.mapListing);
-        setInitMapListings(response.data.mapListing);
+        // setInitMapListings(response.data.mapListing);
+        setTotalLength(response.data.dataLength);
       } catch (error) {
         console.error('Error fetching data', error);
       } finally {
         setIsLoading(false);
       }
     };
+    fetchMapData();
+  }, []);
 
-    fetchData();
+  useEffect(() => {
+    fetchData('0');
   }, []);
 
   const rentIndividualModal = useRentIndividualModal();
 
   const setDefaultListing = useCallback(() => {
-    setSafeListings(initListings);
-    setMapListings(initMapListings);
-  }, [initListings, initMapListings]);
+    location.reload();
+  }, []);
 
   const params = useSearchParams();
   const rentlistingid = params?.get('rentlisting');
+
+  const infiniteScrollNext = useCallback(() => {
+    fetchData(start.toString());
+  }, [start]);
 
   useEffect(() => {
     if (
@@ -59,17 +87,19 @@ const RentPage = () => {
     }
   }, [rentIndividualModal, rentIndividualModal.onOpen, rentlistingid]);
 
-  if (isLoading) {
-    return <LoadingScreen />;
-  }
+  // if (isLoading) {
+  //   return <LoadingScreen />;
+  // }
 
   return (
     <div>
       <RentIndividualModal />
       <RentPageBody
+        fetchData={fetchData}
+        totalLength={totalLength}
+        infiniteScrollNext={infiniteScrollNext}
         listings={safeListings}
         mapListings={mapListings}
-        setSafeListings={setSafeListings}
         setDefaultListing={setDefaultListing}
         rentIndividualOpen={rentIndividualModal.onOpen}
         setIndividualListing={setIndividualListing}

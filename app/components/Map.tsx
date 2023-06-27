@@ -15,7 +15,7 @@ interface MapProps {
   rentmain?: boolean;
   mapListings?: MapListing;
   hasnavi?: boolean;
-  setSafeListings?: (buildingId: string) => void;
+  setSearchListings?: (listing: any[]) => void;
 }
 
 const MapComponent = memo<MapProps>(function MapComponent({
@@ -24,7 +24,7 @@ const MapComponent = memo<MapProps>(function MapComponent({
   rentmain,
   mapListings,
   hasnavi,
-  setSafeListings,
+  setSearchListings,
 }) {
   const mapContainer = useRef<any>(null);
   const map = useRef<mapboxgl.Map | any>(null);
@@ -97,7 +97,8 @@ const MapComponent = memo<MapProps>(function MapComponent({
           const response = await axios.post(`/api/rentListing/rentListing`, {
             buildingId,
           });
-          setSafeListings?.(response.data.recentListings);
+          // console.log(response.data.recentListings);
+          setSearchListings?.(response.data.recentListings);
         } catch (error) {
         } finally {
         }
@@ -163,7 +164,7 @@ const MapComponent = memo<MapProps>(function MapComponent({
     initCoordinate,
     mapListings,
     rentmain,
-    setSafeListings,
+    setSearchListings,
     showRange,
   ]);
 

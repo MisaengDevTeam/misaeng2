@@ -158,7 +158,7 @@ const RoommateIndividualModal: React.FC<RoommateIndividualModalProps> = ({
     <Modal
       isOpen={roommateIndividualModal.isOpen}
       onClose={roommateIndividualModal.onClose}
-      title={''}
+      title={'.'}
       body={bodyContent}
       footer={footerContent}
       mypage={mypage}

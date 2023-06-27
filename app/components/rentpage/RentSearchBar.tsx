@@ -10,14 +10,14 @@ import { useState } from 'react';
 
 interface SearchBarProps {
   isSearchOn: boolean;
-  setSafeListings: any;
+  setSearchListings: any;
   setMapListings: any;
   setIsSearchOn: (setIsSearchOn: boolean) => void;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({
   isSearchOn,
-  setSafeListings,
+  setSearchListings,
   setMapListings,
   setIsSearchOn,
 }) => {
@@ -49,7 +49,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
       axios
         .post(`/api/rentListing/rentListing`, { rentOption: data })
         .then((response) => {
-          setSafeListings?.(response.data.searchedListing);
+          setSearchListings?.(response.data.searchedListing);
           setMapListings?.(response.data.searchedMapListing);
         })
         .catch((error) => console.log(error))

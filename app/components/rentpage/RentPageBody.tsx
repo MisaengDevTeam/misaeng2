@@ -12,26 +12,32 @@ import { TbHomeSearch } from 'react-icons/tb';
 import { IoClose } from 'react-icons/io5';
 import RentListingCard from './RentListingCard';
 import RentSearchBar from './RentSearchBar';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 interface RentPageBodyProps {
+  totalLength: number;
   listings: RentListing[];
   mapListings: MapListing;
-  setSafeListings: any;
   setMapListings: any;
   rentIndividualOpen: () => void;
   setDefaultListing: () => void;
   setIndividualListing: (listingInfo: any) => void;
+  fetchData: any;
+  infiniteScrollNext: any;
 }
 
 const RentPageBody: React.FC<RentPageBodyProps> = ({
+  infiniteScrollNext,
+  totalLength,
+  fetchData,
   listings,
   mapListings,
-  setSafeListings,
   setDefaultListing,
   rentIndividualOpen,
   setIndividualListing,
   setMapListings,
 }) => {
+  const [searchListings, setSearchListings] = useState<any[]>([]);
   const [isListingOn, setIsListingOn] = useState<boolean>(false);
   const [isSearchOn, setIsSearchOn] = useState<boolean>(false);
 
@@ -46,12 +52,12 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
           initCoordinate={[-74.0085514, 40.7127503]}
           rentmain
           mapListings={mapListings}
-          setSafeListings={setSafeListings}
+          setSearchListings={setSearchListings}
         />
         <RentSearchBar
           isSearchOn={isSearchOn}
           setIsSearchOn={setIsSearchOn}
-          setSafeListings={setSafeListings}
+          setSearchListings={setSearchListings}
           setMapListings={setMapListings}
         />
         <div
@@ -91,7 +97,12 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
           )}
         </div>
         <div className='flex flex-row justify-between items-center p-4 shadow-md sm:shadow-none'>
-          <div>Total {listings.length} listings</div>
+          <div>
+            Total{' '}
+            {searchListings.length != 0 ? searchListings.length : totalLength}{' '}
+            listings
+          </div>
+
           <div
             onClick={setDefaultListing}
             className='cursor-pointer bg-[#EC662A] text-white py-1 px-4 rounded-lg'
@@ -99,15 +110,45 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
             전체 리스팅 다시보기
           </div>
         </div>
-        <div className='grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 min-[1960px]:grid-cols-4 min-[2400px]:grid-cols-5 p-4 sm:pt-0 overflow-x-hidden overflow-y-scroll gap-2'>
-          {listings.map((list) => (
-            <RentListingCard
-              key={(list as any)._id}
-              rentIndividualOpen={rentIndividualOpen}
-              list={list}
-            />
-          ))}
-        </div>
+        {/* <div className='grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 min-[1960px]:grid-cols-4 min-[2400px]:grid-cols-5 p-4 sm:pt-0 overflow-x-hidden overflow-y-scroll gap-2'> */}
+        {searchListings.length != 0 ? (
+          <div className='grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 min-[1960px]:grid-cols-4 min-[2400px]:grid-cols-5 p-4 sm:pt-0 overflow-x-hidden overflow-y-scroll gap-2'>
+            {searchListings.map((list) => (
+              <RentListingCard
+                key={(list as any)._id + searchListings.indexOf(list)}
+                rentIndividualOpen={rentIndividualOpen}
+                list={list}
+              />
+            ))}
+          </div>
+        ) : (
+          <InfiniteScroll
+            className='grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 min-[1960px]:grid-cols-4 min-[2400px]:grid-cols-5 p-4 sm:pt-0 overflow-x-hidden overflow-y-scroll gap-2'
+            next={infiniteScrollNext}
+            hasMore={listings.length < totalLength}
+            scrollThreshold={0.8}
+            height={'83vh'}
+            loader={
+              <div className='w-full flex justify-center'>Loading...</div>
+            }
+            dataLength={listings.length}
+            endMessage={
+              <p style={{ textAlign: 'center' }}>
+                <b>Yay! You have seen it all</b>
+              </p>
+            }
+          >
+            {listings.map((list) => (
+              <RentListingCard
+                key={(list as any)._id + listings.indexOf(list)}
+                rentIndividualOpen={rentIndividualOpen}
+                list={list}
+              />
+            ))}
+          </InfiniteScroll>
+        )}
+
+        {/* </div> */}
       </div>
     </div>
   );
