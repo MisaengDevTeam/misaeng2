@@ -1,13 +1,15 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
 import Modal from './Modal';
 import useRentIndividualModal from '../hooks/useRentIndividualModal';
-import { MouseEvent, useCallback, useEffect, useState } from 'react';
 import Button from '../Button';
 import axios from 'axios';
+import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { RentListing } from '@prisma/client';
+import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
+
+import emailjs from '@emailjs/browser';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -24,25 +26,35 @@ import RentIndiReview from './rentindividual/RentIndiReview';
 
 import { BsHeart, BsHeartFill } from 'react-icons/bs';
 import { FaRegShareSquare } from 'react-icons/fa';
-import { RiAlarmWarningLine } from 'react-icons/ri';
+import { RiAlarmWarningLine, RiKakaoTalkFill } from 'react-icons/ri';
+import { MdEmail, MdPhone } from 'react-icons/md';
 import RentIndiFooterButton from './rentindividual/RentIndiFooterButton';
 import RentIndiDetail from './rentindividual/RentIndiDetail';
 import toast from 'react-hot-toast';
+import RentIndiContact from './rentindividual/RentIndiContact';
+import RentIndiContactButton from './rentindividual/RentIndiContactButton';
+import Image from 'next/image';
 
-interface RentRegisterModalProps {
+interface RentIndividualModalProps {
   mypage?: boolean;
 }
 
-const RentRegisterModal: React.FC<RentRegisterModalProps> = ({ mypage }) => {
+const RentIndividualModal: React.FC<RentIndividualModalProps> = ({
+  mypage,
+}) => {
+  const form = useRef<HTMLFormElement>(null);
+
   const [step, setStep] = useState<number>(1);
   const [buildingInfo, setBuildingInfo] = useState<any>(null);
   const [buildingToSubwayInfo, setBuildingToSubwayInfo] = useState<any>(null);
   const [reviewInfo, setReviewInfo] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [like, setLike] = useState(false);
+  const [contact, setContact] = useState('kakao');
   const [currentListing, setCurrentListing] = useState<RentListing | null>(
     null
   );
+  const [emailSent, setEmailSent] = useState(false);
 
   const { data: session } = useSession();
   const currentUser = session?.user;
@@ -83,9 +95,133 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({ mypage }) => {
       console.error('Failed to copy text: ', err);
     }
   }, []);
+
+  const sendContactEmail = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // EMAILJS_PUBLIC_KEY
+    // EMAILJS_SERVICE_ID
+    // EMAILJS_TEMPLATE_ID
+
+    if (form.current !== null) {
+      emailjs
+        .sendForm(
+          process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+          process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+          form.current,
+          process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+        )
+        .then(
+          (result) => {
+            console.log(result.text);
+            setEmailSent(true);
+          },
+          (error) => {
+            console.log(error.text);
+          }
+        );
+    } else {
+      console.error('form.current is null');
+    }
+  };
+
   if (!currentListing) return null;
 
   const headerTitle = `${currentListing.title}`;
+
+  const generateContact = (means: string) => {
+    switch (means) {
+      case 'kakao':
+        return (
+          <div className='w-full h-full flex flex-col items-center justify-center gap-2 py-2'>
+            <Image
+              width={200}
+              height={300}
+              src={'/assets/images/img/qr_image.png'}
+              alt={'qr_image'}
+            />
+            <button
+              onClick={() => {
+                handleCopy();
+                router.push('https://open.kakao.com/o/sQbwnisf');
+              }}
+              className='flex justify-center items-center w-[70%] h-[40px] max-w-[240px] bg-[#FFD800] rounded-lg gap-1'
+            >
+              <RiKakaoTalkFill size={24} />
+              <span> 클릭해서 뉴욕 방찾기!</span>
+            </button>
+          </div>
+        );
+      case 'email':
+        return emailSent ? (
+          <div className='flex flex-col w-full h-full justify-center items-center gap-1'>
+            <Image
+              width={200}
+              height={300}
+              src={'/assets/images/logo/logo_vertical.png'}
+              alt={'logo'}
+            />
+            <p>문의가 완료되었습니다!</p>
+            <p>가능한 빨리 답변드리도록 하겠습니다!</p>
+          </div>
+        ) : (
+          <form
+            ref={form}
+            onSubmit={sendContactEmail}
+            className='flex flex-col w-[80%] py-2 sm:py-4 gap-1'
+          >
+            <RentIndiContact
+              label={'이름'}
+              placeholder={'이름'}
+              maxLength={24}
+              name={'contact_name'}
+            />
+            <RentIndiContact
+              label={'직업'}
+              placeholder={'학생 또는 직장인'}
+              maxLength={10}
+              name={'contact_status'}
+            />
+            <RentIndiContact
+              label={'이메일'}
+              placeholder={'이메일'}
+              maxLength={30}
+              name={'contact_email'}
+            />
+            <RentIndiContact
+              label={'연락처'}
+              placeholder={'한국 또는 미국 전화번호'}
+              maxLength={15}
+              name={'contact_phone'}
+            />
+            <RentIndiContact
+              label={'카톡아이디'}
+              placeholder={'연락 가능한 카톡 아이디'}
+              maxLength={36}
+              name={'contact_kakao'}
+            />
+            <input
+              readOnly
+              className='hidden'
+              name={'contact_listing'}
+              value={window.location.href}
+            />
+            <button
+              type='submit'
+              className='text-white bg-[#3944BC] mt-3 py-2 text-sm font-light rounded-lg hover:shadow-lg'
+            >
+              이메일로 뉴욕 방찾기!
+            </button>
+          </form>
+        );
+      case 'phone':
+        return (
+          <div className='w-full h-full flex flex-col items-center justify-center gap-2 py-2'>
+            <div>미생 USA: +1 914 294 8785</div>
+          </div>
+        );
+    }
+  };
 
   let bodyContent: JSX.Element | null;
 
@@ -165,16 +301,34 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({ mypage }) => {
   }
   if (step == 2) {
     bodyContent = (
-      <div className='flex flex-col items-center py-[36px] gap-8'>
-        <div className='text-lg font-semibold'>
-          이메일: {currentListing.contact[0]}
+      <div className='flex flex-col items-center py-2 gap-2 px-4 h-full'>
+        <div className='w-full grid grid-cols-3 gap-2 mt-1'>
+          <RentIndiContactButton
+            label={'이메일'}
+            bgColor={'bg-[#3944BC]'}
+            icon={MdEmail}
+            onClick={() => {
+              setContact('email');
+            }}
+          />
+          <RentIndiContactButton
+            label={'전화'}
+            bgColor={'bg-[#028A0F]'}
+            icon={MdPhone}
+            onClick={() => {
+              setContact('phone');
+            }}
+          />
+          <RentIndiContactButton
+            label={'카톡'}
+            bgColor={'bg-[#FFD800]'}
+            icon={RiKakaoTalkFill}
+            onClick={() => {
+              setContact('kakao');
+            }}
+          />
         </div>
-        <div className='text-lg font-semibold'>
-          연락처: {currentListing.contact[1]}
-        </div>
-        <div className='text-lg font-semibold'>
-          카카오톡: {currentListing.contact[2]}
-        </div>
+        {generateContact(contact)}
       </div>
     );
   }
@@ -260,4 +414,4 @@ const RentRegisterModal: React.FC<RentRegisterModalProps> = ({ mypage }) => {
     />
   );
 };
-export default RentRegisterModal;
+export default RentIndividualModal;

@@ -205,7 +205,7 @@ export async function POST(request: Request) {
     let query: {
       bedCount?: string;
       bathCount?: string;
-      price?: { $gt: number };
+      price?: { $lte: number };
       generalRate?: { $gt: number };
       broker?: string;
       category?: string;
@@ -219,7 +219,7 @@ export async function POST(request: Request) {
       query.bathCount = bathCount;
     }
     if (price != null) {
-      query.price = { $gt: parseInt(price) };
+      query.price = { $lte: parseInt(price) };
     }
     if (generalRate != null) {
       // query the review collection later

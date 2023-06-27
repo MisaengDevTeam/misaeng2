@@ -40,7 +40,6 @@ const RentPage = () => {
       setIsLoading(false);
     }
     setStart((parseInt(start) + 20).toString());
-    console.log(start);
   };
 
   useEffect(() => {
