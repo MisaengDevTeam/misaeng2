@@ -82,7 +82,7 @@ const RoommateListingCard: React.FC<RoommateListingCardProps> = ({
       <div className='flex flex-col gap-1'>
         <div className={`grid grid-cols-2 gap-1`}>
           <div className={commonCSS}>$ {price.toLocaleString()}</div>
-          <div className={commonCSS}>{length}</div>
+          <div className={commonCSS}>{length.substring(0, 2)}</div>
         </div>
         <div className={commonCSS}>{district}</div>
       </div>

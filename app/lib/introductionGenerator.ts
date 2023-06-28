@@ -15,9 +15,7 @@ export default function introductionGenerator(
 
 < ${MBTI_TYPE[selfmbti as keyof typeof MBTI_TYPE]} ${selfmbti} > 입니다!
 
-  저는 현재 뉴욕에서 ${
-    roommateContext.category[category as keyof typeof roommateContext.category]
-  } ${selfage}의 ${selfgender}입니다.
+  저는 현재 뉴욕에서 룸메이트를 찾고 있는 ${selfage}의 ${selfgender}입니다.
 
   ${
     roommateContext.status[selfstatus as keyof typeof roommateContext.status]

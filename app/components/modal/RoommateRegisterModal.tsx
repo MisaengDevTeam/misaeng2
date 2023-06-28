@@ -485,7 +485,7 @@ const RoommateRegisterModal: React.FC<RoommateRegisterModalProps> = ({}) => {
     <div className='flex flex-row justify-between gap-8'>
       {step > 1 && <Button onClick={onBack} label={'Back'} />}
       {step < 7 && <Button onClick={onNext} label={'Next'} />}
-      {step == 7 && userPrevListing.length == 0 && (
+      {step == 7 && !userPrevListing && (
         <Button
           disabled={isLoading}
           onClick={handleSubmit(onSubmit)}
