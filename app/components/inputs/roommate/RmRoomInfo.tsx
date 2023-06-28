@@ -52,6 +52,23 @@ const RmRoomInfo: React.FC<RmRoomInfoProps> = ({
         required
         small
       />
+
+      <SelectComp
+        small
+        placeholder='City'
+        options={cityOptions}
+        onChange={(value) => {
+          onChange('city', value);
+        }}
+      />
+      {city && (
+        <SelectComp
+          small
+          placeholder='District'
+          options={districtOptions}
+          onChange={(value) => onChange('district', value)}
+        />
+      )}
       <SelectComp
         small
         // placeholder={'房间类型'}
@@ -85,22 +102,6 @@ const RmRoomInfo: React.FC<RmRoomInfoProps> = ({
           subtitle='如果您选择了个人转租选项， 请填写现在公寓的大致地点'
         /> */}
 
-      <SelectComp
-        small
-        placeholder='City'
-        options={cityOptions}
-        onChange={(value) => {
-          onChange('city', value);
-        }}
-      />
-      {city && (
-        <SelectComp
-          small
-          placeholder='District'
-          options={districtOptions}
-          onChange={(value) => onChange('district', value)}
-        />
-      )}
       {/* <Textarea
         id={'description'}
         onChange={(value) => onChange('description', value)}
