@@ -20,7 +20,6 @@ const RentPage = () => {
   const [start, setStart] = useState<string>('0');
 
   const fetchData = async (start: string) => {
-    setIsLoading(true);
     try {
       const response = await axios.post(`/api/rentListing/rentListing`, {
         start,
@@ -86,14 +85,11 @@ const RentPage = () => {
     }
   }, [rentIndividualModal, rentIndividualModal.onOpen, rentlistingid]);
 
-  // if (isLoading) {
-  //   return <LoadingScreen />;
-  // }
-
   return (
     <div>
       <RentIndividualModal />
       <RentPageBody
+        isLoading={isLoading}
         fetchData={fetchData}
         totalLength={totalLength}
         infiniteScrollNext={infiniteScrollNext}

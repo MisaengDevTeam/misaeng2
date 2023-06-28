@@ -99,10 +99,6 @@ const RentIndividualModal: React.FC<RentIndividualModalProps> = ({
   const sendContactEmail = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // EMAILJS_PUBLIC_KEY
-    // EMAILJS_SERVICE_ID
-    // EMAILJS_TEMPLATE_ID
-
     if (form.current !== null) {
       emailjs
         .sendForm(
@@ -134,12 +130,14 @@ const RentIndividualModal: React.FC<RentIndividualModalProps> = ({
       case 'kakao':
         return (
           <div className='w-full h-full flex flex-col items-center justify-center gap-2 py-2'>
-            <Image
-              width={200}
-              height={300}
-              src={'/assets/images/img/qr_image.png'}
-              alt={'qr_image'}
-            />
+            <div className='flex justify-center items-center w-[42vw] max-w-[360px]'>
+              <Image
+                width={200}
+                height={300}
+                src={'/assets/images/img/qr_image.png'}
+                alt={'qr_image'}
+              />
+            </div>
             <button
               onClick={() => {
                 handleCopy();
@@ -168,7 +166,7 @@ const RentIndividualModal: React.FC<RentIndividualModalProps> = ({
           <form
             ref={form}
             onSubmit={sendContactEmail}
-            className='flex flex-col w-[80%] py-2 sm:py-4 gap-1'
+            className='flex flex-col w-full max-w-[480px] py-2 sm:py-4 gap-1 overflow-y-scroll h-full'
           >
             <RentIndiContact
               label={'이름'}
@@ -320,7 +318,7 @@ const RentIndividualModal: React.FC<RentIndividualModalProps> = ({
             }}
           />
           <RentIndiContactButton
-            label={'카톡'}
+            label={'카카오톡'}
             bgColor={'bg-[#FFD800]'}
             icon={RiKakaoTalkFill}
             onClick={() => {

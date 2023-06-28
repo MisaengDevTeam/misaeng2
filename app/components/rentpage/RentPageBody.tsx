@@ -2,7 +2,7 @@
 
 import { RentListing } from '@prisma/client';
 import Map from '../Map';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   MdOutlineKeyboardDoubleArrowUp,
   MdOutlineKeyboardDoubleArrowDown,
@@ -13,9 +13,12 @@ import { IoClose } from 'react-icons/io5';
 import RentListingCard from './RentListingCard';
 import RentSearchBar from './RentSearchBar';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import LoadingScreen from '../LoadingScreen';
+import Image from 'next/image';
 
 interface RentPageBodyProps {
   totalLength: number;
+  isLoading: boolean;
   listings: RentListing[];
   mapListings: MapListing;
   setMapListings: any;
@@ -28,6 +31,7 @@ interface RentPageBodyProps {
 
 const RentPageBody: React.FC<RentPageBodyProps> = ({
   infiniteScrollNext,
+  isLoading,
   totalLength,
   fetchData,
   listings,
@@ -40,8 +44,33 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
   const [searchListings, setSearchListings] = useState<any[]>([]);
   const [isListingOn, setIsListingOn] = useState<boolean>(false);
   const [isSearchOn, setIsSearchOn] = useState<boolean>(false);
+  const [adviceOn, setAdviceOn] = useState<boolean>(true);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  return (
+  useEffect(() => {
+    setTimeout(() => {
+      setAdviceOn(false);
+    }, 5000);
+
+    function handleResize() {
+      setWindowWidth(window.innerWidth);
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Determine the height based on the window width
+  let height;
+  if (windowWidth > 640) {
+    height = '83vh';
+  } else {
+    height = isListingOn ? '76vh' : '42vh';
+  }
+
+  return isLoading ? (
+    <LoadingScreen />
+  ) : (
     <div className='relative flex flex-row h-[93vh] sm:h-[90vh]'>
       <div
         className={`relative ${
@@ -73,6 +102,29 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
           )}
           {isSearchOn ? '' : <p className='text-[#fff] text-sm'>검색</p>}
         </div>
+
+        {adviceOn && (
+          <div
+            onClick={() => {
+              setAdviceOn(false);
+            }}
+            className={`absolute bg-[#000]/50 w-full h-full transition 
+            ${adviceOn ? 'opacity-100' : 'opacity-0'}
+            `}
+          >
+            <div className='flex items-end pt-[40px] pl-[40px] sm:pt-[48px] sm:pl-[48px]'>
+              <Image
+                width={64}
+                height={64}
+                src={'/assets/images/img/arrow_map1.png'}
+                alt={'arrow'}
+              />
+              <div className='text-[#fff] translate-y-2'>
+                검색을 추천해요 :D
+              </div>
+            </div>
+          </div>
+        )}
       </div>
       <div
         className={`sm:relative sm:flex w-full sm:w-[50%] lg:w-[45%] sm:h-[90vh] flex flex-col bg-white
@@ -127,7 +179,7 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
             next={infiniteScrollNext}
             hasMore={listings.length < totalLength}
             scrollThreshold={0.8}
-            height={'83vh'}
+            height={height}
             loader={
               <div className='w-full flex justify-center'>Loading...</div>
             }

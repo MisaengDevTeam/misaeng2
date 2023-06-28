@@ -62,13 +62,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
     }
   };
 
-  return (
-    <div
-      className={`absolute flex bg-white transition duration-100 justify-center
-${isSearchOn ? 'opacity-100 h-auto w-full' : 'opacity-0 h-[0px] w-[0px]'}
-`}
-    >
-      <div className='grid grid-cols-3 lg:grid-cols-4 2xl:grid-cols-8 2xl:gap-1 justify-center pl-[56px] md:pl-[72px] py-4 pr-4 gap-2 md:gap-x-4 md:gap-y-2 xl:gap-x-8'>
+  return isSearchOn ? (
+    <div className={`absolute flex bg-white justify-center h-auto w-full`}>
+      <div className='grid grid-cols-3 lg:grid-cols-4 2xl:grid-cols-8 2xl:gap-1 justify-center pl-[48px] md:pl-[72px] py-4 pr-4 gap-2 md:gap-x-4 md:gap-y-2 xl:gap-x-8'>
         <div className='relative w-auto h-auto'>
           <input
             type='number'
@@ -80,7 +76,7 @@ ${isSearchOn ? 'opacity-100 h-auto w-full' : 'opacity-0 h-[0px] w-[0px]'}
             max={30000}
             step={100}
             placeholder='최고가'
-            className='relative w-[100%] h-[100%] border-[1px] border-neutral-300 rounded-md py-1 px-4 text-sm text-end'
+            className='relative w-full h-full border-[1px] border-neutral-300 rounded-md py-1 px-4 text-sm text-end'
           />
           <label htmlFor='rentMinPrice' className='absolute top-2 left-2'>
             $
@@ -99,9 +95,9 @@ ${isSearchOn ? 'opacity-100 h-auto w-full' : 'opacity-0 h-[0px] w-[0px]'}
           onChange={(value) => setCustomValue('bath', value)}
         />
         <SearchSelect
-          placeholder={'기간'}
-          options={SEARCH_OPTIONS.category}
-          onChange={(value) => setCustomValue('category', value)}
+          placeholder={'중개비'}
+          options={SEARCH_OPTIONS.broker}
+          onChange={(value) => setCustomValue('broker', value)}
         />
         <SearchSelect
           placeholder={'지하철'}
@@ -117,13 +113,6 @@ ${isSearchOn ? 'opacity-100 h-auto w-full' : 'opacity-0 h-[0px] w-[0px]'}
           options={SEARCH_OPTIONS.review}
           onChange={(value) => setCustomValue('review', value)}
         />
-        <SearchSelect
-          placeholder={'중개비'}
-          disabled
-          lastItemToHide
-          options={SEARCH_OPTIONS.broker}
-          onChange={(value) => setCustomValue('broker', value)}
-        />
         <SearchButton
           disabled={isLoading}
           label='검색'
@@ -131,6 +120,6 @@ ${isSearchOn ? 'opacity-100 h-auto w-full' : 'opacity-0 h-[0px] w-[0px]'}
         />
       </div>
     </div>
-  );
+  ) : null;
 };
 export default SearchBar;

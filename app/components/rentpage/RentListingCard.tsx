@@ -52,7 +52,7 @@ const RentListingCard: React.FC<RentListingCardProps> = ({
         handleClick((list as any)._id);
       }}
       key={list.imageSrc[0]}
-      className='p-1 rounded-lg border-[1px] border-neutral-300 cursor-pointer group hover:border-[#EC662A]'
+      className='p-1 rounded-lg border-[1px] border-neutral-300 cursor-pointer group hover:border-[#EC662A] hover:shadow-lg'
     >
       <div className='w-full relative overflow-hidden rounded-lg'>
         <div className='relative '>
