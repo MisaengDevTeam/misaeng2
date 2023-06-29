@@ -41,7 +41,7 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
   setIndividualListing,
   setMapListings,
 }) => {
-  const [searchListings, setSearchListings] = useState<any[]>([]);
+  const [searchListings, setSearchListings] = useState<any[] | null>(null);
   const [isListingOn, setIsListingOn] = useState<boolean>(false);
   const [isSearchOn, setIsSearchOn] = useState<boolean>(false);
   const [adviceOn, setAdviceOn] = useState<boolean>(true);
@@ -151,7 +151,11 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
         <div className='flex flex-row justify-between items-center p-4 shadow-md sm:shadow-none'>
           <div>
             Total{' '}
-            {searchListings.length != 0 ? searchListings.length : totalLength}{' '}
+            {searchListings == null
+              ? totalLength
+              : searchListings?.length != 0
+              ? searchListings?.length
+              : `0`}{' '}
             listings
           </div>
 
@@ -162,18 +166,8 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
             전체 리스팅 다시보기
           </div>
         </div>
-        {/* <div className='grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 min-[1960px]:grid-cols-4 min-[2400px]:grid-cols-5 p-4 sm:pt-0 overflow-x-hidden overflow-y-scroll gap-2'> */}
-        {searchListings.length != 0 ? (
-          <div className='grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 min-[1960px]:grid-cols-4 min-[2400px]:grid-cols-5 p-4 sm:pt-0 overflow-x-hidden overflow-y-scroll gap-2'>
-            {searchListings.map((list) => (
-              <RentListingCard
-                key={(list as any)._id + searchListings.indexOf(list)}
-                rentIndividualOpen={rentIndividualOpen}
-                list={list}
-              />
-            ))}
-          </div>
-        ) : (
+
+        {searchListings == null ? (
           <InfiniteScroll
             className='grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 min-[1960px]:grid-cols-4 min-[2400px]:grid-cols-5 p-4 sm:pt-0 overflow-x-hidden overflow-y-scroll gap-2'
             next={infiniteScrollNext}
@@ -196,9 +190,21 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
               />
             ))}
           </InfiniteScroll>
+        ) : searchListings?.length != 0 ? (
+          <div className='grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 min-[1960px]:grid-cols-4 min-[2400px]:grid-cols-5 p-4 sm:pt-0 overflow-x-hidden overflow-y-scroll gap-2'>
+            {searchListings?.map((list) => (
+              <RentListingCard
+                key={(list as any)._id + searchListings.indexOf(list)}
+                rentIndividualOpen={rentIndividualOpen}
+                list={list}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className='flex justify-center items-center w-full h-full'>
+            검색 결과가 없습니다.
+          </div>
         )}
-
-        {/* </div> */}
       </div>
     </div>
   );

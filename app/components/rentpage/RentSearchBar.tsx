@@ -23,7 +23,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const { handleSubmit, setValue } = useForm<FieldValues>({
+  const { handleSubmit, setValue, reset } = useForm<FieldValues>({
     defaultValues: {
       rentMinPrice: null,
       bed: null,
@@ -56,6 +56,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
         .finally(() => {
           setIsSearchOn(!isSearchOn);
           setIsLoading(false);
+          reset();
         });
     } catch (error) {
       console.log(error);
