@@ -7,6 +7,7 @@ interface TextareaProps {
   disabled?: boolean;
   required?: boolean;
   placeholer?: string;
+  name?: string;
   small?: boolean;
   onChange: (value: any) => void;
   value?: string;
@@ -16,6 +17,7 @@ const Textarea: React.FC<TextareaProps> = ({
   id,
   disabled,
   required,
+  name,
   placeholer,
   onChange,
   small,
@@ -27,6 +29,7 @@ const Textarea: React.FC<TextareaProps> = ({
         id={id}
         required={required}
         disabled={disabled}
+        name={name}
         onChange={(e) => onChange(e.currentTarget.value)}
         placeholder={placeholer}
         autoFocus={false}

@@ -10,11 +10,13 @@ interface SelectCompProps {
   isSearchable?: boolean;
   isClearable?: boolean;
   defaultValue?: string | null;
+  name?: string;
 }
 
 const SelectComp: React.FC<SelectCompProps> = ({
   onChange,
   placeholder,
+  name,
   options,
   small,
   isSearchable = false,
@@ -32,6 +34,7 @@ const SelectComp: React.FC<SelectCompProps> = ({
       <Select
         placeholder={placeholder}
         options={options}
+        name={name}
         value={options.find((option) => option.value === initValue)}
         isSearchable={isSearchable}
         isClearable={isClearable}

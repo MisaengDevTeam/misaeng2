@@ -11,6 +11,7 @@ import Footer from './components/footer/Footer';
 import RentRegisterModal from './components/modal/RentRegisterModal';
 import BuySellRegisterModal from './components/modal/BuySellRegisterModal';
 import BlogIndividualModal from './components/modal/BlogIndividualModal';
+import ReportModal from './components/modal/ReportModal';
 
 const font = Nunito_Sans({ subsets: ['latin'] });
 
@@ -39,6 +40,7 @@ export default async function RootLayout({
             <RoommateRegisterModal />
             <BuySellRegisterModal />
             <BlogIndividualModal />
+            <ReportModal />
             <Navbar />
             <div className='w-full h-[65px] sm:h-[89px] md:h-[77px]'></div>
             {children}

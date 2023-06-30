@@ -34,6 +34,7 @@ import toast from 'react-hot-toast';
 import RentIndiContact from './rentindividual/RentIndiContact';
 import RentIndiContactButton from './rentindividual/RentIndiContactButton';
 import Image from 'next/image';
+import useReportModal from '../hooks/useReportModal';
 
 interface RentIndividualModalProps {
   mypage?: boolean;
@@ -62,6 +63,9 @@ const RentIndividualModal: React.FC<RentIndividualModalProps> = ({
   const rentlistingid = params?.get('rentlisting');
   const router = useRouter();
 
+  const rentIndividualModal = useRentIndividualModal();
+  const reportModal = useReportModal();
+
   useEffect(() => {
     setIsLoading(true);
     if (rentlistingid) {
@@ -84,8 +88,6 @@ const RentIndividualModal: React.FC<RentIndividualModalProps> = ({
     // setCurrentListing(response)
   }, [rentlistingid]);
 
-  const rentIndividualModal = useRentIndividualModal();
-
   const handleCopy = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
@@ -103,7 +105,7 @@ const RentIndividualModal: React.FC<RentIndividualModalProps> = ({
       emailjs
         .sendForm(
           process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
-          process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+          process.env.NEXT_PUBLIC_EMAILJS_CONTACT_TEMPLATE_ID!,
           form.current,
           process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
         )
@@ -119,6 +121,11 @@ const RentIndividualModal: React.FC<RentIndividualModalProps> = ({
     } else {
       console.error('form.current is null');
     }
+  };
+
+  const reportListing = () => {
+    rentIndividualModal.onClose();
+    reportModal.onOpen();
   };
 
   if (!currentListing) return null;
@@ -371,7 +378,7 @@ const RentIndividualModal: React.FC<RentIndividualModalProps> = ({
         <RentIndiFooterButton
           color='#D0342C'
           label='신고하기'
-          onClick={() => {}}
+          onClick={reportListing}
           icon={RiAlarmWarningLine}
         />
       </div>

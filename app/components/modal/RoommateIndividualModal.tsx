@@ -17,6 +17,7 @@ import { FaRegShareSquare } from 'react-icons/fa';
 import { RiAlarmWarningLine } from 'react-icons/ri';
 import Button from '../Button';
 import toast from 'react-hot-toast';
+import useReportModal from '../hooks/useReportModal';
 
 interface RoommateIndividualModalProps {
   mypage?: boolean;
@@ -37,6 +38,7 @@ const RoommateIndividualModal: React.FC<RoommateIndividualModalProps> = ({
 
   const [like, setLike] = useState(false);
   const roommateIndividualModal = useRoommateIndividualModal();
+  const reportModal = useReportModal();
 
   useEffect(() => {
     setIsLoading(true);
@@ -64,6 +66,11 @@ const RoommateIndividualModal: React.FC<RoommateIndividualModalProps> = ({
       console.error('Failed to copy text: ', err);
     }
   }, []);
+
+  const reportListing = () => {
+    roommateIndividualModal.onClose();
+    reportModal.onOpen();
+  };
 
   if (!currentListing) return null;
 
@@ -146,7 +153,7 @@ const RoommateIndividualModal: React.FC<RoommateIndividualModalProps> = ({
         <RentIndiFooterButton
           color='#D0342C'
           label='신고하기'
-          onClick={() => {}}
+          onClick={reportListing}
           icon={RiAlarmWarningLine}
         />
       </div>

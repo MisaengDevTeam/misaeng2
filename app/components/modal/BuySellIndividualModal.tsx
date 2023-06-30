@@ -21,6 +21,7 @@ import BuySellIndiInfo from './buysellindividual/BuySellIndiInfo';
 import MapComponent from '../Map';
 import Heading from '../Heading';
 import { BUY_SELL_STATUS } from '@/types/BuySellTypes';
+import useReportModal from '../hooks/useReportModal';
 
 interface BuySellIndividualModalProps {
   mypage?: boolean;
@@ -35,6 +36,7 @@ const BuySellIndividualModal: React.FC<BuySellIndividualModalProps> = ({
     null
   );
   const buySellIndividualModal = useBuySellIndividualModal();
+  const reportModal = useReportModal();
 
   const params = useSearchParams();
   const buysellid = params?.get('buyselllisting');
@@ -68,6 +70,11 @@ const BuySellIndividualModal: React.FC<BuySellIndividualModalProps> = ({
         });
     }
   }, [buysellid]);
+
+  const reportListing = () => {
+    buySellIndividualModal.onClose();
+    reportModal.onOpen();
+  };
 
   if (!currentListing) return null;
 
@@ -125,14 +132,14 @@ const BuySellIndividualModal: React.FC<BuySellIndividualModalProps> = ({
   const footerContent = (
     <div className='mt-6 sm:mt-0'>
       <div className='flex justify-evenly'>
-        <RentIndiFooterButton
+        {/* <RentIndiFooterButton
           color='#EC662A'
           label='좋아요'
           onClick={() => {
             setLike(!like);
           }}
           icon={like ? BsHeartFill : BsHeart}
-        />
+        /> */}
         <RentIndiFooterButton
           color='#9DCAEB'
           label='공유하기'
@@ -142,7 +149,7 @@ const BuySellIndividualModal: React.FC<BuySellIndividualModalProps> = ({
         <RentIndiFooterButton
           color='#D0342C'
           label='신고하기'
-          onClick={() => {}}
+          onClick={reportListing}
           icon={RiAlarmWarningLine}
         />
       </div>

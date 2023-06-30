@@ -50,7 +50,7 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
   useEffect(() => {
     setTimeout(() => {
       setAdviceOn(false);
-    }, 5000);
+    }, 7000);
 
     function handleResize() {
       setWindowWidth(window.innerWidth);
