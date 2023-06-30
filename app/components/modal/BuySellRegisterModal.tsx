@@ -407,6 +407,7 @@ const BuySellRegisterModal: React.FC<BuySellRegisterModalProps> = ({}) => {
               // placeholer='请详细描述商品特征'
               placeholer='상품에 대한 상세설명을 적어주세요'
               onChange={(value) => setCustomValue('description', value)}
+              small
             />
           </div>
         );

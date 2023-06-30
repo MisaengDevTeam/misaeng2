@@ -7,6 +7,7 @@ import SelectComp from '../inputs/SelectComp';
 import Textarea from '../inputs/Textarea';
 import Modal from './Modal';
 import emailjs from '@emailjs/browser';
+import { useSession } from 'next-auth/react';
 
 interface ReportModalProps {}
 
@@ -14,6 +15,11 @@ const ReportModal: React.FC<ReportModalProps> = ({}) => {
   const form = useRef<HTMLFormElement>(null);
   const [sent, setSent] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { data: session } = useSession();
+  const currentUser = session?.user;
+  const userName = currentUser?.name;
+  const userEmail = currentUser?.email;
 
   const reportModal = useReportModal();
 
@@ -112,6 +118,22 @@ const ReportModal: React.FC<ReportModalProps> = ({}) => {
         name={'report_time'}
         value={currentTimeString}
       />
+      {currentUser && (
+        <>
+          <input
+            readOnly
+            className='hidden'
+            name={'report_username'}
+            value={userName}
+          />
+          <input
+            readOnly
+            className='hidden'
+            name={'report_useremail'}
+            value={userEmail}
+          />
+        </>
+      )}
       <button
         type='submit'
         disabled={isLoading}
