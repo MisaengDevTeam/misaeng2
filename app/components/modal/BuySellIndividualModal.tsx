@@ -252,16 +252,16 @@ const BuySellIndividualModal: React.FC<BuySellIndividualModalProps> = ({
         <button
           disabled={isLoading}
           type='submit'
-          className='text-white bg-[#EC662A] mt-3 py-2 font-light rounded-lg hover:shadow-lg'
+          className='text-white bg-[#EC662A] mt-3 py-2 font-semibold rounded-lg hover:shadow-lg'
         >
-          현재 리스팅 판매자 연락하기
+          판매자에게 메시지 보내기
         </button>
       </form>
     );
   }
 
   const footerContent = (
-    <div className='mt-6 sm:mt-0'>
+    <div className='mt-0'>
       <div className='flex justify-evenly'>
         {/* <RentIndiFooterButton
           color='#EC662A'
@@ -285,24 +285,21 @@ const BuySellIndividualModal: React.FC<BuySellIndividualModalProps> = ({
         />
       </div>
       <div className='mt-2'>
-        {
-          step == 1 && (
-            <Button
-              onClick={() => {
-                setStep(2);
-              }}
-              label={'판매자 연락하기'}
-            />
-          )
-          //  : (
-          //   <Button
-          //     label={'뒤로가기'}
-          //     onClick={() => {
-          //       setStep(1);
-          //     }}
-          //   ></Button>
-          // )
-        }
+        {step == 1 ? (
+          <Button
+            onClick={() => {
+              setStep(2);
+            }}
+            label={'판매자 연락하기'}
+          />
+        ) : (
+          <Button
+            label={'뒤로가기'}
+            onClick={() => {
+              setStep(1);
+            }}
+          ></Button>
+        )}
       </div>
     </div>
   );
@@ -315,6 +312,7 @@ const BuySellIndividualModal: React.FC<BuySellIndividualModalProps> = ({
       body={bodyContent!}
       footer={footerContent}
       mypage={mypage}
+      blogindividual
     />
   );
 };

@@ -150,10 +150,10 @@ const RentIndividualModal: React.FC<RentIndividualModalProps> = ({
                 handleCopy();
                 router.push('https://open.kakao.com/o/sQbwnisf');
               }}
-              className='flex justify-center items-center w-[70%] h-[40px] max-w-[240px] bg-[#FFD800] rounded-lg gap-1'
+              className='flex justify-center items-center w-[80%] h-[40px] max-w-[240px] bg-[#FFD800] rounded-lg gap-1'
             >
               <RiKakaoTalkFill size={24} />
-              <span> 클릭해서 뉴욕 방찾기!</span>
+              <span> 여기를 클릭해서 방 문의하기!</span>
             </button>
           </div>
         );
@@ -388,7 +388,7 @@ const RentIndividualModal: React.FC<RentIndividualModalProps> = ({
             onClick={() => {
               setStep(2);
             }}
-            label={'판매자 연락하기'}
+            label={'리스팅 문의하기'}
           />
         ) : (
           <Button
