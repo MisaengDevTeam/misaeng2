@@ -20,8 +20,8 @@ const Footer = ({}) => {
         priority={false}
       />
       <FooterCopyright
-        address={'20 River Rd, New York, NY, 10044'}
-        email={'misaeng.dev@gmail.com'}
+        address={'980 6th Ave, New York, NY 10018'}
+        email={'info@misaengusa.com'}
         copyright={'ⓒ 2023, Misaeng, Inc, All Rights Reserved'}
       />
     </div>
