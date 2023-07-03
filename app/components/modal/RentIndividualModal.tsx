@@ -27,7 +27,7 @@ import RentIndiReview from './rentindividual/RentIndiReview';
 import { BsHeart, BsHeartFill } from 'react-icons/bs';
 import { FaRegShareSquare } from 'react-icons/fa';
 import { RiAlarmWarningLine, RiKakaoTalkFill } from 'react-icons/ri';
-import { MdEmail, MdPhone } from 'react-icons/md';
+import { MdEmail, MdPhone, MdTextsms } from 'react-icons/md';
 import RentIndiFooterButton from './rentindividual/RentIndiFooterButton';
 import RentIndiDetail from './rentindividual/RentIndiDetail';
 import toast from 'react-hot-toast';
@@ -133,6 +133,8 @@ const RentIndividualModal: React.FC<RentIndividualModalProps> = ({
   const headerTitle = `${currentListing.title}`;
 
   const generateContact = (means: string) => {
+    const currentLink =
+      `I would like to ask this room: ${window.location.href}`.toLocaleLowerCase();
     switch (means) {
       case 'kakao':
         return (
@@ -221,8 +223,22 @@ const RentIndividualModal: React.FC<RentIndividualModalProps> = ({
         );
       case 'phone':
         return (
-          <div className='w-full h-full flex flex-col items-center justify-center gap-2 py-2'>
+          <div className='w-full h-full flex flex-col items-center justify-center gap-4 py-2'>
             <div>미생 USA: +1 914 294 8785</div>
+            <a
+              href='tel:9142948785'
+              className='flex items-center justify-center w-full bg-green-400 text-[#FFF] py-2 rounded-xl gap-2'
+            >
+              <MdPhone size={20} />
+              <p>클릭하여 전화 상담하기</p>
+            </a>
+            <a
+              href={`sms:9142948785&body=${currentLink}`}
+              className='flex items-center justify-center w-full bg-blue-400 text-[#FFF] py-2 rounded-xl gap-2'
+            >
+              <MdTextsms size={20} />
+              클릭하여 문자 보내기
+            </a>
           </div>
         );
     }

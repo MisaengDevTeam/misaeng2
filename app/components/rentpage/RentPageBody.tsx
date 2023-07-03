@@ -50,7 +50,7 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
   useEffect(() => {
     setTimeout(() => {
       setAdviceOn(false);
-    }, 7000);
+    }, 12000);
 
     function handleResize() {
       setWindowWidth(window.innerWidth);
@@ -108,7 +108,7 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
             onClick={() => {
               setAdviceOn(false);
             }}
-            className={`absolute bg-[#000]/50 w-full h-full transition 
+            className={`absolute bg-[#000]/70 w-full h-full transition 
             ${adviceOn ? 'opacity-100' : 'opacity-0'}
             `}
           >
@@ -122,6 +122,12 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
               <div className='text-[#fff] translate-y-2'>
                 검색을 추천해요 :D
               </div>
+            </div>
+            <div className='flex flex-col px-4 py-2 text-[#FFF] text-sm gap-1'>
+              <p>- 사진 업데이트가 다소 느린점 양해부탁드립니다</p>
+              <p>- 리스팅에서 카톡으로 사진을 요청해보세요</p>
+              <p>- 미생은 현재 281개의 건물과 협업 중입니다</p>
+              <p>- 매주 화/목 새로운 리스팅이 업데이트 됩니다</p>
             </div>
           </div>
         )}
