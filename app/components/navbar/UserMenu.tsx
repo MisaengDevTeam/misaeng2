@@ -52,7 +52,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
 
   return (
     <div>
-      {!currentUser ? (
+      {/* {!currentUser ? (
         <div>
           <div
             onClick={loginModal.onOpen}
@@ -61,37 +61,38 @@ const UserMenu: React.FC<UserMenuProps> = ({
             간편 로그인 하기
           </div>
         </div>
-      ) : (
-        <div className='relative'>
-          <div
-            onClick={toggleOpen}
-            className='flex flex-row gap-2 justify-center items-center py-2 px-4 border border-neutral-600 rounded-full cursor-pointer hover:shadow-md transition'
-          >
-            {isOpen ? (
-              <IoCloseSharp size={24} color='neutral-600' />
-            ) : (
-              <AiOutlineMenu size={24} color='neutral-600' />
-            )}
-            <div className='hidden md:block'>
-              <Avatar
-                imgsrc={
-                  currentUser?.newImage
-                    ? currentUser?.newImage[0]
-                    : currentUser?.image
-                }
-              />
-            </div>
-          </div>
-          {isOpen && (
-            <UserMenuWithUser
-              closeUserMenu={closeUserMenu}
-              rentModalOpen={rentRegisterModal.onOpen}
-              roommateModalOpen={roommateRegisterModal.onOpen}
-              buysellModalOpen={buySellRegisterModal.onOpen}
-            />
+      ) : 
+      ( */}
+      <div className='relative'>
+        <div
+          onClick={toggleOpen}
+          className='flex flex-row gap-2 justify-center items-center py-2 px-4 border border-neutral-600 rounded-full cursor-pointer hover:shadow-md transition'
+        >
+          {isOpen ? (
+            <IoCloseSharp size={24} color='neutral-600' />
+          ) : (
+            <AiOutlineMenu size={24} color='neutral-600' />
           )}
+          {/* <div className='hidden md:block'>
+            <Avatar
+              imgsrc={
+                currentUser?.newImage
+                  ? currentUser?.newImage[0]
+                  : currentUser?.image
+              }
+            />
+          </div> */}
         </div>
-      )}
+        {isOpen && (
+          <UserMenuWithUser
+            closeUserMenu={closeUserMenu}
+            rentModalOpen={rentRegisterModal.onOpen}
+            roommateModalOpen={roommateRegisterModal.onOpen}
+            buysellModalOpen={buySellRegisterModal.onOpen}
+          />
+        )}
+      </div>
+      {/* )} */}
     </div>
   );
 };

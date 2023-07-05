@@ -15,6 +15,7 @@ import RentSearchBar from './RentSearchBar';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import LoadingScreen from '../LoadingScreen';
 import Image from 'next/image';
+import useRentNotiModal from '../hooks/useRentNotiModal';
 
 interface RentPageBodyProps {
   totalLength: number;

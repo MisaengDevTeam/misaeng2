@@ -7,9 +7,12 @@ import LoadingScreen from '../components/LoadingScreen';
 import RentIndividualModal from '../components/modal/RentIndividualModal';
 import useRentIndividualModal from '../components/hooks/useRentIndividualModal';
 import { useSearchParams } from 'next/navigation';
+import RentNotiModal from '../components/modal/RentNotiModal';
+import useRentNotiModal from '../components/hooks/useRentNotiModal';
 
 const RentPage = () => {
   const hasModalOpened = useRef(false);
+  const hasNotiModalOpened = useRef(false);
 
   const [safeListings, setSafeListings] = useState<any[]>([]);
   const [initMapListings, setInitMapListings] = useState([]);
@@ -18,6 +21,8 @@ const RentPage = () => {
   const [mapListings, setMapListings] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [start, setStart] = useState<string>('0');
+
+  const rentNotiModal = useRentNotiModal();
 
   const fetchData = async (start: string) => {
     try {
@@ -46,7 +51,7 @@ const RentPage = () => {
       try {
         const response = await axios.get(`/api/rentListing/rentListing`);
         setMapListings(response.data.mapListing);
-        // setInitMapListings(response.data.mapListing);
+        setInitMapListings(response.data.mapListing);
         setTotalLength(response.data.dataLength);
       } catch (error) {
         console.error('Error fetching data', error);
@@ -55,7 +60,7 @@ const RentPage = () => {
       }
     };
     fetchMapData();
-  }, []);
+  }, [rentNotiModal]);
 
   useEffect(() => {
     fetchData('0');
@@ -75,6 +80,13 @@ const RentPage = () => {
   }, [start]);
 
   useEffect(() => {
+    if (!hasNotiModalOpened.current) {
+      rentNotiModal.onOpen();
+      hasNotiModalOpened.current = true;
+    }
+  }, [rentNotiModal]);
+
+  useEffect(() => {
     if (
       !hasModalOpened.current &&
       rentlistingid &&
@@ -88,6 +100,7 @@ const RentPage = () => {
   return (
     <div>
       <RentIndividualModal />
+      <RentNotiModal />
       <RentPageBody
         isLoading={isLoading}
         fetchData={fetchData}

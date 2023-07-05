@@ -52,13 +52,20 @@ const UserMenuWithUser: React.FC<UserMenuWithUserProps> = ({
           router.push('/blog');
         }}
       />
+      <UserMenuItem
+        label='미생 소개'
+        onClick={() => {
+          closeUserMenu();
+          router.push('/about-us');
+        }}
+      />
       {/* <UserMenuItem
         label='렌트찾기 등록하기'
         onClick={() => {
           closeUserMenu();
           rentModalOpen();
         }}
-      /> */}
+      />
       <UserMenuItem
         label='룸메찾기 등록하기'
         onClick={() => {
@@ -79,7 +86,7 @@ const UserMenuWithUser: React.FC<UserMenuWithUserProps> = ({
           closeUserMenu();
           router.push('/mypage/edit');
         }}
-      />
+      /> */}
       <UserMenuItem
         label='고객 센터'
         onClick={() => {
@@ -87,13 +94,13 @@ const UserMenuWithUser: React.FC<UserMenuWithUserProps> = ({
           router.push('/customer');
         }}
       />
-      <UserMenuItem
+      {/* <UserMenuItem
         label='로그 아웃'
         onClick={() => {
           closeUserMenu();
           signOut({ callbackUrl: '/' });
         }}
-      />
+      /> */}
     </div>
   );
 };

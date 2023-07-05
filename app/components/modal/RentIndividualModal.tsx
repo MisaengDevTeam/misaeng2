@@ -159,68 +159,68 @@ const RentIndividualModal: React.FC<RentIndividualModalProps> = ({
             </button>
           </div>
         );
-      case 'email':
-        return emailSent ? (
-          <div className='flex flex-col w-full h-full justify-center items-center gap-1'>
-            <Image
-              width={200}
-              height={300}
-              src={'/assets/images/logo/logo_vertical.png'}
-              alt={'logo'}
-            />
-            <p>문의가 완료되었습니다!</p>
-            <p>가능한 빨리 답변드리도록 하겠습니다!</p>
-          </div>
-        ) : (
-          <form
-            ref={form}
-            onSubmit={sendContactEmail}
-            className='flex flex-col w-full max-w-[480px] py-2 sm:py-4 gap-1 overflow-y-scroll h-full'
-          >
-            <RentIndiContact
-              label={'이름'}
-              placeholder={'이름'}
-              maxLength={24}
-              name={'contact_name'}
-            />
-            <RentIndiContact
-              label={'직업'}
-              placeholder={'학생 또는 직장인'}
-              maxLength={10}
-              name={'contact_status'}
-            />
-            <RentIndiContact
-              label={'이메일'}
-              placeholder={'이메일'}
-              maxLength={30}
-              name={'contact_email'}
-            />
-            <RentIndiContact
-              label={'연락처'}
-              placeholder={'한국 또는 미국 전화번호'}
-              maxLength={15}
-              name={'contact_phone'}
-            />
-            <RentIndiContact
-              label={'카톡아이디'}
-              placeholder={'연락 가능한 카톡 아이디'}
-              maxLength={36}
-              name={'contact_kakao'}
-            />
-            <input
-              readOnly
-              className='hidden'
-              name={'contact_listing'}
-              value={window.location.href}
-            />
-            <button
-              type='submit'
-              className='text-white bg-[#3944BC] mt-3 py-2 text-sm font-light rounded-lg hover:shadow-lg'
-            >
-              이메일로 뉴욕 방찾기!
-            </button>
-          </form>
-        );
+      // case 'email':
+      //   return emailSent ? (
+      //     <div className='flex flex-col w-full h-full justify-center items-center gap-1'>
+      //       <Image
+      //         width={200}
+      //         height={300}
+      //         src={'/assets/images/logo/logo_vertical.png'}
+      //         alt={'logo'}
+      //       />
+      //       <p>문의가 완료되었습니다!</p>
+      //       <p>가능한 빨리 답변드리도록 하겠습니다!</p>
+      //     </div>
+      //   ) : (
+      //     <form
+      //       ref={form}
+      //       onSubmit={sendContactEmail}
+      //       className='flex flex-col w-full max-w-[480px] py-2 sm:py-4 gap-1 overflow-y-scroll h-full'
+      //     >
+      //       <RentIndiContact
+      //         label={'이름'}
+      //         placeholder={'이름'}
+      //         maxLength={24}
+      //         name={'contact_name'}
+      //       />
+      //       <RentIndiContact
+      //         label={'직업'}
+      //         placeholder={'학생 또는 직장인'}
+      //         maxLength={10}
+      //         name={'contact_status'}
+      //       />
+      //       <RentIndiContact
+      //         label={'이메일'}
+      //         placeholder={'이메일'}
+      //         maxLength={30}
+      //         name={'contact_email'}
+      //       />
+      //       <RentIndiContact
+      //         label={'연락처'}
+      //         placeholder={'한국 또는 미국 전화번호'}
+      //         maxLength={15}
+      //         name={'contact_phone'}
+      //       />
+      //       <RentIndiContact
+      //         label={'카톡아이디'}
+      //         placeholder={'연락 가능한 카톡 아이디'}
+      //         maxLength={36}
+      //         name={'contact_kakao'}
+      //       />
+      //       <input
+      //         readOnly
+      //         className='hidden'
+      //         name={'contact_listing'}
+      //         value={window.location.href}
+      //       />
+      //       <button
+      //         type='submit'
+      //         className='text-white bg-[#3944BC] mt-3 py-2 text-sm font-light rounded-lg hover:shadow-lg'
+      //       >
+      //         이메일로 뉴욕 방찾기!
+      //       </button>
+      //     </form>
+      //   );
       case 'phone':
         return (
           <div className='w-full h-full flex flex-col items-center justify-center gap-4 py-2'>
@@ -323,15 +323,15 @@ const RentIndividualModal: React.FC<RentIndividualModalProps> = ({
   if (step == 2) {
     bodyContent = (
       <div className='flex flex-col items-center py-2 gap-2 px-4 h-full'>
-        <div className='w-full grid grid-cols-3 gap-2 mt-1'>
-          <RentIndiContactButton
+        <div className='w-full grid grid-cols-2 gap-2 mt-1'>
+          {/* <RentIndiContactButton
             label={'이메일'}
             bgColor={'bg-[#3944BC]'}
             icon={MdEmail}
             onClick={() => {
               setContact('email');
             }}
-          />
+          /> */}
           <RentIndiContactButton
             label={'전화'}
             bgColor={'bg-[#028A0F]'}

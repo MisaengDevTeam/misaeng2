@@ -1,125 +1,20 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import Container from '../components/Container';
-import ListingBody from '../components/buysellpage/ListingBody';
-import SearchCategory from '../components/buysellpage/SearchCategory';
-import axios from 'axios';
-import { BuySellListing } from '@prisma/client';
-import LoadingScreen from '../components/LoadingScreen';
-import useBuySellIndividualModal from '../components/hooks/useBuySellIndividualModal';
-import BuySellIndividualModal from '../components/modal/BuySellIndividualModal';
-import { useSearchParams } from 'next/navigation';
-import { IoSearchSharp } from 'react-icons/io5';
+import Image from 'next/image';
+
+interface pageProps {}
 
 const BuySellPage = ({}) => {
-  const hasModalOpened = useRef(false);
-  const searchRef = useRef<HTMLInputElement>(null);
-
-  const [isCategoryBoxOpen, setIsCategoryBoxOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [initListings, setInitListings] = useState<BuySellListing[] | null>(
-    null
-  );
-  const [listings, setListings] = useState<BuySellListing[] | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const buySellIndividualModal = useBuySellIndividualModal();
-
-  useEffect(() => {
-    setIsLoading(true);
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`/api/buysellListing/buysellListing`);
-        setInitListings(response.data.initListings);
-        setListings(response.data.initListings);
-      } catch (error) {
-        console.error('Error fetching data', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const params = useSearchParams();
-  const buysellid = params?.get('buyselllisting');
-
-  useEffect(() => {
-    if (!hasModalOpened.current && buysellid && buySellIndividualModal.onOpen) {
-      buySellIndividualModal.onOpen();
-      hasModalOpened.current = true;
-    }
-  }, [buySellIndividualModal, buySellIndividualModal.onOpen, buysellid]);
-
-  const handleSearch = async () => {
-    setIsLoading(true);
-    await axios
-      .post(`/api/buysellListing/buysellListing`, {
-        buysellOption: { keyword: searchRef.current?.value },
-      })
-      .then((res) => {
-        setListings(res.data.searchedListings);
-      })
-      .catch((error) => console.log(error))
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
-
-  if (isLoading) {
-    return <LoadingScreen />;
-  }
-
   return (
-    <div className='w-full flex'>
-      <BuySellIndividualModal />
-      <Container>
-        <div className='flex flex-row justify-center items-center pt-4'>
-          <div className='flex flex-row w-full sm:w-[50%] max-w-[500px] h-[40px] border border-[#EC662A] py-1 px-2 rounded-full'>
-            <input
-              ref={searchRef}
-              className='w-full rounded-full px-4 bg-transparent focus:outline-none'
-              placeholder='찾으시는 상품을 검색해주세요'
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  handleSearch();
-                }
-              }}
-            />
-            <div
-              onClick={handleSearch}
-              className='flex justify-center items-center bg-[#EC662A] rounded-full w-[52px] cursor-pointer hover:opacity-80'
-            >
-              <IoSearchSharp color='#FFF' size={20} />
-            </div>
-          </div>
-        </div>
-        <div className='flex flex-col md:flex-row w-full justify-center items-start py-4 mb-8'>
-          <div
-            onClick={() => {
-              setIsCategoryBoxOpen(!isCategoryBoxOpen);
-            }}
-            className='w-full flex justify-center items-center md:hidden py-2 mb-3 bg-[#EC662A] text-[#fff] rounded-xl'
-          >
-            {isCategoryBoxOpen
-              ? '카테고리 닫기'
-              : '클릭하여 카테고리별 상품을 찾아보세요'}
-          </div>
-          <SearchCategory
-            isCategoryBoxOpen={isCategoryBoxOpen}
-            setIsCategoryBoxOpen={setIsCategoryBoxOpen}
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
-            setListings={setListings}
-          />
-          <ListingBody
-            listings={listings}
-            buySellIndividualOpen={buySellIndividualModal.onOpen}
-          />
-        </div>
-      </Container>
+    <div className='flex flex-col w-full justify-center items-center h-[90vh] md:h-[50vh] gap-4'>
+      <Image
+        width={180}
+        height={120}
+        src={'/assets/images/logo/logo_vertical.png'}
+        alt={'logo'}
+      />
+      <div>현재 사고팔기 서비스를 이용하실 수 없습니다.</div>
+      <div>웹사이트 이용에 불편함을 드려 죄송합니다.</div>
     </div>
   );
 };
