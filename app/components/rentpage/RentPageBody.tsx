@@ -45,13 +45,13 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
   const [searchListings, setSearchListings] = useState<any[] | null>(null);
   const [isListingOn, setIsListingOn] = useState<boolean>(false);
   const [isSearchOn, setIsSearchOn] = useState<boolean>(false);
-  const [adviceOn, setAdviceOn] = useState<boolean>(true);
+  // const [adviceOn, setAdviceOn] = useState<boolean>(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
-    setTimeout(() => {
-      setAdviceOn(false);
-    }, 12000);
+    // setTimeout(() => {
+    //   setAdviceOn(false);
+    // }, 12000);
 
     function handleResize() {
       setWindowWidth(window.innerWidth);
@@ -104,7 +104,7 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
           {isSearchOn ? '' : <p className='text-[#fff] text-sm'>검색</p>}
         </div>
 
-        {adviceOn && (
+        {/* {adviceOn && (
           <div
             onClick={() => {
               setAdviceOn(false);
@@ -131,7 +131,7 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
               <p>- 매주 화/목 새로운 리스팅이 업데이트 됩니다</p>
             </div>
           </div>
-        )}
+        )} */}
       </div>
       <div
         className={`sm:relative sm:flex w-full sm:w-[50%] lg:w-[45%] sm:h-[90vh] flex flex-col bg-white

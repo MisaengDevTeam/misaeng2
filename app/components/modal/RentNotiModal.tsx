@@ -1,5 +1,6 @@
 import useRentNotiModal from '../hooks/useRentNotiModal';
 import Modal from './Modal';
+import { IoArrowDownCircleSharp } from 'react-icons/io5';
 
 interface RentNotiModalProps {}
 
@@ -7,9 +8,9 @@ const RentNotiModal: React.FC<RentNotiModalProps> = ({}) => {
   const rentNotiModal = useRentNotiModal();
 
   const bodyContent = (
-    <div className='h-['>
-      <div className='flex flex-col text-sm gap-2 font-light h-[53vh] sm:h-auto overflow-scroll'>
-        <p>
+    <div className='h-[55vh] sm:h-auto overflow-scroll'>
+      <div className='flex flex-col text-sm gap-2 font-light'>
+        <p className='text-base'>
           회원님께{' '}
           <span className='font-semibold text-[#EC662A]'>더욱 좋은 서비스</span>
           를 제공해드리기 위하여, 아래 내용을 <u>반드시</u> 읽어봐주시기
@@ -68,6 +69,9 @@ const RentNotiModal: React.FC<RentNotiModalProps> = ({}) => {
             수입으로 증명할 수 있어야합니다.
           </p>
         </div>
+      </div>
+      <div className='absolute bottom-4 right-4 w-[28px] h-[28px] rounded-full'>
+        <IoArrowDownCircleSharp size={28} color='#EC662A rounded-full' />
       </div>
     </div>
   );
