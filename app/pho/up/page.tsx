@@ -13,6 +13,7 @@ import { useRouter } from 'next/navigation';
 import validateInput from '@/app/lib/validateInput';
 import Image from 'next/image';
 import LoadingScreen from '@/app/components/LoadingScreen';
+import useLoginModal from '@/app/components/hooks/useLoginModal';
 
 declare const window: any;
 
@@ -47,6 +48,8 @@ const PhoUpPage = ({}) => {
   const { data: session } = useSession();
   const currentUser = session?.user;
   const currentUserId = currentUser?.id.toString();
+
+  const loginModal = useLoginModal();
 
   const {
     register,
@@ -237,7 +240,6 @@ const PhoUpPage = ({}) => {
         setIsLoading(false);
       });
   }, []);
-  console.log(savedPictures);
 
   const onSubmit: SubmitHandler<FieldValues> = useCallback(
     async (data) => {
@@ -446,8 +448,16 @@ const PhoUpPage = ({}) => {
   if (!currentUser) {
     return (
       <div className='w-full h-[80vh] flex flex-col justify-center items-center gap-8'>
+        <Image
+          onClick={loginModal.onOpen}
+          width={120}
+          height={90}
+          src={'/assets/images/logo/logo_square.png'}
+          alt={'logo'}
+        />
         <div className='text-4xl font-bold'>404 Error</div>
         <div className='text-lg'>No page available</div>
+        <div></div>
       </div>
     );
   }
