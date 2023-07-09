@@ -61,27 +61,6 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // TEMP // TEMP // TEMP // TEMP // TEMP // TEMP // TEMP // TEMP
-
-  function findDuplicates(data: any) {
-    let sortedData = data.slice().sort(); // You can sort it if needed
-    let results = [];
-    for (let i = 0; i < sortedData.length - 1; i++) {
-      if (sortedData[i + 1] == sortedData[i]) {
-        results.push(sortedData[i]);
-      }
-    }
-    return results;
-  }
-
-  useEffect(() => {
-    const ids = listings.map((list) => (list as any)._id);
-    // const duplicates = findDuplicates(ids);
-    console.log(ids);
-  }, [listings]);
-
-  // TEMP // TEMP // TEMP // TEMP // TEMP // TEMP // TEMP // TEMP
-
   // Determine the height based on the window width
   let height;
   if (windowWidth > 640) {

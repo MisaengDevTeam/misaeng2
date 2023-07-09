@@ -69,4 +69,26 @@ export const ADDRESS_BOOK = {
   'The Ritz Plaza': '235 W 48th St, Manhattan, New York 10019, United States',
   '201 E 69th St':
     '201 East 69th Street, New York, New York 10021, United States',
+  '47-05 Center Blvd, Queens, NY 11101':
+    '47-05 Center Boulevard, Queens, New York 11101, United States',
+  '110 Horatio Street, Manhattan, NY 10014':
+    '110 Horatio Street, New York, New York 10014, United States',
+  '41 River Terrace, Manhattan, NY 10282':
+    '41 River Ter, Manhattan, New York 10282, United States',
+  '43-10 Crescent Street, Queens, NY 11101':
+    '43-10 Crescent Street, Queens, New York 11101, United States',
+  '555 W 38th St, Manhattan, NY 10018':
+    '555 West 38th Street, New York, New York 10018, United States',
+  '410 W 53rd Street, Manhattan, NY 10019':
+    '410 West 53rd Street, New York, New York 10019, United States',
+  '43-22 Queens Street, Queens, NY 11101':
+    '43-22 Queens Street, Queens, New York 11101, United States',
+  '666 Greenwich Street, Manhattan, NY 10014':
+    '666 Greenwich Street, New York, New York 10014, United States',
+  '200 Water Street, Manhattan, NY 10038':
+    '200 Water Street, New York, New York 10038, United States',
+  '100 Jane Street, Manhattan, NY 10014':
+    '100 Jane Street, New York, New York 10014, United States',
+  '43-12 Hunter St, Long Island, NY 11101':
+    '43-12 Hunter Street, Queens, New York 11101, United States',
 };

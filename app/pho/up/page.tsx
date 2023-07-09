@@ -228,8 +228,6 @@ const PhoUpPage = ({}) => {
   }, [picAddress, step, unit]);
 
   const onCheck = useCallback(async (bid: string, unit: string) => {
-    console.log(bid);
-    console.log(unit);
     setIsLoading(true);
     axios
       .post(`/api/pholookup`, { bid, unit })
