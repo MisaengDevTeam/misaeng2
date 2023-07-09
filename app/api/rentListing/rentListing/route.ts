@@ -102,7 +102,7 @@ export async function POST(request: Request) {
         },
         { $sort: { createdAt: -1, _id: 1 } },
         { $skip: startNumber },
-        { $limit: 10 },
+        { $limit: 20 },
       ])
       .toArray();
 
