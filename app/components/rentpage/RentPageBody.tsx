@@ -61,6 +61,27 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // TEMP // TEMP // TEMP // TEMP // TEMP // TEMP // TEMP // TEMP
+
+  function findDuplicates(data: any) {
+    let sortedData = data.slice().sort(); // You can sort it if needed
+    let results = [];
+    for (let i = 0; i < sortedData.length - 1; i++) {
+      if (sortedData[i + 1] == sortedData[i]) {
+        results.push(sortedData[i]);
+      }
+    }
+    return results;
+  }
+
+  useEffect(() => {
+    const ids = listings.map((list) => (list as any)._id);
+    // const duplicates = findDuplicates(ids);
+    console.log(ids);
+  }, [listings]);
+
+  // TEMP // TEMP // TEMP // TEMP // TEMP // TEMP // TEMP // TEMP
+
   // Determine the height based on the window width
   let height;
   if (windowWidth > 640) {
@@ -126,7 +147,7 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
             </div>
             <div className='flex flex-col px-4 py-2 text-[#FFF] text-sm gap-1'>
               <p>- 사진 업데이트가 다소 느린점 양해부탁드립니다</p>
-              <p>- 리스팅에서 카톡으로 사진을 요청해보세요</p>
+              <p>- 카톡으로 연락하기를 통해 사진을 요청해보세요</p>
             </div>
           </div>
         )}
@@ -174,26 +195,44 @@ const RentPageBody: React.FC<RentPageBodyProps> = ({
 
         {searchListings == null ? (
           <InfiniteScroll
-            className='grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 min-[1960px]:grid-cols-4 min-[2400px]:grid-cols-5 p-4 sm:pt-0 overflow-x-hidden overflow-y-scroll gap-2'
             next={infiniteScrollNext}
             hasMore={listings.length < totalLength}
-            scrollThreshold={0.8}
+            scrollThreshold={0.95}
             height={height}
             loader={
-              <div className='w-full flex justify-center'>Loading...</div>
+              <div className='w-full flex justify-center items-center h-[60px] bg-[#F6A484] text-[#FFFFFF] gap-8'>
+                <Image
+                  width={100}
+                  height={30}
+                  src={'/assets/images/logo/logo_white_horizontal_kor.png'}
+                  alt={'logo'}
+                />
+              </div>
             }
             dataLength={listings.length}
             endMessage={
-              <div className='flex justify-center items-center w-full h-full bg-neutral-300 rounded-lg'></div>
+              <div className='w-full flex justify-center items-center h-[60px] bg-[#F6A484] text-[#FFFFFF] gap-8'>
+                <Image
+                  width={100}
+                  height={30}
+                  src={'/assets/images/logo/logo_white_horizontal_kor.png'}
+                  alt={'logo'}
+                />
+                <span>더 이상 없어요 ㅠ</span>
+              </div>
             }
           >
-            {listings.map((list) => (
-              <RentListingCard
-                key={(list as any)._id + listings.indexOf(list)}
-                rentIndividualOpen={rentIndividualOpen}
-                list={list}
-              />
-            ))}
+            <div className='grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 min-[1960px]:grid-cols-4 min-[2400px]:grid-cols-5 p-4 sm:pt-0 overflow-x-hidden overflow-y-scroll gap-2'>
+              {listings.map((list) => {
+                return (
+                  <RentListingCard
+                    key={(list as any)._id + listings.indexOf(list)}
+                    rentIndividualOpen={rentIndividualOpen}
+                    list={list}
+                  />
+                );
+              })}
+            </div>
           </InfiniteScroll>
         ) : searchListings?.length != 0 ? (
           <div className='grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 min-[1960px]:grid-cols-4 min-[2400px]:grid-cols-5 p-4 sm:pt-0 overflow-x-hidden overflow-y-scroll gap-2'>

@@ -118,6 +118,7 @@ const MapComponent = memo<MapProps>(function MapComponent({
           customMarker.style.width = `20px`;
           customMarker.style.height = `20px`;
           customMarker.style.cursor = `pointer`;
+          // console.log(building);
           const marker = new mapboxgl.Marker(customMarker)
             .setLngLat(building.coordinate)
             .addTo(map.current);

@@ -83,13 +83,13 @@ export async function POST(request: Request) {
 
   if (start) {
     const startNumber = parseInt(start);
-    const mapListing: Record<string, MapListingItem> = {};
+
+    // console.log(start);
 
     const recentListings = await rentCollection
-      .find(
-        {},
+      .aggregate([
         {
-          projection: {
+          $project: {
             _id: 1,
             category: 1,
             buildingId: 1,
@@ -99,14 +99,14 @@ export async function POST(request: Request) {
             imageSrc: 1,
             moveDate: 1,
           },
-        }
-      )
-      .sort({ createdAt: -1 })
-      .skip(startNumber)
-      .limit(20)
+        },
+        { $sort: { createdAt: -1, _id: 1 } },
+        { $skip: startNumber },
+        { $limit: 10 },
+      ])
       .toArray();
 
-    return NextResponse.json({ recentListings, mapListing });
+    return NextResponse.json({ recentListings });
   }
   if (buildingId) {
     const recentListings = await rentCollection
