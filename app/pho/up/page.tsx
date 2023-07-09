@@ -14,6 +14,7 @@ import validateInput from '@/app/lib/validateInput';
 import Image from 'next/image';
 import LoadingScreen from '@/app/components/LoadingScreen';
 import useLoginModal from '@/app/components/hooks/useLoginModal';
+import { ADDRESS_BOOK } from '@/types/AddressBook';
 
 declare const window: any;
 
@@ -327,6 +328,17 @@ const PhoUpPage = ({}) => {
           <input
             ref={unitRef}
             id='pic_up_unit'
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                async () => {
+                  if (bid && unit) {
+                    onCheck(bid, unit);
+                  } else {
+                    toast.error(`Address or Unit is empty`);
+                  }
+                };
+              }
+            }}
             onChange={(e) =>
               setCustomValue('unit', e.currentTarget.value.toLowerCase())
             }
@@ -413,6 +425,21 @@ const PhoUpPage = ({}) => {
         >
           NEXT
         </button>
+        <div className='mt-8 h-[20vh] overflow-scroll'>
+          <h1 className='w-full text-center text-xl font-bold'>ADDRESS BOOK</h1>
+          <table>
+            <tr>
+              <th>Building Name</th>
+              <th>Address</th>
+            </tr>
+            {Object.entries(ADDRESS_BOOK).map(([key, value]) => (
+              <tr key={key}>
+                <td>{key}</td>
+                {value == 'NONE' ? <td></td> : <td>{value}</td>}
+              </tr>
+            ))}
+          </table>
+        </div>
       </div>
     );
   }
