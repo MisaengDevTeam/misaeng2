@@ -44,19 +44,19 @@ const CustomerServicePage: React.FC<pageProps> = ({}) => {
               />
               <div className='flex flex-col'>
                 <div className='w-full h-full flex flex-col items-center justify-center gap-4 py-2'>
-                  <div className='flex w-[200px] h-[60px] items-center justify-center w-full bg-[#EC662A] text-[#FFF] py-2 rounded-full gap-2'>
+                  <div className='flex w-[320px] sm:w-[200px] h-[60px] items-center justify-center w-full bg-[#EC662A] text-[#FFF] py-2 rounded-full gap-2'>
                     문의: +1 914 294 8785
                   </div>
                   <a
                     href='tel:9142948785'
-                    className='flex w-[200px] h-[60px] items-center justify-center w-full bg-green-400 text-[#FFF] py-2 rounded-full gap-2'
+                    className='flex w-[320px] sm:w-[200px] h-[60px] items-center justify-center w-full bg-green-400 text-[#FFF] py-2 rounded-full gap-2'
                   >
                     <MdPhone size={20} />
                     <p>클릭해서 전화 하기</p>
                   </a>
                   <a
                     href={`sms:9142948785&body=문의하기`}
-                    className='flex w-[200px] h-[60px] items-center justify-center w-full bg-blue-400 text-[#FFF] py-2 rounded-full gap-2'
+                    className='flex w-[320px] sm:w-[200px] h-[60px] items-center justify-center w-full bg-blue-400 text-[#FFF] py-2 rounded-full gap-2'
                   >
                     <MdTextsms size={20} />
                     클릭해서 문자 보내기
@@ -65,7 +65,7 @@ const CustomerServicePage: React.FC<pageProps> = ({}) => {
                     onClick={() => {
                       router.push('https://open.kakao.com/o/sQbwnisf');
                     }}
-                    className='flex w-[200px] h-[60px] items-center justify-center w-full bg-[#FFD800] py-2 rounded-full gap-2'
+                    className='flex w-[320px] sm:w-[200px] h-[60px] items-center justify-center w-full bg-[#FFD800] py-2 rounded-full gap-2'
                   >
                     <RiKakaoTalkFill size={24} />
                     <span>클릭해서 카톡 보내기</span>
