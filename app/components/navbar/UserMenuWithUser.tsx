@@ -52,13 +52,13 @@ const UserMenuWithUser: React.FC<UserMenuWithUserProps> = ({
           router.push('/blog');
         }}
       />
-      <UserMenuItem
+      {/* <UserMenuItem
         label='미생 소개'
         onClick={() => {
           closeUserMenu();
           router.push('/about-us');
         }}
-      />
+      /> */}
       {/* <UserMenuItem
         label='렌트찾기 등록하기'
         onClick={() => {
@@ -88,7 +88,7 @@ const UserMenuWithUser: React.FC<UserMenuWithUserProps> = ({
         }}
       /> */}
       <UserMenuItem
-        label='고객 센터'
+        label='문의 센터'
         onClick={() => {
           closeUserMenu();
           router.push('/customer');

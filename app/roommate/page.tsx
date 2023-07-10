@@ -6,15 +6,16 @@ interface pageProps {}
 
 const RoommatePage = ({}) => {
   return (
-    <div className='flex flex-col w-full justify-center items-center h-[90vh] md:h-[50vh] gap-4'>
+    <div className='flex flex-col w-full justify-center items-center h-[90vh] md:h-[50vh] pb-8'>
       <Image
-        width={180}
-        height={120}
-        src={'/assets/images/logo/logo_vertical.png'}
+        width={720}
+        height={480}
+        src={'/assets/images/img/setup.png'}
         alt={'logo'}
       />
-      <div>현재 룸메이트 찾기 서비스를 이용하실 수 없습니다.</div>
-      <div>웹사이트 이용에 불편함을 드려 죄송합니다.</div>
+      <div className='flex flex-col gap-4 justify-center items-center text-lg'>
+        <div>개발자가 혼신의 힘을 다해 개발중 이예요 :D</div>
+      </div>
     </div>
   );
 };
