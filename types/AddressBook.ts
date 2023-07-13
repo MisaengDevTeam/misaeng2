@@ -91,4 +91,58 @@ export const ADDRESS_BOOK = {
     '100 Jane Street, New York, New York 10014, United States',
   '43-12 Hunter St, Long Island, NY 11101':
     '43-12 Hunter Street, Queens, New York 11101, United States',
+  '47-45 Vernon Blvd':
+    '47-45 Vernon Boulevard, Queens, New York 11101, United States',
+  '25 Clinton Street':
+    '25 Clinton Street, New York, New York 10002, United States',
+  '11 Jones Street': '11 Jones Street, New York, New York 10014, United States',
+  '23 Jones Street': '23 Jones Street, New York, New York 10014, United States',
+  '189 Waverly Place':
+    '189 Waverly Place, New York, New York 10014, United States',
+  '151 and 153 West 10th St':
+    '153 West 10th Street, New York, New York 10014, United States',
+  '124 MacDougal Street':
+    '124 Macdougal Street, New York, New York 10012, United States',
+  '11 Waverly Place':
+    '11 Waverly Place, New York, New York 10003, United States',
+  '512 East 5th Street':
+    '512 East 5th Street, New York, New York 10009, United States',
+  '514 East 5th Street':
+    '514 East 5th Street, New York, New York 10009, United States',
+  '516 East 5th Street':
+    '516 East 5th Street, New York, New York 10009, United States',
+  '518 East 5th Street':
+    '518 East 5th Street, New York, New York 10009, United States',
+  '543 East 5th Street':
+    '543 East 5th Street, New York, New York 10009, United States',
+  '218 East 6th Street':
+    '218 East 6th Street, New York, New York 10003, United States',
+  '32 East 7th Street':
+    '32 East 7th Street, New York, New York 10003, United States',
+  '34 East 7th Street':
+    '34 East 7th Street, New York, New York 10003, United States',
+  "102 Saint Mark's Place":
+    '102 Saint Marks Place, New York, New York 10009, United States',
+  "128 Saint Mark's Pl":
+    '128 Saint Marks Place, New York, New York 10009, United States',
+  '110 East 7th Street':
+    '110 East 7th Street, New York, New York 10009, United States',
+  '112 East 7th Street':
+    '112 East 7th Street, New York, New York 10009, United States',
+  '122 East 7th Street':
+    '122 East 7th Street, New York, New York 10009, United States',
+  '431 East 9th Street':
+    '431 East 9th Street, New York, New York 10009, United States',
+  '620 East 11th Street':
+    '620 East 11th Street, New York, New York 10009, United States',
+  '622 East 11th Street':
+    '622 East 11th Street, New York, New York 10009, United States',
+  '198 & 200 First Avenue':
+    '200 1st Avenue, New York, New York 10009, United States',
+  '405 East 12th Street':
+    '405 East 12th Street, New York, New York 10009, United States',
+  '422 East 14th Street':
+    '422 East 14th Street, New York, New York 10009, United States',
+  '206 East 70th Street':
+    '206 East 70th Street, New York, New York 10021, United States',
 };

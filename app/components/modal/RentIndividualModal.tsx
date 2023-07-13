@@ -123,6 +123,11 @@ const RentIndividualModal: React.FC<RentIndividualModalProps> = ({
     }
   };
 
+  const onCloseButton = () => {
+    rentIndividualModal.onClose();
+    setStep(1);
+  };
+
   const reportListing = () => {
     rentIndividualModal.onClose();
     reportModal.onOpen();
@@ -425,7 +430,7 @@ const RentIndividualModal: React.FC<RentIndividualModalProps> = ({
     <Modal
       disabled={isLoading}
       isOpen={rentIndividualModal.isOpen}
-      onClose={rentIndividualModal.onClose}
+      onClose={onCloseButton}
       title={headerTitle}
       body={bodyContent!}
       footer={footerContent}
